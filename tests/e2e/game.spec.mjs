@@ -1,0 +1,164 @@
+import {test,expect} from '@playwright/test';
+import {EventEmitter} from 'node:events';
+import {writeFile,mkdir} from 'node:fs/promises';
+import {spawn} from 'node:child_process';
+import WebSocket from 'ws';
+const observe=page=>{
+ const channel=new EventEmitter();channel.state=null;channel.welcome=null;channel.errors=[];
+ page.on('pageerror',e=>channel.errors.push(e.message));
+ page.on('websocket',socket=>socket.on('framesent',event=>{try{channel.lastSent=JSON.parse(String(event.payload));}catch{channel.lastSent=null;}}));
+ page.on('websocket',socket=>socket.on('framereceived',event=>{
+  let m;try{m=JSON.parse(String(event.payload));}catch{return;}
+  if(m.type==='state')channel.state=m;if(m.type==='welcome')channel.welcome=m;channel.emit('data',m);
+ }));
+ channel.wait=(predicate,timeout=7000)=>{
+  for(const m of [channel.state,channel.welcome])if(m&&predicate(m))return Promise.resolve(m);
+  return new Promise((resolve,reject)=>{
+   const listener=m=>{if(predicate(m)){clearTimeout(timer);channel.off('data',listener);resolve(m);}};
+   const timer=setTimeout(()=>{channel.off('data',listener);reject(Error('browser public state deadline'));},timeout);channel.on('data',listener);
+  });
+ };return channel;
+};
+const channelLast=channel=>channel.lastSent;
+async function enter(page,name,code){
+ await page.goto('/');await page.bringToFront();await expect(page.locator('#create')).toBeEnabled({timeout:15000});
+ await page.getByLabel('닉네임',{exact:true}).fill(name);
+ if(code){await page.getByLabel('방 코드',{exact:true}).fill(code);await page.getByRole('button',{name:'참가',exact:true}).click();}
+ else await page.getByRole('button',{name:'새 방 만들기',exact:true}).click();
+ await expect(page.locator('#pause')).toBeVisible();
+}
+for(const [reducedMotion,forceWebGL] of [['reduce',false],['no-preference',false],['reduce',true]]) test(`actual C++ controls, server ammo, reload and Esc (${reducedMotion}${forceWebGL?'/WebGL2':''})`,async({browser})=>{
+ const scenario=reducedMotion+(forceWebGL?'-webgl':'');
+ const context=await browser.newContext({reducedMotion,viewport:{width:1440,height:900}});
+ if(forceWebGL)await context.addInitScript(()=>Object.defineProperty(navigator,'gpu',{value:undefined,configurable:true}));
+ const page=await context.newPage(),channel=observe(page);
+ try{
+  await enter(page,'QA_CONTROLS');await channel.wait(m=>m.type==='state'&&m.players.length===1);
+  const id=channel.welcome.id,initial=channel.state.players.find(p=>p.id===id);
+  // Test-only observation after the real C++ renderer. Never inject a game event.
+  await page.evaluate(()=>{
+   window.__flash=0;window.__shotFrame=null;
+   const hud=CY.hud;CY.hud=s=>{hud(s);window.__flash=s.flash;};
+   const draw=CY.renderer.draw.bind(CY.renderer);CY.renderer.draw=(...args)=>{draw(...args);if(window.__flash>0&&!window.__shotFrame)window.__shotFrame=document.querySelector('canvas').toDataURL('image/png');};
+  });
+  await page.bringToFront();expect(await page.evaluate(()=>document.visibilityState)).toBe('visible');
+  await page.getByRole('button',{name:/클릭하고 플레이/}).click();
+  await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('game');
+  await page.keyboard.down('KeyW');
+  await channel.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&Math.hypot(p.x-initial.x,p.z-initial.z)>.6));
+  await page.keyboard.up('KeyW');
+  const oldYaw=channel.state.players.find(p=>p.id===id).yaw;
+  await page.mouse.move(850,450,{steps:4});
+  await channel.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&Math.abs(p.yaw-oldYaw)>.04));
+  const heading=await page.locator('#heading').textContent();await page.waitForTimeout(250);
+  expect(await page.locator('#heading').textContent()).toBe(heading);
+  await page.mouse.down();await channel.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.ammo<24));
+  await expect.poll(()=>page.evaluate(()=>!!window.__shotFrame)).toBe(true);await page.mouse.up();
+  const frame=await page.evaluate(()=>window.__shotFrame);await mkdir('work',{recursive:true});await writeFile(`work/firing-${scenario}.png`,Buffer.from(frame.split(',')[1],'base64'));
+  await page.keyboard.press('KeyR');await channel.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.reload>0));
+  await channel.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.reload===0&&p.ammo===24));
+  await page.screenshot({path:`work/play-${scenario}.png`});
+  await page.evaluate(()=>{window.__escapeSeen=false;document.addEventListener('keydown',e=>{if(e.code==='Escape')window.__escapeSeen=true;},true);});
+  await page.keyboard.press('Escape');console.log('Escape diagnostic',JSON.stringify(await page.evaluate(()=>({received:window.__escapeSeen,locked:document.pointerLockElement?.id}))));await expect.poll(()=>page.evaluate(()=>document.pointerLockElement===null)).toBe(true);
+  await expect(page.locator('#pause')).toBeVisible();await page.screenshot({path:`work/menu-${scenario}.png`});
+  expect(await page.locator('#reduce').isChecked()).toBe(reducedMotion==='reduce');
+  await page.getByRole('button',{name:/방 나가기/}).click();await expect(page.locator('#create')).toBeEnabled();
+  expect(channel.errors).toEqual([]);
+ }finally{await context.close();}
+});
+test('four independent browser contexts agree on membership; fifth gets room full',async({browser})=>{
+ const contexts=[],pages=[],channels=[];
+ try{
+  let code;
+  for(let i=0;i<4;i++){
+   const ctx=await browser.newContext({viewport:{width:1280,height:800}});contexts.push(ctx);const page=await ctx.newPage();pages.push(page);channels.push(observe(page));
+   await enter(page,`QA_BROWSER_${i+1}`,code);code=await page.locator('#copy-code').textContent();
+  }
+  await Promise.all(channels.map(c=>c.wait(m=>m.type==='state'&&m.players.length===4)));
+  for(const page of pages)await expect(page.locator('#count')).toHaveText('4 / 4');
+  const ids=channels.map(c=>c.welcome.id);expect(new Set(ids).size).toBe(4);
+  const ctx=await browser.newContext();contexts.push(ctx);const fifth=await ctx.newPage();
+  await fifth.goto('/');await expect(fifth.locator('#join')).toBeEnabled();await fifth.locator('#nickname').fill('QA_FIFTH');await fifth.locator('#code').fill(code);await fifth.locator('#join').click();
+  await expect(fifth.locator('#lobby-status')).toContainText('이미 4명');await expect(fifth.locator('#create')).toBeEnabled();
+  for(const c of channels)expect(c.errors).toEqual([]);
+  console.log('Observed independent browser ids',JSON.stringify(ids));
+ }finally{await Promise.all(contexts.map(c=>c.close()));}
+});
+test('served C++ lobby and live menu retain layout at desktop, tablet and phone widths',async({page})=>{
+ const c=observe(page);await page.goto('/');await page.bringToFront();await expect(page.locator('#create')).toBeEnabled();
+ for(const width of [1440,768,375]){
+  await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>innerWidth)).toBe(width);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:`work/lobby-${width}.png`});
+ }
+ await page.setViewportSize({width:1440,height:900});await page.locator('#create').click();await expect(page.locator('#pause')).toBeVisible();
+ const room=await page.locator('#copy-code').textContent();
+ for(const width of [1440,768,375]){
+  await page.setViewportSize({width,height:900});expect(await page.locator('#copy-code').textContent()).toBe(room);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:`work/live-menu-${width}.png`});
+ }
+ await page.locator('#leave').click();expect(c.errors).toEqual([]);
+});
+
+for(const direction of ['down','up'])test(`extreme mouse pitch ${direction} remains in the strict wire range without disconnecting`,async({page})=>{
+ const c=observe(page);await enter(page,'QA_AIM_BOUNDARY');await c.wait(m=>m.type==='state');
+ await page.locator('#sensitivity').focus();await page.keyboard.press('End');await expect(page.locator('#sensitivity')).toHaveValue('3');
+ await page.getByRole('button',{name:/클릭하고 플레이/}).click();await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('game');
+ const result=c.wait(m=>m.type==='error'||m.type==='state'&&m.players.some(p=>p.id===c.welcome.id&&(direction==='down'?p.pitch<-1.44:p.pitch>1.44)));
+ await page.mouse.move(720,direction==='down'?899:0,{steps:2});const state=await result;
+ console.log('Pitch boundary diagnostic',JSON.stringify({response:state.type==='error'?state:state.players.find(p=>p.id===c.welcome.id),sent:channelLast(c)}));
+ expect(state.type).toBe('state');await expect(page.locator('#hud')).toBeVisible();
+});
+
+async function ownedServer(port=0){
+ const child=spawn(process.execPath,['server/main.mjs','--port',String(port)],{cwd:new URL('../../',import.meta.url),windowsHide:true,stdio:['ignore','pipe','pipe']});
+ const url=await new Promise((resolve,reject)=>{
+  const timer=setTimeout(()=>{child.kill();reject(Error('owned recovery server readiness timeout'));},10000);
+  let output='';child.stdout.on('data',chunk=>{output+=chunk;const m=output.match(/CROSSYARD (http:\/\/127\.0\.0\.1:\d+)/);if(m){clearTimeout(timer);resolve(m[1]);}});
+  child.once('error',e=>{clearTimeout(timer);reject(e);});child.once('exit',code=>{clearTimeout(timer);reject(Error(`owned recovery server exited ${code}`));});
+ });
+ return {url,async stop(){if(child.exitCode!==null)return;await new Promise(resolve=>{const timer=setTimeout(()=>{child.kill('SIGKILL');resolve();},2000);child.once('exit',()=>{clearTimeout(timer);resolve();});child.kill('SIGTERM');});}};
+}
+test('missing-room retry and owned server disconnect recover the real UI',async({page})=>{
+ let server=await ownedServer();const original=server.url;
+ try{
+  await page.goto(original);await page.bringToFront();await expect(page.locator('#create')).toBeEnabled();
+  await page.locator('#nickname').fill('QA_RECOVERY');await page.locator('#code').fill('000000');await page.locator('#join').click();
+  await expect(page.locator('#lobby-status')).toContainText('방을 찾지 못했어요');await expect(page.locator('#create')).toBeEnabled();
+  await page.locator('#create').click();await expect(page.locator('#pause')).toBeVisible();
+  await server.stop();await expect(page.locator('#lobby-status')).toContainText('연결이 끊겼어요');await expect(page.locator('#create')).toBeEnabled();
+  await page.screenshot({path:'work/controlled-disconnect.png'});
+  for(const width of [1440,768,375]){await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.querySelector('#lobby').scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:`work/disconnect-${width}.png`});}
+  server=await ownedServer(Number(new URL(original).port));await page.locator('#create').click();await expect(page.locator('#pause')).toBeVisible();
+  await page.locator('#leave').click();await expect(page.locator('#create')).toBeEnabled();
+ }finally{await server.stop();}
+});
+
+test('real browser hit, kill and incoming-damage feedback through an ordinary socket peer',async({page,baseURL})=>{
+ const c=observe(page);await enter(page,'QA_VISUAL');
+ const room=await page.locator('#copy-code').textContent();
+ const target=new WebSocket(baseURL.replace('http:','ws:')+'/ws',{origin:baseURL});
+ let sequence=0,timer;
+ try{
+  await new Promise((resolve,reject)=>{target.once('open',resolve);target.once('error',reject);});
+  const welcome=new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error('visual target join deadline')),4000);target.on('message',raw=>{const m=JSON.parse(raw);if(m.type==='welcome'){clearTimeout(timeout);resolve(m);}if(m.type==='error'){clearTimeout(timeout);reject(Error(m.code));}});});
+  target.send(JSON.stringify({type:'join',name:'QA_SOCKET_TARGET',code:room}));const other=await welcome;
+  await c.wait(m=>m.type==='state'&&m.players.length===2&&m.players.find(p=>p.id===other.id)?.shield===0);
+  const me=c.state.players.find(p=>p.id===c.welcome.id),victim=c.state.players.find(p=>p.id===other.id);
+  const dx=victim.x-me.x,dz=victim.z-me.z,wantedYaw=Math.atan2(dx,-dz),wantedPitch=Math.atan2(-.35,Math.hypot(dx,dz));
+  const button=await page.locator('#resume').boundingBox();await page.bringToFront();await page.locator('#resume').click();
+  await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('game');
+  await page.mouse.move(button.x+button.width/2+(wantedYaw-me.yaw)/.0022,button.y+button.height/2-wantedPitch/.0022);
+  await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===me.id&&Math.abs(p.yaw-wantedYaw)<.008));
+  await page.mouse.down();await expect(page.locator('#hitmarker')).toHaveClass(/active/);await page.screenshot({path:'work/browser-hit.png'});
+  await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===other.id&&p.hp===0));await page.mouse.up();
+  await expect(page.locator('#players li.me .score-values')).toHaveText('1 / 0');
+  await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===other.id&&p.hp===100&&p.deaths===1));
+  const aimBack={yaw:Math.atan2(-dx,dz),pitch:wantedPitch};
+  const send=fire=>target.send(JSON.stringify({type:'input',seq:++sequence,forward:0,strafe:0,...aimBack,fire,reload:false,sprint:false}));
+  send(true);timer=setInterval(()=>send(true),33);
+  await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===me.id&&p.hp<=75));clearInterval(timer);timer=null;send(false);
+  await expect(page.locator('#damage-vignette')).toHaveClass(/active/);await page.screenshot({path:'work/browser-damage.png'});
+  console.log('Observed browser combat',JSON.stringify({mine:c.welcome.id,target:other.id,health:c.state.players.find(p=>p.id===me.id).hp,kills:c.state.players.find(p=>p.id===me.id).kills}));
+  await page.keyboard.press('Escape');await page.locator('#leave').click();expect(c.errors).toEqual([]);
+ }finally{clearInterval(timer);target.close();}
+});

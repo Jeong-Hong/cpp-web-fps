@@ -14,7 +14,9 @@ EM_JS(void, draw_platform,(const float* matrix,const float* data,int length,floa
  globalThis.CY.renderer.draw(HEAPF32.subarray(matrix>>2,(matrix>>2)+16),HEAPF32.subarray(data>>2,(data>>2)+length),new Float32Array([x,y,z]));
 });
 EM_JS(void, send_platform,(float f,float s,float yaw,float pitch,int fire,int reload,int sprint,unsigned seq),{
- globalThis.CY.sendInput({type:'input',seq:seq,forward:f,strafe:s,yaw:yaw,pitch:pitch,fire:!!fire,reload:!!reload,sprint:!!sprint});
+ // Float32 endpoints can lie a few ulps outside the JSON double contract.
+ // Bound the producer's encoding; keep server validation strict.
+ globalThis.CY.sendInput({type:'input',seq:seq,forward:f,strafe:s,yaw:Math.max(-Math.PI,Math.min(Math.PI,yaw)),pitch:Math.max(-1.45,Math.min(1.45,pitch)),fire:!!fire,reload:!!reload,sprint:!!sprint});
 });
 EM_JS(void, lock_platform,(int locked),{globalThis.CY.lockChanged(!!locked);});
 EM_JS(void, lock_error_platform,(),{globalThis.CY.lockError();});
@@ -122,6 +124,7 @@ void frame(){
 EM_BOOL key_event(int type,const EmscriptenKeyboardEvent* event,void*){
  const bool down=type==EMSCRIPTEN_EVENT_KEYDOWN;
  if(!locked&&down)return EM_FALSE;
+ if(down&&std::strcmp(event->code,"Escape")==0){clear_controls();send_controls();emscripten_exit_pointerlock();return EM_TRUE;}
  bool* key=nullptr;
  if(std::strcmp(event->code,"KeyW")==0)key=&key_w;
  if(std::strcmp(event->code,"KeyA")==0)key=&key_a;

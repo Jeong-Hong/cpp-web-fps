@@ -9,7 +9,7 @@
     "test:server": "node --test tests/*.test.mjs",
     "test": "npm run test:core && npm run test:server",
     "start": "node server/main.mjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test && playwright test -c playwright.game.config.mjs"
   },
   "dependencies": {
     "ws": "8.22.0"
