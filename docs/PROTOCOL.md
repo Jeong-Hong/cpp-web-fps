@@ -19,7 +19,7 @@ All objects reject unknown fields; UTF-8 JSON <=1024 bytes. No arrays as top-lev
 - idle or active → `{type:"ping",stamp}` with safe integer stamp, response pong echoes only this allowed number.
 - socket close/timeout → remove slot, destroy empty room. Idle handshake max10s, transport heartbeat30s. Server max16 rooms,64 sockets. Input/message rate limited.
 - state → `{type:"state",room,names,time,players:[...]}`. time milliseconds monotonic per room; players omit inactive slots. Player fields described by arena.hpp / C++ serializer: id,x,y,z,yaw,pitch,hp,ammo,kills,deaths,reload,respawn,shield,shot,hit,damage,ack,trace[3]. Durations are remaining milliseconds. shot/hit/damage are monotonic per-slot counters during that membership.
-- controls expire after250ms without fresh input; aim remains, held movement/fire stop. Dead players accept validated sequence acknowledgements but cannot buffer movement, reload or fire through respawn.
+- controls expire after250ms without fresh input; aim remains, held movement/fire stop. Reload is a one-shot request: a valid fresh true pulse remains pending until the next simulation tick even if a later input has reload false, then is consumed once. Duplicate/old inputs cannot enqueue it. Dead players accept validated sequence acknowledgements but cannot buffer movement, reload or fire through respawn.
 
 ## Simulation / rendering boundary
 - Simulation60Hz, full snapshots20Hz, browser input30Hz. Full snapshots may be coalesced; welcome/error/left/pong may not.
