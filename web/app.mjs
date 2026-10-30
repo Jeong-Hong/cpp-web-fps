@@ -2,7 +2,7 @@ import {createRenderer} from './gpu.mjs';
 const $=id=>document.getElementById(id);
 const text=(id,value)=>{const node=$(id);const next=String(value);if(node.textContent!==next)node.textContent=next;};
 let module,renderer,socket=null,session=null,busy=false,ready=false,joinTimer=null,pingTimer=null,audio=null;
-let firstEntry=true,lastScore='',lastKills=0;
+let firstEntry=true,lastScore='',lastKills=0,killUntil=0;
 const motion=matchMedia('(prefers-reduced-motion: reduce)');
 $('reduce').checked=motion.matches;
 const errors={ROOM_NOT_FOUND:'방을 찾지 못했어요. 친구에게 코드를 다시 확인해 주세요.',ROOM_FULL:'이미 4명이 참가한 방이에요. 다른 방을 만들어 주세요.',SERVER_FULL:'서버가 가득 찼어요. 잠시 후 다시 시도해 주세요.',INVALID_NAME:'닉네임은 제어 문자를 제외한 1~16자로 입력해 주세요.',INVALID_CODE:'방 코드는 0~9, A~F로 된 6자리입니다.',INVALID_MESSAGE:'통신 형식이 맞지 않아요. 새로고침 후 다시 입장해 주세요.',RATE_LIMIT:'너무 많은 요청이 발생했어요. 잠시 후 다시 입장해 주세요.'};
@@ -12,7 +12,7 @@ function setBusy(value){busy=value;buttons();}
 function settings(){module?._client_settings(Number($('sensitivity').value),$('reduce').checked?1:0);text('sensitivity-value',Number($('sensitivity').value).toFixed(2).replace(/0$/,''));}
 function showPause(initial=false){if(!session)return;$('pause').hidden=false;text('pause-title',initial?'입장 완료':'잠시 조작을 멈췄어요');text('pause-description',initial?'아래 버튼을 누르면 마우스가 게임에 고정됩니다.':'다른 참가자의 전투는 계속되고 있습니다.');text('resume',initial?'클릭하고 플레이 ↗':'플레이로 돌아가기 ↗');if(document.hasFocus())$('resume').focus();}
 function backToLobby(message,error=false){
- clearTimeout(joinTimer);clearInterval(pingTimer);module?._client_stop();session=null;firstEntry=true;lastScore='';lastKills=0;
+ clearTimeout(joinTimer);clearInterval(pingTimer);module?._client_stop();session=null;firstEntry=true;lastScore='';lastKills=0;killUntil=0;
  $('pause').hidden=true;$('hud').hidden=true;$('lobby').hidden=false;setBusy(false);status(message,error);$('create').focus();
 }
 function failGraphics(){
@@ -88,8 +88,9 @@ globalThis.CY={
   $('health-fill').style.width=`${Math.max(0,state.hp)}%`;$('shield').hidden=state.shield<=0;
   $('hitmarker').classList.toggle('active',state.hit>0);$('damage-vignette').classList.toggle('active',state.damage>0);$('crosshair').classList.toggle('ads',state.ads);
   text('reload-label',state.reload>0?`재장전 ${(state.reload/1000).toFixed(1)}s`:'R 재장전');
-  text('action-state',state.hp<=0?`${(state.respawn/1000).toFixed(1)}초 후 부활`:state.reload>0?'재장전 중':state.ammo===0?'탄창이 비었어요 · R 재장전':'');
-  if(state.kills>lastKills){text('action-state','처치 확인');lastKills=state.kills;}
+  const now=performance.now();
+  if(state.kills>lastKills){killUntil=now+900;lastKills=state.kills;}
+  text('action-state',state.hp<=0?`${(state.respawn/1000).toFixed(1)}초 후 부활`:state.reload>0?'재장전 중':state.ammo===0?'탄창이 비었어요 · R 재장전':now<killUntil?'처치 확인':'');
  },
 };
 $('create').addEventListener('click',()=>connect('create'));$('join').addEventListener('click',()=>connect('join'));

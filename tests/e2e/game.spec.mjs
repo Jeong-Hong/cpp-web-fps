@@ -152,6 +152,11 @@ test('real browser hit, kill and incoming-damage feedback through an ordinary so
   await page.mouse.down();await expect(page.locator('#hitmarker')).toHaveClass(/active/);await page.screenshot({path:'work/browser-hit.png'});
   await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===other.id&&p.hp===0));await page.mouse.up();
   await expect(page.locator('#players li.me .score-values')).toHaveText('1 / 0');
+  await page.waitForTimeout(350);
+  await expect(page.locator('#action-state')).toHaveText('처치 확인',{timeout:200});
+  await page.screenshot({path:'work/kill-confirmation.png'});
+  await page.waitForTimeout(900);
+  await expect(page.locator('#action-state')).toHaveText('');
   await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===other.id&&p.hp===100&&p.deaths===1));
   const aimBack={yaw:Math.atan2(-dx,dz),pitch:wantedPitch};
   const send=fire=>target.send(JSON.stringify({type:'input',seq:++sequence,forward:0,strafe:0,...aimBack,fire,reload:false,sprint:false}));
