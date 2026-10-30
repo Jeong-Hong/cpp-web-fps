@@ -43,7 +43,7 @@
 - 서버 상태로 내 조준을 덮어쓰지 않는다. 오른쪽 버튼은 ADS, contextmenu 비활성은 canvas에만 적용한다.
 
 ## 7. Depth & Surface
-- 메뉴는 실면 배경과 1px 테두리. 무차별 그림자·backdrop blur 없음.
+- 메뉴는 실면 배경과 1px 테두리. 무차별 그림자·backdrop blur 없음. 맵 이름 안내는 밝은 3D 배경에서도 읽히도록 surface 토큰의 작은 실면 위에 표시한다.
 - 로비 가독성용 어두운 좌→우 스크림은 장면과 텍스트 분리 목적. 3D는 방향성 명암·거리 안개·낮은 폴리곤 실루엣으로 계층을 만든다.
 
 ## 8. Accessibility Constraints & Accepted Debt

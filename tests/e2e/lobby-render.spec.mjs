@@ -23,5 +23,18 @@ test('real C++ Wasm renders the lobby and fits three widths',async({page})=>{
   const measured=await page.evaluate(()=>({width:innerWidth,overflow:document.querySelector('#lobby').scrollWidth>innerWidth}));
   expect(measured).toEqual({width,overflow:false});await page.screenshot({path:`work/rendered-lobby-${width}.png`});
  }
+ await page.locator('#lobby').evaluate(e=>{e.scrollTop=e.scrollHeight;});
+ await expect(page.locator('.mobile-note')).toBeInViewport();await page.screenshot({path:'work/rendered-lobby-375-bottom.png'});
  expect(errors).toEqual([]);
+});
+
+test('real Wasm loading disables competing actions and then recovers',async({page})=>{
+ let release;const gate=new Promise(resolve=>{release=resolve;});
+ await page.route('**/dist/client.wasm',async route=>{await gate;await route.continue();});
+ try{
+  await page.goto(url);await page.bringToFront();await expect(page.locator('#lobby-status')).toContainText('C++ 게임 모듈');
+  await expect(page.locator('#create')).toBeDisabled();await expect(page.locator('#join')).toBeDisabled();
+  for(const width of [1440,768,375]){await page.setViewportSize({width,height:900});await page.screenshot({path:`work/loading-${width}.png`});}
+ }finally{release();}
+ await expect(page.locator('#create')).toBeEnabled({timeout:10000});await expect(page.locator('#join')).toBeEnabled();
 });
