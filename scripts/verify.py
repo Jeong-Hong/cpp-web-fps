@@ -39,7 +39,8 @@ def main():
     if not node or not git:
         raise SystemExit("Node.js and Git are required")
     SCRATCH.mkdir(parents=True, exist_ok=True)
-    env = dict(os.environ, TEMP=str(SCRATCH), TMP=str(SCRATCH), TMPDIR=str(SCRATCH), NO_COLOR="1", FORCE_COLOR="0")
+    env = dict(os.environ, TEMP=str(SCRATCH), TMP=str(SCRATCH), TMPDIR=str(SCRATCH), FORCE_COLOR="0")
+    env.pop("NO_COLOR", None)
     started = time.time()
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     before = inputs()
@@ -91,7 +92,12 @@ def main():
     captures={}
     for path in sorted((ROOT/"work").glob("*.png")):
         if path.stat().st_mtime>=started:
-            captures[path.relative_to(ROOT).as_posix()]={"sha256":digest(path),"bytes":path.stat().st_size}
+            archive = out / "captures" / path.name
+            archive.parent.mkdir(exist_ok=True)
+            shutil.copy2(path, archive)
+            data = archive.read_bytes()
+            assert data[:8] == bytes([137,80,78,71,13,10,26,10])
+            captures[path.relative_to(ROOT).as_posix()]={"sha256":digest(archive),"bytes":len(data),"width":int.from_bytes(data[16:20],"big"),"height":int.from_bytes(data[20:24],"big"),"archived_path":archive.relative_to(ROOT).as_posix()}
     receipt["captures"]=captures
     counts={}
     for check in receipt["checks"]:
