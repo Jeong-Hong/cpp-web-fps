@@ -30,7 +30,7 @@ function updatePlayers(state){
 function applyState(state){
  if(!session||state.room!==session.room||!Array.isArray(state.players))return;
  module._client_begin_state();
- for(const p of state.players){module._client_player(p.id,p.x,p.y,p.z,p.yaw,p.pitch,p.hp,p.ammo,p.kills,p.deaths,p.reload,p.respawn,p.shield,p.shot,p.hit,p.damage,p.ack,...p.trace);}
+ for(const p of state.players){module._client_player(p.id,p.x,p.y,p.z,p.yaw,p.pitch,p.hp,p.ammo,p.kills,p.deaths,p.reload,p.respawn,p.shield,p.shot,p.hit,p.damage,p.ack,...p.trace);module._client_motion(p.id,p.vy,p.grounded?1:0,p.crouch?1:0);}
  module._client_end_state();updatePlayers(state);
 }
 function connect(type){

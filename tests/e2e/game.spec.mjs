@@ -167,3 +167,18 @@ test('real browser hit, kill and incoming-damage feedback through an ordinary so
   await page.keyboard.press('Escape');await page.locator('#leave').click();expect(c.errors).toEqual([]);
  }finally{clearInterval(timer);target.close();}
 });
+
+test('Space edge jumps, lands and does not repeat while held through real C++ input',async({page})=>{
+ const c=observe(page),jumps=[];
+ page.on('websocket',s=>s.on('framesent',event=>{const p=JSON.parse(String(event.payload));if(p.type==='input'&&p.jump)jumps.push(p.seq);}));
+ await enter(page,'QA_JUMP');await c.wait(m=>m.type==='state');
+ const id=c.welcome.id;await page.bringToFront();expect(await page.evaluate(()=>document.visibilityState)).toBe('visible');
+ await page.locator('#resume').click();await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('game');
+ await page.evaluate(()=>{window.__jumpEye=0;const draw=CY.renderer.draw.bind(CY.renderer);CY.renderer.draw=(...args)=>{draw(...args);window.__jumpEye=Math.max(window.__jumpEye,args[2][1]);};});
+ await page.keyboard.down('Space');
+ await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.y>.12&&!p.grounded),1200).catch(()=>{throw Error('missing authoritative jump action');});
+ expect(await page.evaluate(()=>window.__jumpEye)).toBeGreaterThan(1.7);await page.screenshot({path:'work/actions-jump.png'});
+ await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.y===0&&p.grounded),2500);
+ await page.waitForTimeout(200);expect(c.state.players.find(p=>p.id===id)).toMatchObject({y:0,grounded:true});expect(jumps).toHaveLength(1);
+ await page.keyboard.up('Space');await page.keyboard.press('Escape');await page.locator('#leave').click();expect(c.errors).toEqual([]);
+});

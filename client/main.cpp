@@ -13,10 +13,10 @@
 EM_JS(void, draw_platform,(const float* matrix,const float* data,int length,float x,float y,float z),{
  globalThis.CY.renderer.draw(HEAPF32.subarray(matrix>>2,(matrix>>2)+16),HEAPF32.subarray(data>>2,(data>>2)+length),new Float32Array([x,y,z]));
 });
-EM_JS(void, send_platform,(float f,float s,float yaw,float pitch,int fire,int reload,int sprint,unsigned seq),{
+EM_JS(void, send_platform,(float f,float s,float yaw,float pitch,int fire,int reload,int sprint,unsigned seq,int jump),{
  // Float32 endpoints can lie a few ulps outside the JSON double contract.
  // Bound the producer's encoding; keep server validation strict.
- globalThis.CY.sendInput({type:'input',seq:seq,forward:f,strafe:s,yaw:Math.max(-Math.PI,Math.min(Math.PI,yaw)),pitch:Math.max(-1.45,Math.min(1.45,pitch)),fire:!!fire,reload:!!reload,sprint:!!sprint,jump:false,crouch:false,weapon:0,grenade:false});
+ globalThis.CY.sendInput({type:'input',seq:seq,forward:f,strafe:s,yaw:Math.max(-Math.PI,Math.min(Math.PI,yaw)),pitch:Math.max(-1.45,Math.min(1.45,pitch)),fire:!!fire,reload:!!reload,sprint:!!sprint,jump:!!jump,crouch:false,weapon:0,grenade:false});
 });
 EM_JS(void, lock_platform,(int locked),{globalThis.CY.lockChanged(!!locked);});
 EM_JS(void, lock_error_platform,(),{globalThis.CY.lockError();});
@@ -40,6 +40,8 @@ std::vector<float> instances;
 int mine=-1;
 bool locked=false,fire=false,ads=false,reload_pressed=false,reduced=false;
 bool key_w=false,key_a=false,key_s=false,key_d=false,key_shift=false;
+bool jump_pressed=false,jump_predict=false,grounded=true,crouching=false;
+float vertical_velocity=0;
 float yaw=0,pitch=0,sensitivity=.0022f,hit_time=0,damage_time=0;
 Vec3 position{};
 unsigned sequence=0;
@@ -49,12 +51,12 @@ Vec3 plus(Vec3 a,Vec3 b){return {a.x+b.x,a.y+b.y,a.z+b.z};}
 Vec3 scale(Vec3 a,float f){return {a.x*f,a.y*f,a.z*f};}
 float distance2(Vec3 a,Vec3 b){return (a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)+(a.z-b.z)*(a.z-b.z);}
 float wrap(float angle){while(angle>arena::kPi)angle-=2*arena::kPi;while(angle<-arena::kPi)angle+=2*arena::kPi;return angle;}
-void clear_controls(){key_w=key_a=key_s=key_d=key_shift=fire=ads=reload_pressed=false;}
+void clear_controls(){key_w=key_a=key_s=key_d=key_shift=fire=ads=reload_pressed=jump_pressed=jump_predict=false;}
 void send_controls(){
  if(mine<0)return;
  const bool alive=peers[mine].active&&peers[mine].hp>0;
- send_platform(locked&&alive?float(key_w)-float(key_s):0,locked&&alive?float(key_d)-float(key_a):0,yaw,pitch,locked&&alive&&fire,locked&&alive&&reload_pressed,locked&&alive&&key_shift,++sequence);
- reload_pressed=false;
+ send_platform(locked&&alive?float(key_w)-float(key_s):0,locked&&alive?float(key_d)-float(key_a):0,yaw,pitch,locked&&alive&&fire,locked&&alive&&reload_pressed,locked&&alive&&key_shift,++sequence,locked&&alive&&jump_pressed);
+ reload_pressed=jump_pressed=false;
 }
 void add_box(Vec3 p,Vec3 size,Vec3 color,float y=0,float t=0){
  instances.insert(instances.end(),{p.x,p.y,p.z,size.x,size.y,size.z,color.x,color.y,color.z,y,t});
@@ -85,7 +87,11 @@ void frame(){
  Vec3 eye{};float camera_yaw=0,camera_pitch=0,fov=70;
  if(mine>=0){
   auto& me=peers[mine];
-  if(locked&&me.hp>0)position=arena::move_position(position,float(key_w)-float(key_s),float(key_d)-float(key_a),yaw,dt,key_shift);
+  if(me.hp>0&&dt>0){
+   arena::Input input;input.forward=locked?float(key_w)-float(key_s):0;input.strafe=locked?float(key_d)-float(key_a):0;input.yaw=yaw;input.sprint=locked&&key_shift;input.jump=locked&&jump_predict;
+   const auto motion=arena::step_motion({position,vertical_velocity,grounded,crouching},input,dt);
+   position=motion.position;vertical_velocity=motion.vertical_velocity;grounded=motion.grounded;crouching=motion.crouching;jump_predict=false;
+  }
   eye=plus(position,{0,arena::kEyeHeight,0});camera_yaw=yaw;camera_pitch=pitch;
   if(!reduced&&me.flash>0)camera_pitch+=me.flash*.07f;
   fov=ads?49.f:70.f;
@@ -133,6 +139,7 @@ EM_BOOL key_event(int type,const EmscriptenKeyboardEvent* event,void*){
  if(std::strcmp(event->code,"ShiftLeft")==0||std::strcmp(event->code,"ShiftRight")==0)key=&key_shift;
  if(key){*key=down;return locked?EM_TRUE:EM_FALSE;}
  if(locked&&down&&!event->repeat&&std::strcmp(event->code,"KeyR")==0){reload_pressed=true;return EM_TRUE;}
+ if(locked&&down&&!event->repeat&&std::strcmp(event->code,"Space")==0){jump_pressed=jump_predict=true;return EM_TRUE;}
  return EM_FALSE;
 }
 EM_BOOL mouse_move(int,const EmscriptenMouseEvent* event,void*){
@@ -157,7 +164,7 @@ extern "C" {
 EMSCRIPTEN_KEEPALIVE void client_start(int slot){
  if(slot<0||slot>=arena::kCapacity)return;
  mine=slot;sequence=0;next_input=0;hit_time=damage_time=0;clear_controls();for(auto& p:peers)p=Remote{};
- position=arena::spawn_point(slot);yaw=arena::spawn_yaw(slot);pitch=0;
+ position=arena::spawn_point(slot);yaw=arena::spawn_yaw(slot);pitch=0;vertical_velocity=0;grounded=true;crouching=false;
 }
 EMSCRIPTEN_KEEPALIVE void client_stop(){mine=-1;clear_controls();locked=false;emscripten_exit_pointerlock();for(auto& p:peers)p=Remote{};}
 EMSCRIPTEN_KEEPALIVE void client_release(){clear_controls();send_controls();emscripten_exit_pointerlock();}
@@ -184,6 +191,9 @@ EMSCRIPTEN_KEEPALIVE void client_player(int slot,float x,float y,float z,float s
  if(!first&&shot>p.shot){p.flash=.095f;if(slot==mine)feedback_platform(0);}
  p.yaw=server_yaw;p.pitch=server_pitch;p.hp=hp;p.ammo=ammo;p.kills=kills;p.deaths=deaths;
  p.reload=reload;p.respawn=respawn;p.shield=shield;p.shot=shot;p.hit=hit;p.damage=damage;p.ack=ack;p.trace={tx,ty,tz};p.seeded=true;
+}
+EMSCRIPTEN_KEEPALIVE void client_motion(int slot,float vy,int on_ground,int crouch){
+ if(slot==mine){vertical_velocity=vy;grounded=on_ground!=0;crouching=crouch!=0;}
 }
 EMSCRIPTEN_KEEPALIVE void client_end_state(){for(auto& p:peers)if(!p.seen){p.active=false;p.seeded=false;p.flash=0;}}
 }
