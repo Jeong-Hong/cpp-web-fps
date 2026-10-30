@@ -1,0 +1,119 @@
+{
+  "schema": "crossyard_final_local_handover/v1",
+  "observed_at_utc": "2026-10-30T11:55:19.997183+00:00",
+  "tested_revision": "7a1cc3a6f76dcb6a7afa4a10624b917dc272369c",
+  "documentation_commit_read_back": "6c4aa9412977f9f1361a1b8adf3d2a7b5fa4a866",
+  "branch": "main",
+  "native_checkpoint_id": "887de379c682aafe052f3db4419424a5",
+  "revision": "inputs-sha256-b23b175646af347869c50dd2f6a53481cb54c35d4bececb4596f5fd93481058a",
+  "environment": "win-v24.21.0-py3.14.7-em6.0.13",
+  "source_sha256": {
+    ".gitattributes": "a27ec0af828b6749421ca24d1fd09b0515c3b0a79ff6ec7531bbf6d12b96e5dc",
+    ".gitignore": "138d4ce548f2f360bbb7d08ab6111b3062b40c1b076a66de40dfb62136b818c1",
+    "BUILD.cmd": "c1b93b850fd3051268c55302d127058d1ba3c8aec70f6c2e06eabc02c274b875",
+    "client/camera.hpp": "956a98462f99c24fe0e8ad50027c5a38f46c89f4c52f3ca80bd704e5e810f9b6",
+    "client/main.cpp": "8b130af5dfb1e1d3c1135bea90eaebf5d974542e257cd683b89fd1ad266b7dcd",
+    "core/bridge.cpp": "1c84eb4e6242aa971dc1d15c493b455777b42f9030a6fefb1550b47ed3645111",
+    "core/game.cpp": "bbf455ba50e5e1ccff234e0f3d075994a7676330cebd54cd7cdcf46c34b8f033",
+    "DESIGN.md": "6394b709507a4d4d6d431d5e183cf46fab90f626c20c58a6fb7339c32380eed6",
+    "docs/ACTIONS.md": "291561cf9753bd55733b2eb9bed31f87df3f9bfa9655e5db78c609c3cafc8b9a",
+    "docs/PLAN.md": "58840bb6272ec82e79d678873cad6c3bca7576f73ad2b9820aeb56650f52ed46",
+    "docs/PROTOCOL.md": "a1a926bdc1adb1371fcea366c8d49801252b414763de7baf60b51dfb1e0a4bb8",
+    "include/arena.hpp": "694dcedeb074f692befe7c329dccf7ca34f451b4c7a86d539d6aa9a606a861c1",
+    "package-lock.json": "f4117f70cc4d17933532d7032148512676223379c2ca8de9e5ec56f8177c4e6b",
+    "package.json": "74fa06267efac8cc1b9a80481b4428aa0e08a3cfcac441cfdbd01a1a05e2d0c3",
+    "playwright.config.mjs": "11d78186ea7c8a3fb5f591c5a5bbe39769adc138153bc0fed70b76aa5a57c640",
+    "playwright.game.config.mjs": "49b85b3382b9ca9b6044b9e7813752e5713668b53aa82ee0d35919de8464a09c",
+    "README.md": "13f49f4ae6a8375ca93813184d0e7d3504c57bba7de48b1048d73a3f78440119",
+    "scripts/build.py": "93205655217756d786b5c851cbb8e821411fbcdf1a490d2d8065a1cd79edf7e7",
+    "scripts/launcher-smoke.py": "57ab7f2c1cd4b551407a9e7666564f44e1d6d5006455df44e43add0c58e0c8d2",
+    "scripts/live-smoke.mjs": "a852d8d894a38f9dcdb3b4fa263043df7af258a8c506c567da8cb60d817641cc",
+    "scripts/verify.py": "7cfa6de23997ea210f87900286db1b7d5add60ed591b6d301c0f2767aa4b5562",
+    "server/app.mjs": "0901365d811654fe85d777c8a24addcf38ad34e94107482cb962b37abbc1ba4d",
+    "server/engine.mjs": "4c9accc3862574b4927f369d8dc0f9fffc3c2123bf07c39a20806362426faaea",
+    "server/main.mjs": "1587233e818d7a7c0a4f240a44579d42102d33c76fa1640363033ce3af3ad485",
+    "server/peer.mjs": "e55b49f6bbb26ae14e0245d731cf68cb2f229e10f85949dba6506fe90f2e2697",
+    "server/protocol.mjs": "5b336558fb1768dd1d20ac18edf491290cee1acc8f813810400f7dbbd1645985",
+    "START.cmd": "a834a91e2d01136664baabcfd92f4f1220c1dbdaffb206eb71ddcbff67697209",
+    "tests/actions-integration.test.mjs": "5c7547c6121535fd27772b55b053c8d7b04a041453cc260367a876504235286d",
+    "tests/cli-server.test.mjs": "14202a70114090f1db5a552d6e4d4f898ac69860460887c5357617c1e103402d",
+    "tests/client_math_tests.cpp": "2c9cca94cddd678a53ff5a6bfa4fa94870e9282851cb8ed2ac78b86b761aa37d",
+    "tests/core_tests.cpp": "ad47adeedacf8c0dcb771ce9e4b17c9ede15fdf21b026d0414e98287eba731fa",
+    "tests/e2e/client-contract.spec.mjs": "235331f1a0a44e412fa0a12ff2b90afd0965d9e2bc4e1435e1434f08bf5ffc92",
+    "tests/e2e/game.spec.mjs": "97d49fd824cbd97fbb120bb8824bc3566f83ed7aa1482c053738315b7fc1e005",
+    "tests/e2e/gpu.spec.mjs": "9c61c30fec320a8b8b951c6d522a24a3146044efa883367bb54fed2057486b58",
+    "tests/e2e/lobby-render.spec.mjs": "8d7da6c0341d9d208c7cb97dd89d2b647c3dce3d1ff0e33bb7941ca92f3c4ec9",
+    "tests/e2e/shell.spec.mjs": "de0922c04f2ae31043ea604ac4bc8d77cc9260086de6a99f11187a3a937c0e9b",
+    "tests/engine-server.test.mjs": "2c3f5e3af1e67fa7be517c762b796ec36979116cfac86b77dc47eec403256a29",
+    "tests/gpu-geometry.test.mjs": "9978d2567563978b35b466cfe99934a9119aa5a7baf8fdd708ffe62f73b8743f",
+    "tests/protocol-server.test.mjs": "9f9cbcc5fa61fdf3ed6b0cae379d8c4d1ed19a9830fa634ec20fefb77ff20614",
+    "tests/transport-peer.test.mjs": "12dd946e94bc0fb44283fbaec7c0082ece455a3dbebf19db17531047dc581f51",
+    "tests/transport-server.test.mjs": "ff42599220f46f45e63c5584ecfc5f26f7c67450f549d51fbd9fa9b3eaaaf191",
+    "web/app.mjs": "dfc5c8d2b2e15eff17026a3790783968f1c10e21ab879853fb2a3bebe941685d",
+    "web/gpu.mjs": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+    "web/index.html": "3eba463936fc489c0cd46cbd4b4ec5b033ff0403af89e4f286b90486164094dd",
+    "web/style.css": "f2d7b598f5b2e6020911fb4a5bf6b91b3ac7c465d1cd75ab512c9ace2f4a64c8"
+  },
+  "outputs": {
+    "build/sim.mjs": "629fc99736c1d517e531ed47125fa27854461897da0dc8344fa34be6985c5f25",
+    "build/sim.wasm": "90297d4c5a8e455335c68105553c893a06a898492e95aa9262ceec3d7b50fc59",
+    "web/dist/client.mjs": "b80adfe0d807d83a48db119f26643db3ab69fcf7d3c01974f5466daa1311d91c",
+    "web/dist/client.wasm": "7f108051b4b87c62aa2a4b27fc57bd73d35c0faf9c7c431decb1e369d8504a89"
+  },
+  "source_git_blobs_checked": 90,
+  "archive_git_blobs_checked": 483,
+  "archived_bytes_match_working_and_committed": true,
+  "receipt_sha256": "cf161ac340df023c5e3b30ac5cae26bb5b71eac046a013262c8da9dfbbb2d1a3",
+  "review_sha256": {
+    "fixes.json": "bf42692e0e6adca7c5af0e50edc2fe42afe1ecb62207c73530c7f3e3fa9f36cc",
+    "visual-round-2.json": "4308d7f7454507c17f4c63afc4c0d1ec1985558c56fc8597ae189e9994212d45"
+  },
+  "counts": {
+    "core_checks": 2516,
+    "camera_checks": 6,
+    "node_tests": 115,
+    "browser_tests": 12,
+    "game_tests": 17,
+    "browser_total": 29
+  },
+  "requirements_mapping": {
+    "functional_requirements": 4,
+    "success_criteria": 2,
+    "tasks": 6,
+    "orphan_tasks": 0,
+    "unmapped_requirements": 0,
+    "mapping_percent": 100.0
+  },
+  "origin": "http://127.0.0.1:8088",
+  "served_sha256": {
+    "index.html": "3eba463936fc489c0cd46cbd4b4ec5b033ff0403af89e4f286b90486164094dd",
+    "style.css": "f2d7b598f5b2e6020911fb4a5bf6b91b3ac7c465d1cd75ab512c9ace2f4a64c8",
+    "app.mjs": "dfc5c8d2b2e15eff17026a3790783968f1c10e21ab879853fb2a3bebe941685d",
+    "gpu.mjs": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+    "dist/client.mjs": "b80adfe0d807d83a48db119f26643db3ab69fcf7d3c01974f5466daa1311d91c",
+    "dist/client.wasm": "7f108051b4b87c62aa2a4b27fc57bd73d35c0faf9c7c431decb1e369d8504a89"
+  },
+  "health": {
+    "ok": true,
+    "engine": "C++/Wasm",
+    "rooms": 0,
+    "clients": 0,
+    "tickRate": 60
+  },
+  "listeners": [
+    {
+      "LocalAddress": "127.0.0.1",
+      "LocalPort": 8088,
+      "OwningProcess": 32988
+    }
+  ],
+  "full_suite_reexecuted_for_documentation": false,
+  "provenance_boundary": "The recorded full run and independent reviews remain separate observations. Current input membership, all input/output hashes, committed raw bytes and loopback serving were rechecked. This metadata file is not itself an independent correctness or approval attestation.",
+  "remaining_scope_limits": [
+    "physical LAN and other devices",
+    "touch and physical user input",
+    "all motion/GPU permutations and frame-time quality",
+    "full accessibility",
+    "Internet deployment/CI/push not performed"
+  ]
+}
