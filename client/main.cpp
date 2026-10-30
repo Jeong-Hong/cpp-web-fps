@@ -37,7 +37,9 @@ struct Remote {
 };
 std::array<Remote,arena::kCapacity> peers{};
 struct VisualGrenade{bool active=false,seen=false,exploding=false;unsigned id=0;int owner=-1;Vec3 position{},target{};float explosion=0;};
-std::array<VisualGrenade,arena::kMaxGrenades> projectiles{};
+// Keep old IDs reserved until end_state removes absent ones; an incoming
+// snapshot can replace all authoritative slots before that reconciliation.
+std::array<VisualGrenade,arena::kMaxGrenades*2> projectiles{};
 std::vector<float> instances;
 int mine=-1,weapon_wanted=0;
 bool locked=false,fire=false,ads=false,reload_pressed=false,reduced=false;
@@ -234,7 +236,7 @@ EMSCRIPTEN_KEEPALIVE void client_grenade(unsigned id,int owner,float x,float y,f
  if(id==0)return;
  auto it=std::find_if(projectiles.begin(),projectiles.end(),[id](const VisualGrenade& g){return g.active&&g.id==id;});
  if(it==projectiles.end()){
-  it=std::find_if(projectiles.begin(),projectiles.end(),[](const VisualGrenade& g){return !g.active||!g.seen;});
+  it=std::find_if(projectiles.begin(),projectiles.end(),[](const VisualGrenade& g){return !g.active;});
   if(it==projectiles.end())return;
   *it=VisualGrenade{};it->position={x,y,z};
  }
