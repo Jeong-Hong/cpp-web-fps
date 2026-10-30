@@ -13,16 +13,16 @@
 EM_JS(void, draw_platform,(const float* matrix,const float* data,int length,float x,float y,float z),{
  globalThis.CY.renderer.draw(HEAPF32.subarray(matrix>>2,(matrix>>2)+16),HEAPF32.subarray(data>>2,(data>>2)+length),new Float32Array([x,y,z]));
 });
-EM_JS(void, send_platform,(float f,float s,float yaw,float pitch,int fire,int reload,int sprint,unsigned seq,int jump,int crouch),{
+EM_JS(void, send_platform,(float f,float s,float yaw,float pitch,int fire,int reload,int sprint,unsigned seq,int jump,int crouch,int weapon),{
  // Float32 endpoints can lie a few ulps outside the JSON double contract.
  // Bound the producer's encoding; keep server validation strict.
- globalThis.CY.sendInput({type:'input',seq:seq,forward:f,strafe:s,yaw:Math.max(-Math.PI,Math.min(Math.PI,yaw)),pitch:Math.max(-1.45,Math.min(1.45,pitch)),fire:!!fire,reload:!!reload,sprint:!!sprint,jump:!!jump,crouch:!!crouch,weapon:0,grenade:false});
+ globalThis.CY.sendInput({type:'input',seq:seq,forward:f,strafe:s,yaw:Math.max(-Math.PI,Math.min(Math.PI,yaw)),pitch:Math.max(-1.45,Math.min(1.45,pitch)),fire:!!fire,reload:!!reload,sprint:!!sprint,jump:!!jump,crouch:!!crouch,weapon:weapon,grenade:false});
 });
 EM_JS(void, lock_platform,(int locked),{globalThis.CY.lockChanged(!!locked);});
 EM_JS(void, lock_error_platform,(),{globalThis.CY.lockError();});
 EM_JS(void, feedback_platform,(int kind),{globalThis.CY.feedback(kind);});
-EM_JS(void, hud_platform,(int hp,int ammo,float reload,float respawn,int kills,int deaths,float heading,float hit,float damage,float flash,float shield,int ads,int on_ground,int crouch),{
- globalThis.CY.hud({hp:hp,ammo:ammo,reload:reload,respawn:respawn,kills:kills,deaths:deaths,heading:heading,hit:hit,damage:damage,flash:flash,shield:shield,ads:!!ads,grounded:!!on_ground,crouch:!!crouch});
+EM_JS(void, hud_platform,(int hp,int ammo,float reload,float respawn,int kills,int deaths,float heading,float hit,float damage,float flash,float shield,int ads,int on_ground,int crouch,int weapon,int grenades,float equip),{
+ globalThis.CY.hud({hp:hp,ammo:ammo,reload:reload,respawn:respawn,kills:kills,deaths:deaths,heading:heading,hit:hit,damage:damage,flash:flash,shield:shield,ads:!!ads,grounded:!!on_ground,crouch:!!crouch,weapon:weapon,grenades:grenades,equip:equip});
 });
 EM_JS(double, canvas_aspect,(),{const c=document.getElementById('game');return Math.max(1,c.clientWidth)/Math.max(1,c.clientHeight);});
 
@@ -31,13 +31,13 @@ using arena::Vec3;
 struct Remote {
  bool active=false,seen=false,seeded=false,crouching=false;
  Vec3 target{},position{},trace{};
- float yaw=0,pitch=0,reload=0,respawn=0,shield=0,flash=0;
- int hp=100,ammo=24,kills=0,deaths=0;
+ float yaw=0,pitch=0,reload=0,respawn=0,shield=0,flash=0,equip=0;
+ int hp=100,ammo=24,kills=0,deaths=0,weapon=0,grenades=2;
  unsigned shot=0,hit=0,damage=0,ack=0;
 };
 std::array<Remote,arena::kCapacity> peers{};
 std::vector<float> instances;
-int mine=-1;
+int mine=-1,weapon_wanted=0;
 bool locked=false,fire=false,ads=false,reload_pressed=false,reduced=false;
 bool key_w=false,key_a=false,key_s=false,key_d=false,key_shift=false;
 bool jump_pressed=false,jump_predict=false,grounded=true,crouching=false,crouch_wanted=false;
@@ -55,7 +55,7 @@ void clear_controls(){key_w=key_a=key_s=key_d=key_shift=fire=ads=reload_pressed=
 void send_controls(){
  if(mine<0)return;
  const bool alive=peers[mine].active&&peers[mine].hp>0;
- send_platform(locked&&alive?float(key_w)-float(key_s):0,locked&&alive?float(key_d)-float(key_a):0,yaw,pitch,locked&&alive&&fire,locked&&alive&&reload_pressed,locked&&alive&&key_shift,++sequence,locked&&alive&&jump_pressed,locked&&alive&&crouch_wanted);
+ send_platform(locked&&alive?float(key_w)-float(key_s):0,locked&&alive?float(key_d)-float(key_a):0,yaw,pitch,locked&&alive&&fire,locked&&alive&&reload_pressed,locked&&alive&&key_shift,++sequence,locked&&alive&&jump_pressed,locked&&alive&&crouch_wanted,weapon_wanted);
  reload_pressed=jump_pressed=false;
 }
 void add_box(Vec3 p,Vec3 size,Vec3 color,float y=0,float t=0){
@@ -76,15 +76,15 @@ void player_model(int id,const Remote& p){
  add_box(plus(p.position,{0,1.67f*height,0}),{.41f,.20f*height,.41f},{.22f,.29f,.25f},p.yaw);
  for(float s:{-1.f,1.f})add_box(plus(p.position,plus(scale(right,.17f*s),{0,.28f*height,0})),{.23f,.55f*height,.28f},{.21f,.27f,.23f},p.yaw);
  const Vec3 weapon=plus(p.position,plus(Vec3{0,1.2f*height,0},scale(forward,.45f)));
- add_box(weapon,{.12f,.13f,.65f},{.14f,.19f,.18f},p.yaw,p.pitch);
+ add_box(weapon,{.12f,.13f,p.weapon==1?.28f:.65f},{.14f,.19f,.18f},p.yaw,p.pitch);
  add_box(plus(p.position,{0,.012f,0}),{.85f,.018f,.85f},{.28f,.34f,.30f});
- if(p.flash>0){const auto muzzle=plus(weapon,scale(forward,.4f));add_box(muzzle,{.13f,.13f,.20f},{2.5f,1.6f,.3f},p.yaw,p.pitch);beam(muzzle,p.trace,{1.9f,1.3f,.3f});}
+ if(p.flash>0){const auto muzzle=plus(weapon,scale(forward,p.weapon==1?.22f:.4f));add_box(muzzle,{.13f,.13f,.20f},{2.5f,1.6f,.3f},p.yaw,p.pitch);beam(muzzle,p.trace,{1.9f,1.3f,.3f});}
 }
 void frame(){
  const double now=emscripten_get_now();
  const float dt=std::clamp(float((now-previous_time)/1000.0),0.f,.05f);previous_time=now;
  hit_time=std::max(0.f,hit_time-dt);damage_time=std::max(0.f,damage_time-dt);
- for(auto& p:peers){p.flash=std::max(0.f,p.flash-dt);p.reload=std::max(0.f,p.reload-dt*1000);p.respawn=std::max(0.f,p.respawn-dt*1000);p.shield=std::max(0.f,p.shield-dt*1000);}
+ for(auto& p:peers){p.flash=std::max(0.f,p.flash-dt);p.reload=std::max(0.f,p.reload-dt*1000);p.respawn=std::max(0.f,p.respawn-dt*1000);p.shield=std::max(0.f,p.shield-dt*1000);p.equip=std::max(0.f,p.equip-dt*1000);}
  Vec3 eye{};float camera_yaw=0,camera_pitch=0,fov=70;
  if(mine>=0){
   auto& me=peers[mine];
@@ -97,7 +97,7 @@ void frame(){
   if(!reduced&&me.flash>0)camera_pitch+=me.flash*.07f;
   fov=ads?49.f:70.f;
   if(now>=next_input){send_controls();next_input=now+1000.0/30.0;}
-  hud_platform(me.hp,me.ammo,me.reload,me.respawn,me.kills,me.deaths,std::fmod(yaw*180.f/arena::kPi+360.f,360.f),hit_time,damage_time,me.flash,me.shield,ads,grounded,crouching);
+  hud_platform(me.hp,me.ammo,me.reload,me.respawn,me.kills,me.deaths,std::fmod(yaw*180.f/arena::kPi+360.f,360.f),hit_time,damage_time,me.flash,me.shield,ads,grounded,crouching,me.weapon,me.grenades,me.equip);
  } else {
   const float orbit=.76f+(reduced?0:std::sin(float(now)*.000025f)*.06f);
   eye={std::sin(orbit)*44.f,22.f,std::cos(orbit)*44.f};camera_yaw=-orbit;camera_pitch=-.42f;fov=62.f;
@@ -115,13 +115,20 @@ void frame(){
   const float x=ads?.045f:.30f,y=ads?-.19f:-.29f;
   const float kick=reduced?0:me.flash*.65f;
   const auto gun=camera_point(eye,f,r,u,x,y+sway,.61f-kick);
+  if(me.weapon==1){
+   add_box(gun,{.11f,.13f,.23f},{.12f,.16f,.15f},yaw,camera_pitch);
+   add_box(plus(gun,scale(u,.08f)),{.10f,.045f,.26f},{.26f,.31f,.29f},yaw,camera_pitch);
+   add_box(plus(gun,scale(f,.17f)),{.035f,.035f,.10f},{.055f,.08f,.07f},yaw,camera_pitch);
+   add_box(plus(gun,plus(scale(f,-.04f),scale(u,-.13f))),{.10f,.20f,.11f},{.21f,.27f,.23f},yaw,camera_pitch-.18f);
+  }else{
   add_box(gun,{.14f,.15f,.46f},{.12f,.16f,.15f},yaw,camera_pitch);
   add_box(plus(gun,scale(u,.10f)),{.065f,.07f,.15f},{.055f,.08f,.07f},yaw,camera_pitch);
   add_box(plus(gun,scale(f,.33f)),{.045f,.045f,.31f},{.21f,.25f,.23f},yaw,camera_pitch);
   add_box(plus(gun,plus(scale(f,-.13f),scale(u,-.12f))),{.08f,.23f,.10f},{.21f,.27f,.23f},yaw,camera_pitch-.18f);
   add_box(plus(gun,plus(scale(f,.09f),scale(u,-.08f))),{.17f,.10f,.17f},{.52f,.44f,.31f},yaw,camera_pitch);
+  }
   if(me.flash>0){
-   const auto muzzle=plus(gun,scale(f,.52f));add_box(muzzle,{.15f,.15f,.25f},{2.6f,1.7f,.35f},yaw,camera_pitch);
+   const auto muzzle=plus(gun,scale(f,me.weapon==1?.31f:.52f));add_box(muzzle,{.15f,.15f,.25f},{2.6f,1.7f,.35f},yaw,camera_pitch);
    beam(muzzle,me.trace,{2.f,1.4f,.35f});
   }
  }
@@ -142,6 +149,8 @@ EM_BOOL key_event(int type,const EmscriptenKeyboardEvent* event,void*){
  if(locked&&down&&!event->repeat&&std::strcmp(event->code,"KeyR")==0){reload_pressed=true;return EM_TRUE;}
  if(locked&&down&&!event->repeat&&std::strcmp(event->code,"Space")==0){jump_pressed=jump_predict=true;return EM_TRUE;}
  if(locked&&down&&!event->repeat&&std::strcmp(event->code,"KeyC")==0){crouch_wanted=!crouch_wanted;return EM_TRUE;}
+ if(locked&&down&&!event->repeat&&std::strcmp(event->code,"Digit1")==0){weapon_wanted=0;return EM_TRUE;}
+ if(locked&&down&&!event->repeat&&std::strcmp(event->code,"Digit2")==0){weapon_wanted=1;return EM_TRUE;}
  return EM_FALSE;
 }
 EM_BOOL mouse_move(int,const EmscriptenMouseEvent* event,void*){
@@ -151,7 +160,7 @@ EM_BOOL mouse_move(int,const EmscriptenMouseEvent* event,void*){
 EM_BOOL mouse_button(int type,const EmscriptenMouseEvent* event,void*){
  const bool down=type==EMSCRIPTEN_EVENT_MOUSEDOWN;
  if(down&&!locked)return EM_FALSE;
- if(event->button==0)fire=down;
+ if(event->button==0){fire=down;if(locked&&mine>=0&&peers[mine].weapon==1)send_controls();}
  if(event->button==2)ads=down;
  return locked?EM_TRUE:EM_FALSE;
 }
@@ -165,7 +174,7 @@ EM_BOOL visibility_event(int,const EmscriptenVisibilityChangeEvent* event,void*)
 extern "C" {
 EMSCRIPTEN_KEEPALIVE void client_start(int slot){
  if(slot<0||slot>=arena::kCapacity)return;
- mine=slot;sequence=0;next_input=0;hit_time=damage_time=0;clear_controls();for(auto& p:peers)p=Remote{};
+ mine=slot;weapon_wanted=0;sequence=0;next_input=0;hit_time=damage_time=0;clear_controls();for(auto& p:peers)p=Remote{};
  position=arena::spawn_point(slot);yaw=arena::spawn_yaw(slot);pitch=0;vertical_velocity=0;grounded=true;crouching=false;
 }
 EMSCRIPTEN_KEEPALIVE void client_stop(){mine=-1;clear_controls();locked=false;emscripten_exit_pointerlock();for(auto& p:peers)p=Remote{};}
@@ -183,7 +192,7 @@ EMSCRIPTEN_KEEPALIVE void client_player(int slot,float x,float y,float z,float s
  p.active=p.seen=true;p.target={x,y,z};
  if(first||reborn)p.position=p.target;
  if(slot==mine){
-  if(first||reborn){position=p.target;yaw=server_yaw;pitch=server_pitch;clear_controls();}
+  if(first||reborn){position=p.target;yaw=server_yaw;pitch=server_pitch;clear_controls();weapon_wanted=0;}
   else {const float a=distance2(position,p.target)>4.f?1.f:.25f;position=plus(position,scale({x-position.x,y-position.y,z-position.z},a));}
   // Never replace local aim with an earlier authoritative snapshot.
   if(!first&&hit>p.hit){hit_time=.18f;feedback_platform(1);}
@@ -198,6 +207,10 @@ EMSCRIPTEN_KEEPALIVE void client_motion(int slot,float vy,int on_ground,int crou
  if(slot<0||slot>=arena::kCapacity)return;
  peers[slot].crouching=crouch!=0;
  if(slot==mine){vertical_velocity=vy;grounded=on_ground!=0;crouching=crouch!=0;}
+}
+EMSCRIPTEN_KEEPALIVE void client_loadout(int slot,int weapon,int grenades,float equip){
+ if(slot<0||slot>=arena::kCapacity)return;
+ auto& p=peers[slot];p.weapon=weapon;p.grenades=grenades;p.equip=equip;
 }
 EMSCRIPTEN_KEEPALIVE void client_end_state(){for(auto& p:peers)if(!p.seen){p.active=false;p.seeded=false;p.flash=0;}}
 }

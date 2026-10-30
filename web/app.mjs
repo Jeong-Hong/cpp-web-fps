@@ -30,7 +30,7 @@ function updatePlayers(state){
 function applyState(state){
  if(!session||state.room!==session.room||!Array.isArray(state.players))return;
  module._client_begin_state();
- for(const p of state.players){module._client_player(p.id,p.x,p.y,p.z,p.yaw,p.pitch,p.hp,p.ammo,p.kills,p.deaths,p.reload,p.respawn,p.shield,p.shot,p.hit,p.damage,p.ack,...p.trace);module._client_motion(p.id,p.vy,p.grounded?1:0,p.crouch?1:0);}
+ for(const p of state.players){module._client_player(p.id,p.x,p.y,p.z,p.yaw,p.pitch,p.hp,p.ammo,p.kills,p.deaths,p.reload,p.respawn,p.shield,p.shot,p.hit,p.damage,p.ack,...p.trace);module._client_motion(p.id,p.vy,p.grounded?1:0,p.crouch?1:0);module._client_loadout(p.id,p.weapon,p.grenadeCount,p.equip);}
  module._client_end_state();updatePlayers(state);
 }
 function connect(type){
@@ -84,6 +84,8 @@ globalThis.CY={
  feedback(kind){sound(kind);},
  hud(state){
   if(!session)return;
+  text('weapon-name',state.weapon===1?'권총 / 12':'소총 / 24');text('grenade-count',state.grenades);
+  for(let i=0;i<2;i++){const active=i===state.weapon;$(`weapon-slot-${i}`).classList.toggle('active',active);$(`weapon-slot-${i}`).setAttribute('aria-current',String(active));}
   text('stance-state',state.hp<=0?'사망':!state.grounded?'공중':state.crouch?'앉음':'서 있음');
   text('hp',state.hp);text('ammo',state.ammo);text('heading',`${Math.round(state.heading).toString().padStart(3,'0')}°`);
   $('health-fill').style.width=`${Math.max(0,state.hp)}%`;$('shield').hidden=state.shield<=0;
@@ -91,7 +93,7 @@ globalThis.CY={
   text('reload-label',state.reload>0?`재장전 ${(state.reload/1000).toFixed(1)}s`:'R 재장전');
   const now=performance.now();
   if(state.kills>lastKills){killUntil=now+900;lastKills=state.kills;}
-  text('action-state',state.hp<=0?`${(state.respawn/1000).toFixed(1)}초 후 부활`:state.reload>0?'재장전 중':state.ammo===0?'탄창이 비었어요 · R 재장전':now<killUntil?'처치 확인':'');
+  text('action-state',state.hp<=0?`${(state.respawn/1000).toFixed(1)}초 후 부활`:state.equip>0?'무기 장착 중':state.reload>0?'재장전 중':state.ammo===0?'탄창이 비었어요 · R 재장전':now<killUntil?'처치 확인':'');
  },
 };
 $('create').addEventListener('click',()=>connect('create'));$('join').addEventListener('click',()=>connect('join'));

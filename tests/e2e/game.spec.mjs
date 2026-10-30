@@ -4,9 +4,9 @@ import {writeFile,mkdir} from 'node:fs/promises';
 import {spawn} from 'node:child_process';
 import WebSocket from 'ws';
 const observe=page=>{
- const channel=new EventEmitter();channel.state=null;channel.welcome=null;channel.errors=[];
+ const channel=new EventEmitter();channel.state=null;channel.welcome=null;channel.errors=[];channel.inputs=[];
  page.on('pageerror',e=>channel.errors.push(e.message));
- page.on('websocket',socket=>socket.on('framesent',event=>{try{channel.lastSent=JSON.parse(String(event.payload));}catch{channel.lastSent=null;}}));
+ page.on('websocket',socket=>socket.on('framesent',event=>{try{channel.lastSent=JSON.parse(String(event.payload));if(channel.lastSent.type==='input'){channel.inputs.push(channel.lastSent);if(channel.inputs.length>512)channel.inputs.shift();}}catch{channel.lastSent=null;}}));
  page.on('websocket',socket=>socket.on('framereceived',event=>{
   let m;try{m=JSON.parse(String(event.payload));}catch{return;}
   if(m.type==='state')channel.state=m;if(m.type==='welcome')channel.welcome=m;channel.emit('data',m);
@@ -213,4 +213,27 @@ test('C toggle synchronizes actual stance, eye height and remote model through p
   await page.keyboard.press('KeyC');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&!p.crouch));await expect(page.locator('#stance-state')).toHaveText('서 있음');await expect.poll(()=>page.evaluate(()=>window.__stanceEye)).toBeGreaterThan(1.5);
   await page.keyboard.press('Escape');await page.locator('#leave').click();expect(c.errors).toEqual([]);
  }finally{clearInterval(timer);peer.close();}
+});
+
+for(const [reducedMotion,forceWebGL] of [['reduce',false],['no-preference',false],['reduce',true]])test(`Digit2 selects a semi-auto pistol with independent ammo and visible feedback (${reducedMotion}${forceWebGL?'/WebGL2':''})`,async({browser})=>{
+ const context=await browser.newContext({reducedMotion,viewport:{width:1440,height:900}});if(forceWebGL)await context.addInitScript(()=>Object.defineProperty(navigator,'gpu',{value:undefined,configurable:true}));
+ const page=await context.newPage(),c=observe(page),scenario=reducedMotion+(forceWebGL?'-webgl':'');
+ try{
+  await enter(page,'QA_PISTOL');await c.wait(m=>m.type==='state');const id=c.welcome.id;
+  await page.bringToFront();await page.locator('#resume').click();await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('game');
+  await page.keyboard.press('Digit2');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.weapon===1),1200).catch(()=>{throw Error('missing authoritative pistol selection');});
+  await expect(page.locator('#weapon-name')).toHaveText('권총 / 12');await expect(page.locator('#weapon-slot-1')).toHaveAttribute('aria-current','true');
+  await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.equip===0&&p.weapon===1));
+  await page.evaluate(()=>{window.__pistolFlash=0;window.__pistolShot=null;const hud=CY.hud;CY.hud=s=>{hud(s);window.__pistolFlash=s.flash;};const draw=CY.renderer.draw.bind(CY.renderer);CY.renderer.draw=(...args)=>{draw(...args);if(window.__pistolFlash>0&&!window.__pistolShot)window.__pistolShot=document.querySelector('canvas').toDataURL('image/png');};});
+  await page.mouse.down();await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.weapon===1&&p.ammo===11));await page.waitForTimeout(400);
+  expect(c.state.players.find(p=>p.id===id)).toMatchObject({ammo:11,pistolAmmo:11,rifleAmmo:24});await page.mouse.up();
+  await expect.poll(()=>page.evaluate(()=>!!window.__pistolShot)).toBe(true);const image=await page.evaluate(()=>window.__pistolShot);await writeFile(`work/actions-pistol-shot-${scenario}.png`,Buffer.from(image.split(',')[1],'base64'));
+  await page.mouse.click(720,450);await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.ammo===10),1500).catch(()=>{const changes=c.inputs.filter((p,i,a)=>!i||p.fire!==a[i-1].fire);console.log('Pistol brief-click observation',JSON.stringify({player:c.state.players.find(p=>p.id===id),changes}));throw Error('missing brief second pistol click');});
+  await page.keyboard.press('Digit1');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.weapon===0&&p.ammo===24));await expect(page.locator('#weapon-name')).toHaveText('소총 / 24');
+  await page.keyboard.press('Digit2');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.weapon===1&&p.equip===0&&p.ammo===10));
+  await page.keyboard.press('KeyR');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.weapon===1&&p.reload>0));
+  await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.reload===0&&p.ammo===12&&p.weapon===1));await page.screenshot({path:`work/actions-pistol-${scenario}.png`});
+  await page.keyboard.press('Escape');await expect(page.locator('#pause')).toBeVisible();await page.waitForTimeout(100);expect(c.state.players.find(p=>p.id===id).weapon).toBe(1);
+  await page.locator('#leave').click();expect(c.errors).toEqual([]);
+ }finally{await context.close();}
 });
