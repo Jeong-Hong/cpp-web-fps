@@ -1,0 +1,36 @@
+
+Running 1 test using 1 worker
+
+  x  1 tests\e2e\game.spec.mjs:171:1 › Space edge jumps, lands and does not repeat while held through real C++ input (1.9s)
+
+
+  1) tests\e2e\game.spec.mjs:171:1 › Space edge jumps, lands and does not repeat while held through real C++ input 
+
+    Error: missing authoritative jump action
+
+      176 |  await page.locator('#resume').click();await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('game');
+      177 |  await page.keyboard.down('Space');
+    > 178 |  await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.y>.12&&!p.grounded),1200).catch(()=>{throw Error('missing authoritative jump action');});
+          |                                                                                                              ^
+      179 |  await page.screenshot({path:'work/actions-jump.png'});
+      180 |  await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.y===0&&p.grounded),2500);
+      181 |  await page.waitForTimeout(200);expect(c.state.players.find(p=>p.id===id)).toMatchObject({y:0,grounded:true});expect(jumps).toHaveLength(1);
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:178:110
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:178:2
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\game-tests\game-Space-edge-jumps-land-81b45-e-held-through-real-C-input\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\game-tests\game-Space-edge-jumps-land-81b45-e-held-through-real-C-input\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\game-tests\game-Space-edge-jumps-land-81b45-e-held-through-real-C-input\trace.zip
+    Usage:
+
+        npx playwright show-trace work\game-tests\game-Space-edge-jumps-land-81b45-e-held-through-real-C-input\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\game.spec.mjs:171:1 › Space edge jumps, lands and does not repeat while held through real C++ input 

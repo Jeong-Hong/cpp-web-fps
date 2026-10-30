@@ -1,0 +1,24 @@
+
+Running 12 tests using 1 worker
+
+  ok  1 tests\e2e\client-contract.spec.mjs:15:1 › compiled C++ exports actual game, snapshot and input entry points (235ms)
+  ok  2 tests\e2e\client-contract.spec.mjs:23:1 › compiled C++ sends complete v2 action fields even in a neutral input snapshot (158ms)
+  ok  3 tests\e2e\client-contract.spec.mjs:35:1 › compiled grenade snapshots retain existing IDs when an earlier pool slot is reused (148ms)
+GPU smoke {"api":"WebGPU","reason":"","width":640}
+  ok  4 tests\e2e\gpu.spec.mjs:13:39 › real GPU adapter draws an instanced cube (fallback=false) (229ms)
+GPU smoke {"api":"WebGL2","reason":"WebGL2 selected","width":640}
+  ok  5 tests\e2e\gpu.spec.mjs:13:39 › real GPU adapter draws an instanced cube (fallback=true) (194ms)
+Observed local lobby {"api":"WebGPU / C++ WASM","lcp":[{"time":68,"tag":"H1"}],"reduced":false}
+Observed bottom state {"state":"ready","origin":"http://127.0.0.1:64108","width":768,"height":900,"visibility":"visible","scrollTop":281,"text":"준비됐어요. 새 방을 만들거나 친구의 코드로 참가하세요."}
+Observed bottom state {"state":"ready","origin":"http://127.0.0.1:64108","width":375,"height":900,"visibility":"visible","scrollTop":393,"text":"준비됐어요. 새 방을 만들거나 친구의 코드로 참가하세요."}
+  ok  6 tests\e2e\lobby-render.spec.mjs:14:1 › real C++ Wasm renders the lobby and fits three widths (809ms)
+Observed bottom state {"state":"controlled-loading","origin":"http://127.0.0.1:64108","width":768,"height":900,"visibility":"visible","scrollTop":281,"text":"그래픽 준비 완료 · C++ 게임 모듈을 불러오고 있습니다."}
+Observed bottom state {"state":"controlled-loading","origin":"http://127.0.0.1:64108","width":375,"height":900,"visibility":"visible","scrollTop":393,"text":"그래픽 준비 완료 · C++ 게임 모듈을 불러오고 있습니다."}
+  ok  7 tests\e2e\lobby-render.spec.mjs:30:1 › real Wasm loading disables competing actions and then recovers (589ms)
+  ok  8 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 1440px (252ms)
+  ok  9 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 768px (219ms)
+  ok 10 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 375px (217ms)
+  ok 11 tests\e2e\shell.spec.mjs:28:1 › new inventory hints fit the narrow HUD without replacing gameplay proof (205ms)
+  ok 12 tests\e2e\shell.spec.mjs:41:1 › Esc key and Korean footer label stay together at 375px (187ms)
+
+  12 passed (4.1s)

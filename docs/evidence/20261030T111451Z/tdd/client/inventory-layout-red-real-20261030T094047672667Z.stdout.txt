@@ -1,0 +1,47 @@
+
+Running 1 test using 1 worker
+
+  x  1 tests\e2e\shell.spec.mjs:28:1 › new inventory hints fit the narrow HUD without replacing gameplay proof (1.2s)
+
+
+  1) tests\e2e\shell.spec.mjs:28:1 › new inventory hints fit the narrow HUD without replacing gameplay proof 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('#inventory')
+    Expected: visible
+    Timeout: 1000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('#inventory') with timeout 1000ms
+      - waiting for locator('#inventory')
+
+
+      31 |  // Static layout fixture only: the compiled-game action tests separately exercise real input.
+      32 |  await page.evaluate(()=>{document.querySelector('#lobby').hidden=true;document.querySelector('#hud').hidden=false;});
+    > 33 |  await expect(page.locator('#inventory')).toBeVisible({timeout:1000});
+         |                                           ^
+      34 |  await expect(page.locator('#inventory')).toContainText('소총');
+      35 |  await expect(page.locator('#inventory')).toContainText('권총');
+      36 |  await expect(page.locator('#inventory')).toContainText('수류탄');
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\shell.spec.mjs:33:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\browser\shell-new-inventory-hints--8c664-ut-replacing-gameplay-proof\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\browser\shell-new-inventory-hints--8c664-ut-replacing-gameplay-proof\error-context.md
+
+    Error Context: work\browser\shell-new-inventory-hints--8c664-ut-replacing-gameplay-proof\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\browser\shell-new-inventory-hints--8c664-ut-replacing-gameplay-proof\trace.zip
+    Usage:
+
+        npx playwright show-trace work\browser\shell-new-inventory-hints--8c664-ut-replacing-gameplay-proof\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\shell.spec.mjs:28:1 › new inventory hints fit the narrow HUD without replacing gameplay proof 

@@ -1,0 +1,6 @@
+
+Running 1 test using 1 worker
+
+  ok 1 tests\e2e\game.spec.mjs:171:1 › Space edge jumps, lands and does not repeat while held through real C++ input (1.9s)
+
+  1 passed (2.7s)

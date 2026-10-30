@@ -1,0 +1,136 @@
+{
+  "schema": "crossyard_final_supplements/v1",
+  "tested_revision": "7a1cc3a6f76dcb6a7afa4a10624b917dc272369c",
+  "files": [
+    {
+      "source": "D:\\Projects\\Vibe_Coding\\cpp-web-fps\\.omh\\artifacts\\actions-final-runtime-pre.json",
+      "archive": "docs/evidence/20261030T111451Z/runtime-before-verification.json",
+      "sha256": "36d7dc2275180b7d14ea1a5cea9d86b860ee7de6f689c2d17ee7ff351054ffe3"
+    },
+    {
+      "source": "D:\\Tools\\Hermes\\profiles\\omh\\cache\\browser-use\\workspace\\local-07f4e95bfc2875055550dd46acdf2e56a625a37ea18d684c1f8869524a5cd19c\\crossyard-final-observation.json",
+      "archive": "docs/evidence/20261030T111451Z/primary-origin/observation.json",
+      "sha256": "af3aae33c7ddb3675b7ef3c1c5295b67d6797917d97a879c030c0c4b04c5cf27"
+    },
+    {
+      "source": "C:\\Users\\Jeongki\\.config\\browser-harness\\tmp\\p-20797bc8156b\\shot.png",
+      "archive": "docs/evidence/20261030T111451Z/primary-origin/actions-player.png",
+      "sha256": "f7b3d336bfea06f159c8b3d28053d492a5562a889aeca3cac8525def62bf2f61"
+    },
+    {
+      "source": "D:\\Tools\\Hermes\\profiles\\omh\\cache\\scratch\\cpp-web-fps-review-e141566-core-server.md",
+      "archive": "docs/evidence/20261030T111451Z/reviews/core-server-initial.md",
+      "sha256": "b1c284bae0b712db166a12a6263754b323ade46d67c23c9249838c192c08a5db"
+    },
+    {
+      "source": "D:\\Projects\\Vibe_Coding\\cpp-web-fps\\.omh\\artifacts\\actions-review\\client.json",
+      "archive": "docs/evidence/20261030T111451Z/reviews/client-initial.json",
+      "sha256": "99d642019fa85d1755290704b6d5bf3e2ebbe0586637c9ec8a9298cb3534d0a3"
+    },
+    {
+      "source": "D:\\Projects\\Vibe_Coding\\cpp-web-fps\\.omh\\artifacts\\actions-review\\visual\\review.json",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-1.json",
+      "sha256": "92b774a49e30a85f44590363c9d2d475f16557ed24549a417d84ea558a32ce88"
+    },
+    {
+      "source": "D:\\Projects\\Vibe_Coding\\cpp-web-fps\\.omh\\artifacts\\actions-review\\visual\\contact-01.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-1/contact-01.png",
+      "sha256": "89d0e4ee1d7ed85b9761e3475f058eba66ff88c0590beb613c9815dc0783731b"
+    },
+    {
+      "source": "D:\\Projects\\Vibe_Coding\\cpp-web-fps\\.omh\\artifacts\\actions-review\\visual\\contact-02.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-1/contact-02.png",
+      "sha256": "e8bb6578e687a8d83cebf880faa4ac41f6c33bf29ca07288fb0c8897546b46fe"
+    },
+    {
+      "source": "D:\\Projects\\Vibe_Coding\\cpp-web-fps\\.omh\\artifacts\\actions-review\\visual\\contact-03.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-1/contact-03.png",
+      "sha256": "46fc52e08bc19b44b324fb77abddabe2383809c85285bdf2cdacdb04fb26c6e1"
+    },
+    {
+      "source": "D:\\Projects\\Vibe_Coding\\cpp-web-fps\\.omh\\artifacts\\actions-review\\visual\\contact-04.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-1/contact-04.png",
+      "sha256": "340d875723a199a5cb80d0d0091ea03b6d32c18cc566c6596e7e9b5311ae66c5"
+    },
+    {
+      "source": "D:\\Projects\\Vibe_Coding\\cpp-web-fps\\.omh\\artifacts\\actions-review\\visual\\contact-05.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-1/contact-05.png",
+      "sha256": "3a3bd8df15c10acd29c9d5686dfdc8daff7875a47c47e8fd79b7ef2c0e4e5dcd"
+    },
+    {
+      "source": "D:\\Projects\\Vibe_Coding\\cpp-web-fps\\.omh\\artifacts\\actions-review\\visual\\contact-06.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-1/contact-06.png",
+      "sha256": "d19876c2bc556f5eefcc77fdea7a54325514f203ffbcb7d30125df0f0ec4615a"
+    }
+  ],
+  "checks": [
+    {
+      "name": "abi",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        ".omh/artifacts/actions-tdd/core/export-smoke.mjs"
+      ],
+      "source": "this checkout",
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "started_at": "2026-10-30T11:26:47.891093+00:00",
+      "finished_at": "2026-10-30T11:26:47.937187+00:00",
+      "exit_status": 0,
+      "stdout_sha256": "c60deaab100a18ff50e586a19f58f844bccd868e99b4493b83ea4d8cfefa2e3e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "node-version",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "--version"
+      ],
+      "source": "this checkout",
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "started_at": "2026-10-30T11:26:47.942202+00:00",
+      "finished_at": "2026-10-30T11:26:47.957861+00:00",
+      "exit_status": 0,
+      "stdout_sha256": "44ce64f1806e1aa8fa0bdd85b10e0413acd78557c88a8d52e94a0eb70f40b7ee",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "python-version",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "--version"
+      ],
+      "source": "this checkout",
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "started_at": "2026-10-30T11:26:47.962381+00:00",
+      "finished_at": "2026-10-30T11:26:47.976336+00:00",
+      "exit_status": 0,
+      "stdout_sha256": "9fc9968e3ae8d82284d7426a87e1426e07246027c7706b0803a1c8d9c60c7a4d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "compiler-version",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "D:/Tools/emsdk/upstream/emscripten/em++.py",
+        "--version"
+      ],
+      "source": "this checkout",
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "started_at": "2026-10-30T11:26:47.980389+00:00",
+      "finished_at": "2026-10-30T11:26:48.122120+00:00",
+      "exit_status": 0,
+      "stdout_sha256": "8072ce3f5941ca8f562e1c7fcde359cf95be8402ff116d2475f12d5ba061a217",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "source_fingerprint": "sha256:b23b175646af347869c50dd2f6a53481cb54c35d4bececb4596f5fd93481058a",
+  "environment": "Windows|Node24.21.0|Python3.14.7|emsdk6.0.13",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "health_after_qa_cleanup": {
+    "ok": true,
+    "engine": "C++/Wasm",
+    "rooms": 0,
+    "clients": 0,
+    "tickRate": 60
+  },
+  "boundary": "Parent-observed runtime and ABI evidence; independent re-reviews are separate and still pending."
+}

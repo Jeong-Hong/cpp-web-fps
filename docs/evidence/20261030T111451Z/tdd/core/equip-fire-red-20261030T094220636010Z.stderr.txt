@@ -1,0 +1,12 @@
+FAIL: equip rejects and consumes a coalesced pistol press
+Traceback (most recent call last):
+  File [35m"D:\Projects\Vibe_Coding\cpp-web-fps\scripts\build.py"[0m, line [35m50[0m, in [35m<module>[0m
+    [31mmain[0m[1;31m()[0m
+    [31m~~~~[0m[1;31m^^[0m
+  File [35m"D:\Projects\Vibe_Coding\cpp-web-fps\scripts\build.py"[0m, line [35m40[0m, in [35mmain[0m
+    [31msubprocess.run[0m[1;31m([node, str(target)], cwd=ROOT, env=env, check=True, timeout=45)[0m
+    [31m~~~~~~~~~~~~~~[0m[1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"D:\Tools\Hermes\tools\python-3.14.7+20260901-win32-x64\Lib\subprocess.py"[0m, line [35m578[0m, in [35mrun[0m
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+[1;35msubprocess.CalledProcessError[0m: [35mCommand '['C:\\Program Files\\nodejs\\node.EXE', 'D:\\Projects\\Vibe_Coding\\cpp-web-fps\\build\\core-tests.cjs']' returned non-zero exit status 1.[0m

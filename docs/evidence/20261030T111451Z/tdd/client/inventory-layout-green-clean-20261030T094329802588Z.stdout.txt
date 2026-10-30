@@ -1,0 +1,9 @@
+
+Running 4 tests using 1 worker
+
+  ok 1 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 1440px (334ms)
+  ok 2 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 768px (227ms)
+  ok 3 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 375px (219ms)
+  ok 4 tests\e2e\shell.spec.mjs:28:1 › new inventory hints fit the narrow HUD without replacing gameplay proof (219ms)
+
+  4 passed (1.5s)

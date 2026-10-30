@@ -1,0 +1,34 @@
+
+Running 17 tests using 1 worker
+
+Escape diagnostic {"received":true}
+  ok  1 tests\e2e\game.spec.mjs:30:101 › actual C++ controls, server ammo, reload and Esc (reduce) (3.1s)
+Escape diagnostic {"received":true}
+  ok  2 tests\e2e\game.spec.mjs:30:101 › actual C++ controls, server ammo, reload and Esc (no-preference) (3.0s)
+Escape diagnostic {"received":true}
+  ok  3 tests\e2e\game.spec.mjs:30:101 › actual C++ controls, server ammo, reload and Esc (reduce/WebGL2) (2.9s)
+Observed independent browser ids [0,1,2,3]
+  ok  4 tests\e2e\game.spec.mjs:69:1 › four independent browser contexts agree on membership; fifth gets room full (1.9s)
+  ok  5 tests\e2e\game.spec.mjs:87:1 › served C++ lobby and live menu retain layout at desktop, tablet and phone widths (1.2s)
+Pitch boundary diagnostic {"response":{"id":0,"x":-18,"y":0,"z":-18,"yaw":2.356194496154785,"pitch":-1.4500000476837158,"hp":100,"ammo":24,"vy":0,"grounded":true,"crouch":false,"weapon":0,"rifleAmmo":24,"pistolAmmo":12,"grenadeCount":2,"equip":0,"kills":0,"deaths":0,"reload":0,"respawn":0,"shield":1383.333444595337,"shot":0,"hit":0,"damage":0,"ack":3,"trace":[-18,1.600000023841858,-18]},"sent":{"type":"input","seq":3,"forward":0,"strafe":0,"yaw":2.356194496154785,"pitch":-1.45,"fire":false,"reload":false,"sprint":false,"jump":false,"crouch":false,"weapon":0,"grenade":false}}
+  ok  6 tests\e2e\game.spec.mjs:109:38 › extreme mouse pitch down remains in the strict wire range without disconnecting (470ms)
+Pitch boundary diagnostic {"response":{"id":0,"x":-18,"y":0,"z":-18,"yaw":2.356194496154785,"pitch":1.4500000476837158,"hp":100,"ammo":24,"vy":0,"grounded":true,"crouch":false,"weapon":0,"rifleAmmo":24,"pistolAmmo":12,"grenadeCount":2,"equip":0,"kills":0,"deaths":0,"reload":0,"respawn":0,"shield":1333.3334922790527,"shot":0,"hit":0,"damage":0,"ack":4,"trace":[-18,1.600000023841858,-18]},"sent":{"type":"input","seq":4,"forward":0,"strafe":0,"yaw":2.356194496154785,"pitch":1.45,"fire":false,"reload":false,"sprint":false,"jump":false,"crouch":false,"weapon":0,"grenade":false}}
+  ok  7 tests\e2e\game.spec.mjs:109:38 › extreme mouse pitch up remains in the strict wire range without disconnecting (494ms)
+Observed bottom state {"state":"controlled-disconnect","origin":"http://127.0.0.1:54179","width":768,"height":900,"visibility":"visible","scrollTop":281,"text":"서버와 연결이 끊겼어요. 서버 실행 상태를 확인하고 다시 입장해 주세요."}
+Observed bottom state {"state":"controlled-disconnect","origin":"http://127.0.0.1:54179","width":375,"height":900,"visibility":"visible","scrollTop":393,"text":"서버와 연결이 끊겼어요. 서버 실행 상태를 확인하고 다시 입장해 주세요."}
+  ok  8 tests\e2e\game.spec.mjs:128:1 › missing-room retry and owned server disconnect recover the real UI (1.3s)
+Observed browser combat {"mine":0,"target":1,"health":75,"kills":1}
+  ok  9 tests\e2e\game.spec.mjs:146:1 › real browser hit, kill and incoming-damage feedback through an ordinary socket peer (5.3s)
+  ok 10 tests\e2e\game.spec.mjs:181:1 › Space edge jumps, lands and does not repeat while held through real C++ input (1.7s)
+  ok 11 tests\e2e\game.spec.mjs:205:1 › C toggle synchronizes actual stance, eye height and remote model through public sockets (4.5s)
+  ok 12 tests\e2e\game.spec.mjs:228:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce) (3.2s)
+  ok 13 tests\e2e\game.spec.mjs:228:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (no-preference) (3.2s)
+  ok 14 tests\e2e\game.spec.mjs:228:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce/WebGL2) (3.1s)
+Observed four-peer grenade agreement {"scenario":"reduce","id":0,"projectile":1,"blastTime":3700.0001929700375,"selfHp":39,"observers":[1,2,3]}
+  ok 15 tests\e2e\game.spec.mjs:251:100 › G edge renders authoritative grenade flight and blast with four-peer agreement (reduce) (5.2s)
+Observed four-peer grenade agreement {"scenario":"no-preference","id":0,"projectile":1,"blastTime":3700.0001929700375,"selfHp":39,"observers":[1,2,3]}
+  ok 16 tests\e2e\game.spec.mjs:251:100 › G edge renders authoritative grenade flight and blast with four-peer agreement (no-preference) (5.2s)
+Observed four-peer grenade agreement {"scenario":"reduce-webgl","id":0,"projectile":1,"blastTime":3700.0001929700375,"selfHp":39,"observers":[1,2,3]}
+  ok 17 tests\e2e\game.spec.mjs:251:100 › G edge renders authoritative grenade flight and blast with four-peer agreement (reduce/WebGL2) (5.0s)
+
+  17 passed (51.6s)

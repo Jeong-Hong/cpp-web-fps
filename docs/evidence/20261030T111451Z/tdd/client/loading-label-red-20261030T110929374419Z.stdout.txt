@@ -1,0 +1,51 @@
+
+Running 1 test using 1 worker
+
+  x  1 tests\e2e\lobby-render.spec.mjs:31:1 › real Wasm loading disables competing actions and then recovers (5.5s)
+
+
+  1) tests\e2e\lobby-render.spec.mjs:31:1 › real Wasm loading disables competing actions and then recovers 
+
+    Error: loading primary button names its current state
+
+    expect(locator).toContainText(expected) failed
+
+    Locator: locator('#create')
+    Expected substring: "준비 중"
+    Received string:    "새 방 만들기 →"
+    Timeout: 5000ms
+
+    Call log:
+      - loading primary button names its current state locator('#create') with timeout 5000ms
+      - waiting for locator('#create')
+        14 × locator resolved to <button disabled id="create" class="primary">…</button>
+           - unexpected value "새 방 만들기 →"
+
+
+      35 |   await page.goto(url);await page.bringToFront();await expect(page.locator('#lobby-status')).toContainText('C++ 게임 모듈');
+      36 |   await expect(page.locator('#create')).toBeDisabled();await expect(page.locator('#join')).toBeDisabled();
+    > 37 |   await expect(page.locator('#create'),'loading primary button names its current state').toContainText('준비 중');
+         |                                                                                          ^
+      38 |   for(const width of [1440,768,375]){await page.setViewportSize({width,height:900});await page.screenshot({path:`work/loading-${width}.png`});}
+      39 |  }finally{release();}
+      40 |  await expect(page.locator('#create')).toBeEnabled({timeout:10000});await expect(page.locator('#join')).toBeEnabled();
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\lobby-render.spec.mjs:37:90
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\browser\lobby-render-real-Wasm-loa-c4413-g-actions-and-then-recovers\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\browser\lobby-render-real-Wasm-loa-c4413-g-actions-and-then-recovers\error-context.md
+
+    Error Context: work\browser\lobby-render-real-Wasm-loa-c4413-g-actions-and-then-recovers\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\browser\lobby-render-real-Wasm-loa-c4413-g-actions-and-then-recovers\trace.zip
+    Usage:
+
+        npx playwright show-trace work\browser\lobby-render-real-Wasm-loa-c4413-g-actions-and-then-recovers\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\lobby-render.spec.mjs:31:1 › real Wasm loading disables competing actions and then recovers 

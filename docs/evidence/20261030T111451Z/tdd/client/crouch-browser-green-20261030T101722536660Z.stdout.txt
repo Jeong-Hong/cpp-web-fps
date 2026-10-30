@@ -1,0 +1,7 @@
+
+Running 2 tests using 1 worker
+
+  ok 1 tests\e2e\game.spec.mjs:171:1 › Space edge jumps, lands and does not repeat while held through real C++ input (1.9s)
+  ok 2 tests\e2e\game.spec.mjs:195:1 › C toggle synchronizes actual stance, eye height and remote model through public sockets (4.5s)
+
+  2 passed (7.2s)

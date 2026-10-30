@@ -1,0 +1,12 @@
+
+Running 2 tests using 1 worker
+
+Observed local lobby {"api":"WebGPU / C++ WASM","lcp":[{"time":120,"tag":"H1"}],"reduced":false}
+Observed bottom state {"state":"ready","origin":"http://127.0.0.1:64140","width":768,"height":900,"visibility":"visible","scrollTop":281,"text":"준비됐어요. 새 방을 만들거나 친구의 코드로 참가하세요."}
+Observed bottom state {"state":"ready","origin":"http://127.0.0.1:64140","width":375,"height":900,"visibility":"visible","scrollTop":393,"text":"준비됐어요. 새 방을 만들거나 친구의 코드로 참가하세요."}
+  ok 1 tests\e2e\lobby-render.spec.mjs:14:1 › real C++ Wasm renders the lobby and fits three widths (978ms)
+Observed bottom state {"state":"controlled-loading","origin":"http://127.0.0.1:64140","width":768,"height":900,"visibility":"visible","scrollTop":281,"text":"그래픽 준비 완료 · C++ 게임 모듈을 불러오고 있습니다."}
+Observed bottom state {"state":"controlled-loading","origin":"http://127.0.0.1:64140","width":375,"height":900,"visibility":"visible","scrollTop":393,"text":"그래픽 준비 완료 · C++ 게임 모듈을 불러오고 있습니다."}
+  ok 2 tests\e2e\lobby-render.spec.mjs:30:1 › real Wasm loading disables competing actions and then recovers (633ms)
+
+  2 passed (2.2s)

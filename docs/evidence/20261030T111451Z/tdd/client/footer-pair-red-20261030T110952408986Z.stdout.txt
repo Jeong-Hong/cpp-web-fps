@@ -1,0 +1,41 @@
+
+Running 1 test using 1 worker
+
+  x  1 tests\e2e\shell.spec.mjs:41:1 › Esc key and Korean footer label stay together at 375px (268ms)
+
+
+  1) tests\e2e\shell.spec.mjs:41:1 › Esc key and Korean footer label stay together at 375px ────────
+
+    Error: Esc key and Korean footer label share one line
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      43 |  await page.setViewportSize({width:375,height:900});await page.goto(url);
+      44 |  const sameLine=await page.evaluate(()=>{const key=[...document.querySelectorAll('.lobby-footer kbd')].find(e=>e.textContent==='Esc');const label=key.nextSibling,start=label.textContent.indexOf('메뉴'),range=document.createRange();range.setStart(label,start);range.setEnd(label,start+2);return Math.abs(key.getBoundingClientRect().top-range.getBoundingClientRect().top)<8;});
+    > 45 |  expect(sameLine,'Esc key and Korean footer label share one line').toBe(true);
+         |                                                                    ^
+      46 | });
+      47 |
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\shell.spec.mjs:45:68
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\browser\shell-Esc-key-and-Korean-footer-label-stay-together-at-375px\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\browser\shell-Esc-key-and-Korean-footer-label-stay-together-at-375px\error-context.md
+
+    Error Context: work\browser\shell-Esc-key-and-Korean-footer-label-stay-together-at-375px\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\browser\shell-Esc-key-and-Korean-footer-label-stay-together-at-375px\trace.zip
+    Usage:
+
+        npx playwright show-trace work\browser\shell-Esc-key-and-Korean-footer-label-stay-together-at-375px\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\shell.spec.mjs:41:1 › Esc key and Korean footer label stay together at 375px ─────────

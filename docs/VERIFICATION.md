@@ -2,7 +2,7 @@
 
 ## v2 이동·무장 확장 — 실행 완료, 독립 검토 진행 중
 
-- 대상 코드: `6f4e21867a4f2f1be777ea689d7df60925a641e3`.
+- 대상 코드: `7a1cc3a6f76dcb6a7afa4a10624b917dc272369c`.
 - 이전 완료 기준: `b7b0c69c9ae61ee3e4fcafe000314178d4a9db0b`. 아래 v0.1 기록은 당시 결과이며 새 기능의 증거로 대체하지 않는다.
 - 실행 주소: **http://127.0.0.1:8088**. 루프백 리스너와 C++/Wasm health를 확인했다. 기본 실행은 다른 PC에 공개되지 않는다.
 - 환경: Windows · Node.js24.21.0 · Python3.14.7 · Emscripten6.0.13.
@@ -10,21 +10,21 @@
 
 ### 재현 명령과 실제 결과
 
-주 명령은 `python scripts/verify.py`이며 [현재 실행 기록](evidence/20261030T104003Z/receipt.json)에 실제 명령 배열·시각·작업 폴더·종료 코드·입력/출력 지문이 있다. 실행 시작 시 소스 트리는 깨끗했고 실행 중 입력 집합은 변하지 않았다.
+주 명령은 `python scripts/verify.py`이며 [현재 실행 기록](evidence/20261030T111451Z/receipt.json)에 실제 명령 배열·시각·작업 폴더·종료 코드·입력/출력 지문이 있다. 실행 시작 시 소스 트리는 깨끗했고 실행 중 45개 입력 경로와 지문은 변하지 않았다. 이전 [첫 확장 실행](evidence/20261030T104003Z/receipt.json)의 2,503/114/27 통과 기록은 그대로 보존했다. 그 실행 뒤 독립 검토가 두 경계 결함을 찾아 수정했으므로 이전 성공만으로 현재 완료를 판정하지 않는다.
 
 | 검사 | 실제 명령 | 관찰 결과 | exit |
 |---|---|---|---|
 | 서버·브라우저 Wasm | `python scripts/build.py` | 실제 두 타깃 빌드, C++ 경고를 오류로 처리 | 0 |
-| 공통 C++ 규칙 | `python scripts/build.py --test` | 2,503개 assertion 통과 | 0 |
+| 공통 C++ 규칙 | `python scripts/build.py --test` | 2,516개 assertion 통과 | 0 |
 | C++ 카메라 | `python scripts/build.py --client-test` | 6개 assertion 통과 | 0 |
-| Node·전송·기하 | `node --test tests/*.test.mjs` | 114개 통과, 실패·취소·skip 없음 | 0 |
-| GPU·Wasm·로비 | `node node_modules/@playwright/test/cli.js test` | 10개 통과 | 0 |
+| Node·전송·기하 | `node --test tests/*.test.mjs` | 115개 통과, 실패·취소·skip 없음 | 0 |
+| GPU·Wasm·로비 | `node node_modules/@playwright/test/cli.js test` | 12개 통과 | 0 |
 | 실제 게임 | `node node_modules/@playwright/test/cli.js test -c playwright.game.config.mjs` | 17개 통과 | 0 |
 | 실제 4소켓 전투 | `node scripts/live-smoke.mjs --url http://127.0.0.1:8088` | 참가·교전·사망·부활·장전·이동·정리 통과 | 0 |
 | Windows 실행기 | `python scripts/launcher-smoke.py` | 실제 START.cmd 시작·health·소유 프로세스 정리 | 0 |
 | 소스 공백 | `git diff --check` | 오류 없음 | 0 |
 
-브라우저 합계는 27개이며 C++ assertion 수와 합산하지 않는다. Node 격리 검사만으로 실제 게임을 입증한 것이 아니라, 실제 생성 모듈·소켓·GPU·브라우저를 따로 실행했다. 정적 타입 검사·전용 린터·원격 CI·새 복제 설치를 이번 확장에서 실행했다는 뜻은 아니다.
+브라우저 합계는 29개이며 C++ assertion 수와 합산하지 않는다. Node 격리 검사만으로 실제 게임을 입증한 것이 아니라, 실제 생성 모듈·소켓·GPU·브라우저를 따로 실행했다. 정적 타입 검사·전용 린터·원격 CI·새 복제 설치를 이번 확장에서 실행했다는 뜻은 아니다.
 
 ### 새 기능을 실제로 확인한 경로
 
@@ -33,13 +33,13 @@
 - **권총:** 2 선택·독립 탄창·누른 채 유지해도 한 발·짧은 추가 클릭·1/2 전환 시 탄약 유지·R 장전·Esc 뒤 선택 유지. 효과 줄이기 두 설정과 강제 WebGL2에서 실제 총구 빛을 캡처했다.
 - **수류탄:** G 한 번·잔량 감소·비행·폭발·자해·잔량 0 거부·탈퇴 시 투사체 제거. 브라우저 1개와 일반 소켓 상대 3개가 같은 서버 시각의 전체 플레이어/수류탄 상태를 받는 것을 비교했다. 세 렌더 조건에서 자해 후 HP39가 관찰됐으며 사람 4명이나 제품의 봇을 뜻하지 않는다.
 - **화면:** 실제 로비·메뉴·활성 HUD의 1440/768/375px, 로딩·연결 끊김과 복귀. 앉은 상태의 권총 HUD에서 패널 분리·한국어 14px 이상·가로 넘침 없음을 검사했다.
-- **원본 이미지:** [이번 실행의 PNG 51개](evidence/20261030T104003Z/captures/). 사격·수류탄 비행/폭발 이미지 일부는 canvas-only이며 HUD나 OS 커서 증거가 아니다. 최종 시각 판정은 독립 검토 완료 뒤 별도로 기록한다.
+- **원본 이미지:** [이번 실행의 PNG 56개](evidence/20261030T111451Z/captures/). 사격·수류탄 비행/폭발 이미지 일부는 canvas-only이며 HUD나 OS 커서 증거가 아니다. 로딩/연결 해제 375·768px의 하단 상태 본문과 정상 로비 768px 하단도 새로 캡처했다. 최종 시각 판정은 독립 재검토 완료 뒤 별도로 기록한다.
 
 ### 실제 안내 주소 재검사
 
-[기본 주소 관찰](evidence/20261030T104003Z/primary-origin/observation.json)과 [실제 플레이 캡처](evidence/20261030T104003Z/primary-origin/actions-player.png)를 추가로 보관했다. 브라우저 자동화의 처음 연결이 about:blank로 돌아간 관찰은 성공으로 세지 않고, 정확한 주소 복원·브라우저 탭의 visible 확인 후 처음부터 다시 수행했다.
+[기본 주소 관찰](evidence/20261030T111451Z/primary-origin/observation.json)과 [실제 플레이 캡처](evidence/20261030T111451Z/primary-origin/actions-player.png)를 추가로 보관했다. 브라우저 자동화의 처음 연결이 about:blank로 돌아간 관찰은 성공으로 세지 않고, 정확한 주소 복원·브라우저 탭의 visible 확인 후 처음부터 다시 수행했다.
 
-`http://127.0.0.1:8088`에서 실제 새 방 → 클릭·포인터 잠금 → Space → C → 2 → 마우스 클릭 → G → Esc → 나가기를 실행했다. 서버 상태는 점프 관찰, 앉음, 권총 11발, 수류탄 1개를 보였고 HUD와 일치했다. API는 WebGPU, 효과 줄이기는 켜짐이었다. 자동화 입력이며 사용자 기존 탭이나 물리 손 입력을 관찰한 것은 아니다. 만든 방은 정상 퇴장으로 정리했다.
+수정된 Wasm으로 소유 서버를 다시 시작한 뒤 `http://127.0.0.1:8088`에서 새 방·실제 클릭과 포인터 잠금·2/C·권총 클릭을 확인했다. 보관한 1440×900 이미지는 앉음·권총 11발·수류탄 2개 상태다. 이어 같은 방의 일반 관찰자 소켓을 연결하고 실제 Space 입력의 서버 Y 상승/접지 해제와 Y=0 착지, G 입력의 잔량 1개와 비행체 생성을 확인했다. 이 후속 상태는 이미지 자체가 아니라 관찰 JSON에 보존했다. API는 WebGPU, 효과 줄이기는 켜짐이었다. 자동화 입력이며 사용자 기존 탭이나 물리 손 입력을 관찰한 것은 아니다. 두 QA 소켓·방을 정리한 뒤 health의 rooms/clients가 0이었다. 실행 전 서버·클라이언트 생성물 4개 지문은 전체 재빌드 뒤와 같아 실행 중인 엔진과 최종 생성물을 구별 없이 바꿔 쓰지 않았다.
 
 ### 발견한 문제와 수정 근거
 
@@ -48,8 +48,24 @@
 | 짧은 권총 클릭 유실 | 30Hz 출력에서 두 번째 true가 빠지고 서버 shot1/ammo11이 유지되는 것을 기록. 권총 누름/뗌 에지를 즉시 전송해 같은 검사에서 두 번째 사격과 ammo10을 확인했다. 테스트에 클릭 지연을 넣지 않았다. |
 | 눈 위치에 생성된 수류탄의 근접 클리핑 | 실제 비행 캡처와 렌더 인스턴스로 카메라를 감싸는 첫 프레임을 재현. 판정상의 투척 원점은 유지하고 카메라 바로 앞 비행 메시만 제외했다. 같은 검사와 새 이미지로 재확인했다. |
 | 사망/부활 문구 모호함 | 기존 시체 좌표 유지 동작을 보존하고 부활 시 위치·자세·자원을 초기화한다는 뜻으로 계약을 명확히 했다. 기존 사망 좌표 거부 검사는 유지했다. |
+| P2: 만료 뒤 권총의 가짜 클릭 | 공통 로직/클라이언트 두 검토가 같은 결함을 독립 재현했다. 250ms 제어 만료와 마지막 유효 버튼 상태를 분리했다. 실제 Wasm과 live-clock 공개 소켓의 같은 assertion을 RED→GREEN으로 확인하고 과거 release 거절·새 release/짧은 클릭·기존 자동 사격 만료 검사를 유지했다. 수정 커밋 `f02eb564caf67ea8952722472c2388122c933fa5`. |
+| P2: 새 수류탄 ID가 기존 표시를 덮음 | 기존 폭발 둘 앞에 새 비행 ID가 오면 피드백이 2회에서 4회가 되는 실제 compiled-client ABI 실패를 보존했다. snapshot 종료까지 기존 ID를 예약할 공간을 두고 inactive 슬롯만 할당했다. 기존 ID 유지·16개 전체 교체·순서 반전·정리를 실제 ABI에서 재검증했다. 피해 중복을 발견한 것은 아니다. 수정 커밋 `b3ee71a4cb82aa31a9611c887b62b3f92b20a80a`. |
+| 로딩 문구·좁은 키 안내 | 준비 중 CTA가 원래 문구인 상태와 375px에서 Esc/메뉴 분리를 각각 RED로 확인했다. 준비/연결 문구와 nowrap 묶음을 적용하고 실제 회귀·새 캡처로 확인했다. |
+| 좁은 오류 상태의 누락 이미지 | 구현상 잘림으로 단정하지 않았다. 실제 스크롤 컨테이너 하단에서 로딩/연결 해제 375·768px 네 상태와 정상 768px를 보충하고 scrollTop·visible·한국어 본문을 원시 로그에 기록했다. |
 
-[TDD 원본 색인](evidence/20261030T104003Z/archive-index.json)에 공통 로직·서버·클라이언트의 실제 명령과 원본 stdout/stderr 보관 경로·지문을 연결했다. RED·의도한 mutation 실패와 예상 밖의 과거 실패를 구별하며, 실패 기록을 뒤의 성공으로 덮어쓰지 않았다. 과거 TDD 지문을 현재 코드의 실행 결과로 바꿔 쓰지 않는다.
+[TDD 원본 색인](evidence/20261030T111451Z/archive-index.json)에 공통 로직·서버·클라이언트의 실제 명령과 원본 stdout/stderr 보관 경로·지문을 연결했다. RED·의도한 mutation 실패와 예상 밖의 과거 실패를 구별하며, 실패 기록을 뒤의 성공으로 덮어쓰지 않았다. 과거 TDD 지문을 현재 코드의 실행 결과로 바꿔 쓰지 않는다.
+
+### 추가 ABI·보관 기록
+
+[보충 색인](evidence/20261030T111451Z/supplement-index.json)은 `node .omh/artifacts/actions-tdd/core/export-smoke.mjs`의 현재 실제 실행(exit 0), 공개 export 8개·구형 10인자/v2 14인자·실제 JSON 단위 검사와 기본 주소 재검사·도구 버전을 연결한다. 주 receipt를 덮어쓰지 않았다. TDD 보관 색인의 파일은 376개이며 과거의 예상 밖 실패도 남아 있다. 일부 부모 TDD의 client 명명 범위에는 공통 구현 파일 전체 지문이 포함되지 않았으므로, 각 시도의 선언 범위와 현재 45경로 통합 지문을 구별한다.
+
+코드와 시각의 최초 no_ship/BLOCK 원본은 `reviews/core-server-initial.md`, `reviews/client-initial.json`, `reviews/visual-round-1.json`에 따로 보존했다. 두 수정의 소스 재검토와 새 56개 이미지의 시각 2회차는 진행 중이다. 부모의 실행 통과를 독립 검토자의 재실행으로 표현하지 않는다.
+
+| 보관 ID | 현재 대상 |
+|---|---|
+| `20261030T111451Z` | `docs/evidence/20261030T111451Z/receipt.json` 및 원시 로그·PNG |
+| `crossyard-v2-tdd-archive` | 같은 폴더의 `archive-index.json`·`tdd/` |
+| `crossyard-v2-supplements` | 같은 폴더의 `supplement-index.json`·ABI/도구 로그·`primary-origin/` |
 
 ### 확장 요구·작업·증거 대응
 
@@ -58,8 +74,8 @@
 | ID | ACTIONS의 요구 | 작업 | 해당 회귀·증거 |
 |---|---|---|---|
 | FR-006 | 실제 점프·앉기·공유 충돌 | actions-core, actions-client | C++ 규칙·Space/C 브라우저 검사 |
-| FR-007 | 권총·독립 자원·반자동 | actions-core, actions-client | C++ 쿨다운/에지·Digit2 3조건 |
-| FR-008 | 수류탄·차폐·자해·수명주기 | actions-core, actions-client | C++ 투사체/폭발·G 4자 동일 상태 |
+| FR-007 | 권총·독립 자원·반자동 | actions-core, actions-client | C++ 쿨다운/에지·만료 후 재개 실제 소켓·Digit2 3조건 |
+| FR-008 | 수류탄·차폐·자해·수명주기 | actions-core, actions-client | C++ 투사체/폭발·G 4자 동일 상태·기존 ID/16개 교체 ABI |
 | FR-009 | strict v2·ABI·서버 권위 | actions-contract, actions-server | protocol/engine/실제 Wasm 소켓·전체 Node |
 | SC-009 | HUD·모델·효과·3폭 | actions-client, actions-verify | 실제 뷰포트·사격/폭발 캡처 |
 | SC-010 | 전체 회귀·리뷰·보관·실행 안내 | actions-verify, actions-deliver | 현재 receipt·독립 검토 진행 중·이 문서 |

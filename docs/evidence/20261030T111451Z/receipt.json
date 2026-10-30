@@ -1,0 +1,660 @@
+{
+  "schema": "crossyard_verification/v1",
+  "run_id": "20261030T111451Z",
+  "repository": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+  "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+  "tested_revision": "7a1cc3a6f76dcb6a7afa4a10624b917dc272369c",
+  "initial_git_state": "",
+  "python": "3.14.7 (main, Sep  1 2026, 14:17:30) [MSC v.1944 64 bit (AMD64)]",
+  "source_sha256": {
+    ".gitattributes": "a27ec0af828b6749421ca24d1fd09b0515c3b0a79ff6ec7531bbf6d12b96e5dc",
+    ".gitignore": "138d4ce548f2f360bbb7d08ab6111b3062b40c1b076a66de40dfb62136b818c1",
+    "BUILD.cmd": "c1b93b850fd3051268c55302d127058d1ba3c8aec70f6c2e06eabc02c274b875",
+    "client/camera.hpp": "956a98462f99c24fe0e8ad50027c5a38f46c89f4c52f3ca80bd704e5e810f9b6",
+    "client/main.cpp": "8b130af5dfb1e1d3c1135bea90eaebf5d974542e257cd683b89fd1ad266b7dcd",
+    "core/bridge.cpp": "1c84eb4e6242aa971dc1d15c493b455777b42f9030a6fefb1550b47ed3645111",
+    "core/game.cpp": "bbf455ba50e5e1ccff234e0f3d075994a7676330cebd54cd7cdcf46c34b8f033",
+    "DESIGN.md": "6394b709507a4d4d6d431d5e183cf46fab90f626c20c58a6fb7339c32380eed6",
+    "docs/ACTIONS.md": "291561cf9753bd55733b2eb9bed31f87df3f9bfa9655e5db78c609c3cafc8b9a",
+    "docs/PLAN.md": "58840bb6272ec82e79d678873cad6c3bca7576f73ad2b9820aeb56650f52ed46",
+    "docs/PROTOCOL.md": "a1a926bdc1adb1371fcea366c8d49801252b414763de7baf60b51dfb1e0a4bb8",
+    "include/arena.hpp": "694dcedeb074f692befe7c329dccf7ca34f451b4c7a86d539d6aa9a606a861c1",
+    "package-lock.json": "f4117f70cc4d17933532d7032148512676223379c2ca8de9e5ec56f8177c4e6b",
+    "package.json": "74fa06267efac8cc1b9a80481b4428aa0e08a3cfcac441cfdbd01a1a05e2d0c3",
+    "playwright.config.mjs": "11d78186ea7c8a3fb5f591c5a5bbe39769adc138153bc0fed70b76aa5a57c640",
+    "playwright.game.config.mjs": "49b85b3382b9ca9b6044b9e7813752e5713668b53aa82ee0d35919de8464a09c",
+    "README.md": "13f49f4ae6a8375ca93813184d0e7d3504c57bba7de48b1048d73a3f78440119",
+    "scripts/build.py": "93205655217756d786b5c851cbb8e821411fbcdf1a490d2d8065a1cd79edf7e7",
+    "scripts/launcher-smoke.py": "57ab7f2c1cd4b551407a9e7666564f44e1d6d5006455df44e43add0c58e0c8d2",
+    "scripts/live-smoke.mjs": "a852d8d894a38f9dcdb3b4fa263043df7af258a8c506c567da8cb60d817641cc",
+    "scripts/verify.py": "7cfa6de23997ea210f87900286db1b7d5add60ed591b6d301c0f2767aa4b5562",
+    "server/app.mjs": "0901365d811654fe85d777c8a24addcf38ad34e94107482cb962b37abbc1ba4d",
+    "server/engine.mjs": "4c9accc3862574b4927f369d8dc0f9fffc3c2123bf07c39a20806362426faaea",
+    "server/main.mjs": "1587233e818d7a7c0a4f240a44579d42102d33c76fa1640363033ce3af3ad485",
+    "server/peer.mjs": "e55b49f6bbb26ae14e0245d731cf68cb2f229e10f85949dba6506fe90f2e2697",
+    "server/protocol.mjs": "5b336558fb1768dd1d20ac18edf491290cee1acc8f813810400f7dbbd1645985",
+    "START.cmd": "a834a91e2d01136664baabcfd92f4f1220c1dbdaffb206eb71ddcbff67697209",
+    "tests/actions-integration.test.mjs": "5c7547c6121535fd27772b55b053c8d7b04a041453cc260367a876504235286d",
+    "tests/cli-server.test.mjs": "14202a70114090f1db5a552d6e4d4f898ac69860460887c5357617c1e103402d",
+    "tests/client_math_tests.cpp": "2c9cca94cddd678a53ff5a6bfa4fa94870e9282851cb8ed2ac78b86b761aa37d",
+    "tests/core_tests.cpp": "ad47adeedacf8c0dcb771ce9e4b17c9ede15fdf21b026d0414e98287eba731fa",
+    "tests/e2e/client-contract.spec.mjs": "235331f1a0a44e412fa0a12ff2b90afd0965d9e2bc4e1435e1434f08bf5ffc92",
+    "tests/e2e/game.spec.mjs": "97d49fd824cbd97fbb120bb8824bc3566f83ed7aa1482c053738315b7fc1e005",
+    "tests/e2e/gpu.spec.mjs": "9c61c30fec320a8b8b951c6d522a24a3146044efa883367bb54fed2057486b58",
+    "tests/e2e/lobby-render.spec.mjs": "8d7da6c0341d9d208c7cb97dd89d2b647c3dce3d1ff0e33bb7941ca92f3c4ec9",
+    "tests/e2e/shell.spec.mjs": "de0922c04f2ae31043ea604ac4bc8d77cc9260086de6a99f11187a3a937c0e9b",
+    "tests/engine-server.test.mjs": "2c3f5e3af1e67fa7be517c762b796ec36979116cfac86b77dc47eec403256a29",
+    "tests/gpu-geometry.test.mjs": "9978d2567563978b35b466cfe99934a9119aa5a7baf8fdd708ffe62f73b8743f",
+    "tests/protocol-server.test.mjs": "9f9cbcc5fa61fdf3ed6b0cae379d8c4d1ed19a9830fa634ec20fefb77ff20614",
+    "tests/transport-peer.test.mjs": "12dd946e94bc0fb44283fbaec7c0082ece455a3dbebf19db17531047dc581f51",
+    "tests/transport-server.test.mjs": "ff42599220f46f45e63c5584ecfc5f26f7c67450f549d51fbd9fa9b3eaaaf191",
+    "web/app.mjs": "dfc5c8d2b2e15eff17026a3790783968f1c10e21ab879853fb2a3bebe941685d",
+    "web/gpu.mjs": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+    "web/index.html": "3eba463936fc489c0cd46cbd4b4ec5b033ff0403af89e4f286b90486164094dd",
+    "web/style.css": "f2d7b598f5b2e6020911fb4a5bf6b91b3ac7c465d1cd75ab512c9ace2f4a64c8"
+  },
+  "checks": [
+    {
+      "name": "build",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T11:14:51.129310+00:00",
+      "finished_at": "2026-10-30T11:14:54.852164+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "544fd12716a8d76854c23cf058ef2705d6c345408d62d627fd85cef92d838508",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "build"
+    },
+    {
+      "name": "core",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py",
+        "--test"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T11:14:54.852209+00:00",
+      "finished_at": "2026-10-30T11:14:57.121499+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "d3b43719234ae947eaaa7db060d3f84beec4ccdc0d486490d9734bf0b4633ae3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "core"
+    },
+    {
+      "name": "camera",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py",
+        "--client-test"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T11:14:57.121538+00:00",
+      "finished_at": "2026-10-30T11:14:58.309359+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "a44754135d36f56551f7f7003fdde7ce61d8872e799381d3f4bb483b7a3a8c4b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "camera"
+    },
+    {
+      "name": "node",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "--test",
+        "tests/*.test.mjs"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T11:14:58.309399+00:00",
+      "finished_at": "2026-10-30T11:14:59.311939+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "c2eeb4c780e7b4bdc86b2e06c4e0003310eeff68e43af76a9beb76889358cff6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "node"
+    },
+    {
+      "name": "browser",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "node_modules/@playwright/test/cli.js",
+        "test"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T11:14:59.312012+00:00",
+      "finished_at": "2026-10-30T11:15:03.756362+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "c4fa47a06876129ade53c7635d3bb067fbe2dbac27c6cec8de0cea9e851aa610",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "browser"
+    },
+    {
+      "name": "game",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "-c",
+        "playwright.game.config.mjs"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T11:15:03.756414+00:00",
+      "finished_at": "2026-10-30T11:15:55.692873+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "39fc102253bcbd0f89eebdf15309060963331c2a1162178f3c0e0bb416835c44",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "game"
+    },
+    {
+      "name": "live",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "scripts/live-smoke.mjs",
+        "--url",
+        "http://127.0.0.1:8088"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T11:15:55.692927+00:00",
+      "finished_at": "2026-10-30T11:16:02.670439+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "709948d035d4d2fa3c035cef00918a51f6e8d5497fd15e692bc3d95656ccea98",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "live"
+    },
+    {
+      "name": "launcher",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/launcher-smoke.py"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T11:16:02.670480+00:00",
+      "finished_at": "2026-10-30T11:16:03.041196+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "8b8b46c1114e2af67b71e16263f1bb9f5c12065fd18a211ffc9f175f595cf150",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "launcher"
+    },
+    {
+      "name": "diff",
+      "command": [
+        "D:\\Tools\\Hermes\\tools\\git-2.53.0+3-win32-x64\\mingw64\\bin\\git.EXE",
+        "diff",
+        "--check"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T11:16:03.041229+00:00",
+      "finished_at": "2026-10-30T11:16:03.060706+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "diff"
+    }
+  ],
+  "inputs_unchanged": true,
+  "served_assets": {
+    "index.html": {
+      "origin": "http://127.0.0.1:8088",
+      "served_sha256": "3eba463936fc489c0cd46cbd4b4ec5b033ff0403af89e4f286b90486164094dd",
+      "local_sha256": "3eba463936fc489c0cd46cbd4b4ec5b033ff0403af89e4f286b90486164094dd",
+      "matches": true
+    },
+    "style.css": {
+      "origin": "http://127.0.0.1:8088",
+      "served_sha256": "f2d7b598f5b2e6020911fb4a5bf6b91b3ac7c465d1cd75ab512c9ace2f4a64c8",
+      "local_sha256": "f2d7b598f5b2e6020911fb4a5bf6b91b3ac7c465d1cd75ab512c9ace2f4a64c8",
+      "matches": true
+    },
+    "app.mjs": {
+      "origin": "http://127.0.0.1:8088",
+      "served_sha256": "dfc5c8d2b2e15eff17026a3790783968f1c10e21ab879853fb2a3bebe941685d",
+      "local_sha256": "dfc5c8d2b2e15eff17026a3790783968f1c10e21ab879853fb2a3bebe941685d",
+      "matches": true
+    },
+    "gpu.mjs": {
+      "origin": "http://127.0.0.1:8088",
+      "served_sha256": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+      "local_sha256": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+      "matches": true
+    },
+    "dist/client.mjs": {
+      "origin": "http://127.0.0.1:8088",
+      "served_sha256": "b80adfe0d807d83a48db119f26643db3ab69fcf7d3c01974f5466daa1311d91c",
+      "local_sha256": "b80adfe0d807d83a48db119f26643db3ab69fcf7d3c01974f5466daa1311d91c",
+      "matches": true
+    },
+    "dist/client.wasm": {
+      "origin": "http://127.0.0.1:8088",
+      "served_sha256": "7f108051b4b87c62aa2a4b27fc57bd73d35c0faf9c7c431decb1e369d8504a89",
+      "local_sha256": "7f108051b4b87c62aa2a4b27fc57bd73d35c0faf9c7c431decb1e369d8504a89",
+      "matches": true
+    }
+  },
+  "outputs": {
+    "build/sim.mjs": "629fc99736c1d517e531ed47125fa27854461897da0dc8344fa34be6985c5f25",
+    "build/sim.wasm": "90297d4c5a8e455335c68105553c893a06a898492e95aa9262ceec3d7b50fc59",
+    "web/dist/client.mjs": "b80adfe0d807d83a48db119f26643db3ab69fcf7d3c01974f5466daa1311d91c",
+    "web/dist/client.wasm": "7f108051b4b87c62aa2a4b27fc57bd73d35c0faf9c7c431decb1e369d8504a89"
+  },
+  "captures": {
+    "work/actions-crouch-remote.png": {
+      "sha256": "713cb05ff9c30663d44931c0861f74b0c1179512fd02d33ffbed3546559e353a",
+      "bytes": 45687,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-crouch-remote.png"
+    },
+    "work/actions-grenade-after-no-preference.png": {
+      "sha256": "1279ef53ae61cfd9a49200077d17e39529be997da8ff2b56f23ca397e19adad1",
+      "bytes": 54126,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-grenade-after-no-preference.png"
+    },
+    "work/actions-grenade-after-reduce-webgl.png": {
+      "sha256": "9422a0eced3c998393aadbcf8ef049a4b0a9652477221e394367b94cd6e19e35",
+      "bytes": 53843,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-grenade-after-reduce-webgl.png"
+    },
+    "work/actions-grenade-after-reduce.png": {
+      "sha256": "96ae947284fe9aa38b19208aee474f910202c95ebfb6953f525ea2cba29e0335",
+      "bytes": 54079,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-grenade-after-reduce.png"
+    },
+    "work/actions-grenade-blast-no-preference.png": {
+      "sha256": "107663714d2e1ab5262883b6a8485fb11c1d32b4790ada0d0d52dcd6989db553",
+      "bytes": 97884,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-grenade-blast-no-preference.png"
+    },
+    "work/actions-grenade-blast-reduce-webgl.png": {
+      "sha256": "234973f5d09416f421ab5b5304ef8e4dc48e50f844d7e6a8118daa6da70c92dc",
+      "bytes": 98465,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-grenade-blast-reduce-webgl.png"
+    },
+    "work/actions-grenade-blast-reduce.png": {
+      "sha256": "3d09f37d6a4b754711b8518d539cfff48ec40bc9e2a631b7ba5b087ec69f8ff1",
+      "bytes": 97928,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-grenade-blast-reduce.png"
+    },
+    "work/actions-grenade-flight-no-preference.png": {
+      "sha256": "f4475011b7c8f97bdde5461f85ad1ec4591ec3b94551c28fb05caf50c1410d83",
+      "bytes": 44611,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-grenade-flight-no-preference.png"
+    },
+    "work/actions-grenade-flight-reduce-webgl.png": {
+      "sha256": "d16b4fc50c56042353e3577fe46b5fb05b63ecbf2771a521ff88727817446f1f",
+      "bytes": 45043,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-grenade-flight-reduce-webgl.png"
+    },
+    "work/actions-grenade-flight-reduce.png": {
+      "sha256": "16d0c4923101403d23ff31b9397a82409db786765bd89d6e960cb374922b6bc4",
+      "bytes": 46460,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-grenade-flight-reduce.png"
+    },
+    "work/actions-jump.png": {
+      "sha256": "bf9faeada184fc22457701494ed8c2ec194a205a5b88a6fbd457947bfcd119a9",
+      "bytes": 54068,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-jump.png"
+    },
+    "work/actions-pistol-no-preference.png": {
+      "sha256": "0f5e3b12a1b30f2bef00ad18598b6eedbb2e7928d47a779cd7c2d1cb040a74d0",
+      "bytes": 64211,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-pistol-no-preference.png"
+    },
+    "work/actions-pistol-reduce-webgl.png": {
+      "sha256": "c4ea4fefdbb74c96006edfe6bb96ad1be79c8a4ffdb7d2ed3686509fa643d46f",
+      "bytes": 64046,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-pistol-reduce-webgl.png"
+    },
+    "work/actions-pistol-reduce.png": {
+      "sha256": "6937671b44e3505900195c1a6c818b5bfcc70a4cda341af787e690103becfb3c",
+      "bytes": 64207,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-pistol-reduce.png"
+    },
+    "work/actions-pistol-shot-no-preference.png": {
+      "sha256": "7407a4553f2ea7ad0d0ec1a0a24d00824945bf04f2bfd869275d1a90de916298",
+      "bytes": 88403,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-pistol-shot-no-preference.png"
+    },
+    "work/actions-pistol-shot-reduce-webgl.png": {
+      "sha256": "86208c8ab54718a6ea095bead06d3ea8e35f37fb35d16141c7e206679e25a043",
+      "bytes": 90048,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-pistol-shot-reduce-webgl.png"
+    },
+    "work/actions-pistol-shot-reduce.png": {
+      "sha256": "9fb7bc647e0979985e841b7525c866d1faba9105f48e3039626e34c842d55ba0",
+      "bytes": 88810,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/actions-pistol-shot-reduce.png"
+    },
+    "work/browser-damage.png": {
+      "sha256": "8c9abf6b1e9e33bb47a412ca0c5ea403a85249ae5c4d5c7bb4f0f9f159bf76c9",
+      "bytes": 496314,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/browser-damage.png"
+    },
+    "work/browser-hit.png": {
+      "sha256": "75177b46ec9288a25ba39df0c3dffa2bea7e3a574adddfc044f073060e614fdf",
+      "bytes": 49997,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/browser-hit.png"
+    },
+    "work/controlled-disconnect.png": {
+      "sha256": "f78746497ceba04831ce1e0812b12fd9f588dccab4e8a7969a597cc48d3aa403",
+      "bytes": 493868,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/controlled-disconnect.png"
+    },
+    "work/disconnect-1440.png": {
+      "sha256": "21cec1dc9dc99f802beb7011bc89184089f4143eacaa1f3957347e5e6c1a634e",
+      "bytes": 494244,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/disconnect-1440.png"
+    },
+    "work/disconnect-375-bottom.png": {
+      "sha256": "a941ffd6a40668d61fea58fbfd471c512d07b248a32894cfa784844fbf304721",
+      "bytes": 85705,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/disconnect-375-bottom.png"
+    },
+    "work/disconnect-375.png": {
+      "sha256": "f3aedbf52541ae5dd9c4dae811d9ce6d430d5ff8af0d6e56a77de11e91dad715",
+      "bytes": 124698,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/disconnect-375.png"
+    },
+    "work/disconnect-768-bottom.png": {
+      "sha256": "f5c3bc3230ef524d6d2788b8689afd5d4ca16fbf98ae910c8537f339997cdad7",
+      "bytes": 173239,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/disconnect-768-bottom.png"
+    },
+    "work/disconnect-768.png": {
+      "sha256": "34cd44002d7b599039b1f4b85a21dc1c9a54ff74d19468a7fe68d7cb8e9ea3d2",
+      "bytes": 211591,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/disconnect-768.png"
+    },
+    "work/firing-no-preference.png": {
+      "sha256": "823d257af2385d32cab668a43dcee91d5a5af1dccc81411e14383d4fa14114e7",
+      "bytes": 105538,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/firing-no-preference.png"
+    },
+    "work/firing-reduce-webgl.png": {
+      "sha256": "ed982f5804991575bc166627e5da2fc77fd13b39b3adb46b1f14ce422ec2efbd",
+      "bytes": 104238,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/firing-reduce-webgl.png"
+    },
+    "work/firing-reduce.png": {
+      "sha256": "62d9108e1622223dd8a7737b770ce21128bd28e6303ba8c9c46e9a1ffd738cc7",
+      "bytes": 102508,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/firing-reduce.png"
+    },
+    "work/gpu-auto.png": {
+      "sha256": "aaf8270446dfd2648f7496591980f646fd35c2e976d91c6facf3e5ae92c05ee2",
+      "bytes": 6003,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/gpu-auto.png"
+    },
+    "work/gpu-webgl.png": {
+      "sha256": "aaf8270446dfd2648f7496591980f646fd35c2e976d91c6facf3e5ae92c05ee2",
+      "bytes": 6003,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/gpu-webgl.png"
+    },
+    "work/kill-confirmation.png": {
+      "sha256": "11d62f3dcce52a6465d4827c7595d3bb1a8f5669c6851922c2ae294997959514",
+      "bytes": 47609,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/kill-confirmation.png"
+    },
+    "work/live-hud-1440.png": {
+      "sha256": "d09a5128754e93ea733a77f10483d118dfa175c520e6d403a61d3aefb420985f",
+      "bytes": 50909,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/live-hud-1440.png"
+    },
+    "work/live-hud-375.png": {
+      "sha256": "6c4f2db2da07aa77829a921a5cb1409810c9acb2c0b169b9d0e1faabdca2266d",
+      "bytes": 20547,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/live-hud-375.png"
+    },
+    "work/live-hud-768.png": {
+      "sha256": "e4aa023783e12b2743d31e85ef0d321508c29142733b6a7a2617010e33eb131d",
+      "bytes": 34594,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/live-hud-768.png"
+    },
+    "work/live-menu-1440.png": {
+      "sha256": "4bef44d679346406d1b556221ab3ea0ea895cfda418af30d63ad56b295e1d7b3",
+      "bytes": 52396,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/live-menu-1440.png"
+    },
+    "work/live-menu-375.png": {
+      "sha256": "59beb1d0d0bd5bbc61ff90e2e6e9201454c567455e0330dc5a49d0ba28bed8f9",
+      "bytes": 27062,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/live-menu-375.png"
+    },
+    "work/live-menu-768.png": {
+      "sha256": "50e988c83cc7834e2998e70ff313df4e92f5ab94a940ff1ddbad0b8e5c44f5a8",
+      "bytes": 40955,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/live-menu-768.png"
+    },
+    "work/loading-1440.png": {
+      "sha256": "717d3dce71ffe68134fa90fe6228e5988d79b2bcb13dfe860c1d4c018e6598ae",
+      "bytes": 320501,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/loading-1440.png"
+    },
+    "work/loading-375-bottom.png": {
+      "sha256": "b898dfa9fe44f160ae38d8e9c0a97b855ee33f2e24aab8be6d53e1402ac1212f",
+      "bytes": 60424,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/loading-375-bottom.png"
+    },
+    "work/loading-375.png": {
+      "sha256": "50e697a6ec92b67d811dcaa9cd28c3e4b294f7b98bf24820af0c1f805f4cb4f0",
+      "bytes": 79565,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/loading-375.png"
+    },
+    "work/loading-768-bottom.png": {
+      "sha256": "63d70747dc489af9ecb460f773446d083aa586915f26de79859e4f28f08d76f9",
+      "bytes": 106903,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/loading-768-bottom.png"
+    },
+    "work/loading-768.png": {
+      "sha256": "692f790bec3e9ef9f3df56e9c60dbebcd448e927195d7be7b23cfac307f90c52",
+      "bytes": 122377,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/loading-768.png"
+    },
+    "work/lobby-1440.png": {
+      "sha256": "c98b2360a9e2779adc3e1e3ac443bad0b5c66bfb38e381501870fb126ee98d10",
+      "bytes": 493452,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/lobby-1440.png"
+    },
+    "work/lobby-375.png": {
+      "sha256": "86175588fff576b67f1b8dd5a95592a91f07c2a10a5ee21661f6a0d34acce037",
+      "bytes": 124172,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/lobby-375.png"
+    },
+    "work/lobby-768.png": {
+      "sha256": "b107eb4ae8b738ee57cdbad38cc389607be94fff1a96b8fd1df89a0fcf6302bc",
+      "bytes": 211279,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/lobby-768.png"
+    },
+    "work/menu-no-preference.png": {
+      "sha256": "e788422e21c588c77d52c6d1e5ca551366ee035e9ec018a356f8d7b3ee27c347",
+      "bytes": 60187,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/menu-no-preference.png"
+    },
+    "work/menu-reduce-webgl.png": {
+      "sha256": "9d328e85f1848825637bdde6aa3d08888037562fbf611fd06f86386c94701cf1",
+      "bytes": 60184,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/menu-reduce-webgl.png"
+    },
+    "work/menu-reduce.png": {
+      "sha256": "29b59a84bb29d0b700f31b3e870121fc49929f995014432adea565ad2ab2caac",
+      "bytes": 60232,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/menu-reduce.png"
+    },
+    "work/play-no-preference.png": {
+      "sha256": "3c4b99e44875faeaa3b0086ece0d6c336050981e7bf64f383aabc639f901de86",
+      "bytes": 59871,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/play-no-preference.png"
+    },
+    "work/play-reduce-webgl.png": {
+      "sha256": "811122d42187b68c9be91e2bd45427ec5a4cb42f3b136ed54657b5b52e5eacab",
+      "bytes": 59684,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/play-reduce-webgl.png"
+    },
+    "work/play-reduce.png": {
+      "sha256": "0a938acd63d7341634cc8fe76debfa2eeb86ce0f965f1a6ab11c4e6f268b7ab9",
+      "bytes": 59781,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/play-reduce.png"
+    },
+    "work/rendered-lobby-1440.png": {
+      "sha256": "e948ae4dc8048d1b5bf4728c0c952b526543b1fa1cd6698921fa966224775dbf",
+      "bytes": 493463,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/rendered-lobby-1440.png"
+    },
+    "work/rendered-lobby-375-bottom.png": {
+      "sha256": "b95059639ccb10c7ac45af4926dbf59d6e6bce237b8f6d0f5e387f73f39d0775",
+      "bytes": 84470,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/rendered-lobby-375-bottom.png"
+    },
+    "work/rendered-lobby-375.png": {
+      "sha256": "103d961cb0b62a3384108835a799153098954e25438e62a3975f31799026041b",
+      "bytes": 124204,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/rendered-lobby-375.png"
+    },
+    "work/rendered-lobby-768-bottom.png": {
+      "sha256": "d753a6af95707cd1e4d6507f2520ecb132d6a57b979a3673bc9b71d106c8163c",
+      "bytes": 172181,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/rendered-lobby-768-bottom.png"
+    },
+    "work/rendered-lobby-768.png": {
+      "sha256": "ebedadb43f235b0f7b6606ca0a513bfcd71d852d8550635a697329f53f857064",
+      "bytes": 211202,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T111451Z/captures/rendered-lobby-768.png"
+    }
+  },
+  "counts": {
+    "core_checks": 2516,
+    "camera_checks": 6,
+    "node_tests": 115,
+    "browser_tests": 12,
+    "game_tests": 17,
+    "browser_total": 29
+  },
+  "passed": true
+}

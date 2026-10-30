@@ -1,0 +1,47 @@
+
+Running 1 test using 1 worker
+
+  x  1 tests\e2e\client-contract.spec.mjs:23:1 › compiled C++ sends complete v2 action fields even in a neutral input snapshot (251ms)
+
+
+  1) tests\e2e\client-contract.spec.mjs:23:1 › compiled C++ sends complete v2 action fields even in a neutral input snapshot 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 4
+    + Received  + 0
+
+      Object {
+    -   "crouch": false,
+    -   "grenade": false,
+    -   "jump": false,
+        "type": "input",
+    -   "weapon": 0,
+      }
+
+      30 |   m._client_stop();return packets[0];
+      31 |  });
+    > 32 |  expect(packet).toMatchObject({type:'input',jump:false,crouch:false,weapon:0,grenade:false});
+         |                 ^
+      33 | });
+      34 |
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\client-contract.spec.mjs:32:17
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\browser\client-contract-compiled-C-ee552-in-a-neutral-input-snapshot\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\browser\client-contract-compiled-C-ee552-in-a-neutral-input-snapshot\error-context.md
+
+    Error Context: work\browser\client-contract-compiled-C-ee552-in-a-neutral-input-snapshot\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\browser\client-contract-compiled-C-ee552-in-a-neutral-input-snapshot\trace.zip
+    Usage:
+
+        npx playwright show-trace work\browser\client-contract-compiled-C-ee552-in-a-neutral-input-snapshot\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\client-contract.spec.mjs:23:1 › compiled C++ sends complete v2 action fields even in a neutral input snapshot 

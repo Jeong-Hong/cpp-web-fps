@@ -1,0 +1,42 @@
+
+Running 1 test using 1 worker
+
+  x  1 tests\e2e\client-contract.spec.mjs:35:1 › compiled grenade snapshots retain existing IDs when an earlier pool slot is reused (261ms)
+
+
+  1) tests\e2e\client-contract.spec.mjs:35:1 › compiled grenade snapshots retain existing IDs when an earlier pool slot is reused 
+
+    Error: new ID must not replay existing grenade explosions
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 4
+
+      52 |  });
+      53 |  expect(counts.initial).toBe(2);
+    > 54 |  expect(counts.inserted,'new ID must not replay existing grenade explosions').toBe(2);
+         |                                                                               ^
+      55 |  expect(counts.full).toBe(16);expect(counts.retained).toBe(16);
+      56 |  expect(counts.replaced,'all sixteen replacement IDs remain observable').toBe(32);
+      57 |  expect(counts.reordered).toBe(32);expect(counts.afterCleanup).toBe(33);
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\client-contract.spec.mjs:54:79
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\browser\client-contract-compiled-g-c8032-earlier-pool-slot-is-reused\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\browser\client-contract-compiled-g-c8032-earlier-pool-slot-is-reused\error-context.md
+
+    Error Context: work\browser\client-contract-compiled-g-c8032-earlier-pool-slot-is-reused\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\browser\client-contract-compiled-g-c8032-earlier-pool-slot-is-reused\trace.zip
+    Usage:
+
+        npx playwright show-trace work\browser\client-contract-compiled-g-c8032-earlier-pool-slot-is-reused\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\client-contract.spec.mjs:35:1 › compiled grenade snapshots retain existing IDs when an earlier pool slot is reused 

@@ -1,0 +1,2338 @@
+{
+  "schema": "visual_qa_verdict/v1",
+  "language": "ko-KR",
+  "score": 94,
+  "verdict": "BLOCK",
+  "pass_threshold": 90,
+  "round": 1,
+  "summary": "기존 로우폴리 야드와 산업용 HUD 방향은 유지된다. 51개 전체를 접촉지에서 검사하고 한국어·핵심 효과는 원본 및 좌표 확대로 재검사했다. 관찰된 표면은 대체로 안정적이나 좁은 화면의 로딩/연결 해제 상태 본문 네 셀이 캡처에 없어 전체 범위 PASS는 보류한다. 경미한 버튼 문구·키 안내 줄바꿈 개선 두 건은 별도로 제안한다.",
+  "score_interpretation": "루브릭 10축 각10점의 합계다. 90점 이상이어도 필수 상태의 관찰 증거가 없으면 PASS가 아니다. D3는 구현 결함 확정이 아닌 증거 차단이다.",
+  "first_measured_at": "2026-10-30T10:45:01.750568+00:00",
+  "completed_at": "2026-10-30T10:50:38.280622+00:00",
+  "time_limit_minutes": 8,
+  "review_scope": {
+    "mode": "제공된 실제 PNG만으로 읽기 전용 시각 리뷰",
+    "requirements": [
+      "DESIGN.md",
+      "docs/ACTIONS.md:45-56 UI와 시각 증거 부분"
+    ],
+    "required_viewports": [
+      [
+        1440,
+        900
+      ],
+      [
+        768,
+        900
+      ],
+      [
+        375,
+        900
+      ]
+    ],
+    "new_art_direction_requested": false,
+    "network_calls_to_app": false,
+    "browser_launched": false,
+    "builds_or_tests_executed": false,
+    "source_or_original_capture_written": false,
+    "git_commit_created": false,
+    "allowed_output_directory": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual"
+  },
+  "contracts_used": [
+    "omh-visual-qa/references/visual-verdict-contract.md",
+    "omh-design-quality-gate/references/design-critique-rubric.md"
+  ],
+  "confidence": "중간: 단일 읽기 전용 시각 리뷰이며 독립적인 두 번째 시각 리뷰는 이 결과에 포함하지 않았다.",
+  "direction_verdict": {
+    "maintained": true,
+    "evidence": [
+      "C01",
+      "C30",
+      "C33",
+      "C48"
+    ],
+    "assessment": "저폴리 항만 건물·컨테이너·황토색 크레인, 먹색 실면 HUD, 산성 노랑 표식과 큰 압축 워드마크를 유지한다. 권총과 수류탄도 같은 각진 저폴리 어휘를 쓴다. 사실적 폭발·새 색상·새 폰트·새 UI 구조를 요구하지 않는다."
+  },
+  "differences": [
+    {
+      "id": "D1",
+      "kind": "관찰된 경미한 계약 차이",
+      "severity": "낮음",
+      "blocking": false,
+      "axis": [
+        "State coverage"
+      ],
+      "difference": "C++ 모듈을 불러오는 로딩 캡처에서도 주 버튼 문구가 새 방 만들기로 유지된다. 375/768 상단 프레임에는 별도 로딩 설명도 보이지 않아 버튼이 흐려진 이유를 그 프레임 안에서 알기 어렵다.",
+      "suggestion": "기존 버튼 크기와 위치를 유지한 채 부팅 로딩 동안 준비 중 등 진행 문구로 교체하고 준비 완료 시 기존 문구로 복원한다. 초기 모듈 로딩을 DESIGN.md의 문구 교체 규칙에서 제외하려는 의도라면 그 예외부터 확인한다.",
+      "evidence": [
+        "C36",
+        "C37",
+        "C38"
+      ],
+      "regions": {
+        "C36": [
+          1025,
+          355,
+          1348,
+          407
+        ],
+        "C37": [
+          49,
+          695,
+          326,
+          747
+        ],
+        "C38": [
+          49,
+          694,
+          591,
+          746
+        ]
+      },
+      "requirement": [
+        "DESIGN.md:34",
+        "docs/ACTIONS.md:56"
+      ]
+    },
+    {
+      "id": "D2",
+      "kind": "관찰된 경미한 줄바꿈 차이",
+      "severity": "낮음",
+      "blocking": false,
+      "axis": [
+        "Spacing rhythm",
+        "CJK and localization fit"
+      ],
+      "difference": "375 하단 로비 조작 안내에서 Esc 키는 첫 줄 끝에, 메뉴 라벨만 다음 줄 처음에 놓여 키와 의미의 묶음이 끊어진다. 글리프 잘림이나 조작 불가를 뜻하지는 않는다.",
+      "suggestion": "Esc와 메뉴만 한 줄바꿈 불가 묶음으로 다루고 묶음 전체가 다음 줄로 흐르도록 한다. 기존 서체·팔레트·구조는 유지한다.",
+      "evidence": [
+        "C49"
+      ],
+      "regions": {
+        "C49": [
+          18,
+          748,
+          351,
+          811
+        ]
+      },
+      "requirement": [
+        "DESIGN.md:25",
+        "DESIGN.md:30"
+      ]
+    },
+    {
+      "id": "D3",
+      "kind": "필수 시각 증거 누락",
+      "severity": "증거 차단",
+      "blocking": true,
+      "axis": [
+        "State coverage"
+      ],
+      "difference": "loading-375/768와 disconnect-375/768는 파일과 상태 이름은 존재하지만 한국어 로딩/연결 끊김 원인·복구 문구가 있는 카드 하단이 프레임 밖이다. 정상 로비의 375 하단 캡처 C49는 다른 상태이므로 이 네 셀을 대신 검증하지 못한다. 이것을 DOM clipping이나 실제 스크롤 불가로 단정하지 않는다.",
+      "suggestion": "구현 변경을 가정하지 말고 같은 리비전/폭/높이에서 로딩375·768 및 연결 해제375·768 각각 상태 본문이 보이는 하단 스크롤 캡처를 추가한다. 기존 상단 캡처와 함께 스크롤 위치를 기록하고 한국어 상태·복구 안내를 재검사한다.",
+      "evidence": [
+        "C37",
+        "C38",
+        "C22",
+        "C23",
+        "C49"
+      ],
+      "missing_evidence": [
+        "loading/375/상태본문 하단",
+        "loading/768/상태본문 하단",
+        "disconnect/375/오류·복구 하단",
+        "disconnect/768/오류·복구 하단"
+      ],
+      "requirement": [
+        "docs/ACTIONS.md:56",
+        "DESIGN.md:35"
+      ],
+      "implementation_defect_confirmed": false
+    }
+  ],
+  "rubric_axes": [
+    {
+      "axis": "Hierarchy",
+      "score": 10,
+      "evidence": [
+        "C39",
+        "C48",
+        "C33",
+        "C30"
+      ],
+      "assessment": "워드마크→참가 CTA→보조 설명의 우선순위와 전투 HUD 숫자 우선순위가 명확하다."
+    },
+    {
+      "axis": "Type discipline",
+      "score": 10,
+      "evidence": [
+        "C34",
+        "C48",
+        "C49",
+        "C31"
+      ],
+      "assessment": "압축 영문 표시와 한국어 본문의 역할이 분리된다. 원본에서 글리프 잘림은 관찰하지 않았다. 실제 CSS 크기·폰트 로딩은 별도 측정하지 않았다."
+    },
+    {
+      "axis": "Spacing rhythm",
+      "score": 9,
+      "evidence": [
+        "C34",
+        "C35",
+        "C49"
+      ],
+      "assessment": "기존 패널 여백·구분선 리듬 유지. 좁은 로비 하단 Esc/메뉴 묶음 분리에 1점 감점.",
+      "difference_refs": [
+        "D2"
+      ]
+    },
+    {
+      "axis": "Color system",
+      "score": 10,
+      "evidence": [
+        "C21",
+        "C30",
+        "C43",
+        "C48"
+      ],
+      "assessment": "어두운 실면, 산성 노랑 동작/선택, 주황 오류의 역할이 유지된다. 수치 대비 AA 충족을 새로 측정했다는 뜻은 아니다."
+    },
+    {
+      "axis": "State coverage",
+      "score": 6,
+      "evidence": [
+        "C21",
+        "C36",
+        "C37",
+        "C38",
+        "C43"
+      ],
+      "assessment": "초기/복귀 메뉴·focus ring·disabled처럼 보이는 로딩·오류·무장 전환·명중·피격·처치 프레임을 확인. 로딩 CTA 문구 미교체 2점, 좁은 상태 본문 4셀 미포함 2점 감점.",
+      "difference_refs": [
+        "D1",
+        "D3"
+      ]
+    },
+    {
+      "axis": "Signature",
+      "score": 10,
+      "evidence": [
+        "C48",
+        "C01",
+        "C30"
+      ],
+      "assessment": "CROSSYARD 워드마크, 로우폴리 항만 야드, 안전표식 같은 노랑 선이 고유 서명으로 남아 있다."
+    },
+    {
+      "axis": "Motion restraint",
+      "score": 10,
+      "evidence": [
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C15",
+        "C16",
+        "C17",
+        "C24",
+        "C25",
+        "C26"
+      ],
+      "assessment": "검사한 세 설정의 정지 활성 프레임에서 핵심 총구 빛·수류탄 비행·폭발이 유지된다. 시간·흔들림 정도·전체 궤적은 점수의 검증 범위 밖이다."
+    },
+    {
+      "axis": "CJK and localization fit",
+      "score": 9,
+      "evidence": [
+        "C34",
+        "C49",
+        "C21",
+        "C31"
+      ],
+      "assessment": "새 키 한국어와 상태 문구는 원본에서 읽히고 모바일 메뉴 핵심 텍스트는 잘리지 않는다. Esc 키와 메뉴 라벨 분리에 1점 감점.",
+      "difference_refs": [
+        "D2"
+      ]
+    },
+    {
+      "axis": "Default-prior fit",
+      "score": 10,
+      "evidence": [
+        "C48",
+        "C33",
+        "C30"
+      ],
+      "assessment": "산업 현장 사격장이라는 Bold/expressive 방향에 맞으며 크림 편집·유리 카드 등 다른 미술 방향이 섞이지 않았다."
+    },
+    {
+      "axis": "Chosen, not inherited",
+      "score": 10,
+      "evidence": [
+        "C48",
+        "C43",
+        "C30"
+      ],
+      "assessment": "설명된 노랑/먹색 토큰·얇은 경계·실면 패널·압축 표시체를 유지한다. 프레임워크 기본 파랑이나 장식 그라데이션으로 바뀌지 않았다."
+    }
+  ],
+  "coverage_matrix": [
+    {
+      "surface": "로비",
+      "viewport": [
+        1440,
+        900
+      ],
+      "evidence": [
+        "C39",
+        "C48"
+      ],
+      "result": "보이는 전체 상태 확인"
+    },
+    {
+      "surface": "로비",
+      "viewport": [
+        768,
+        900
+      ],
+      "evidence": [
+        "C41",
+        "C51"
+      ],
+      "result": "상단·참가 제어 확인; 하단 정상 상태 본문은 이 폭에서 프레임 밖"
+    },
+    {
+      "surface": "로비",
+      "viewport": [
+        375,
+        900
+      ],
+      "evidence": [
+        "C40",
+        "C50",
+        "C49"
+      ],
+      "result": "상단과 하단 스크롤을 함께 확인; PC 조작 필요 안내 존재"
+    },
+    {
+      "surface": "입장 메뉴",
+      "viewport": [
+        1440,
+        900
+      ],
+      "evidence": [
+        "C33"
+      ],
+      "result": "새 키와 핵심 제어 모두 보임"
+    },
+    {
+      "surface": "입장 메뉴",
+      "viewport": [
+        768,
+        900
+      ],
+      "evidence": [
+        "C35"
+      ],
+      "result": "새 키와 핵심 제어 모두 보임"
+    },
+    {
+      "surface": "입장 메뉴",
+      "viewport": [
+        375,
+        900
+      ],
+      "evidence": [
+        "C34"
+      ],
+      "result": "한국어 원본 확대 확인; 메뉴 자체 핵심 제어 잘림 없음"
+    },
+    {
+      "surface": "활성 HUD",
+      "viewport": [
+        1440,
+        900
+      ],
+      "evidence": [
+        "C30"
+      ],
+      "result": "방·참가자·조준점·HP·자세·권총12·수류탄2 확인"
+    },
+    {
+      "surface": "활성 HUD",
+      "viewport": [
+        768,
+        900
+      ],
+      "evidence": [
+        "C32"
+      ],
+      "result": "전체 HUD 원본 확인; 필수 텍스트 겹침 없음"
+    },
+    {
+      "surface": "활성 HUD",
+      "viewport": [
+        375,
+        900
+      ],
+      "evidence": [
+        "C31"
+      ],
+      "result": "HUD 정보는 읽힘; 하단 팁이 패널 빈 가장자리와 닿지만 필수 텍스트 겹침은 보이지 않음. 3D 권총 자체는 이 프레임에 보이지 않아 이 폭의 모델 실루엣은 미검증"
+    },
+    {
+      "surface": "loading",
+      "viewport": [
+        1440,
+        900
+      ],
+      "evidence": [
+        "C36"
+      ],
+      "result": "한국어 설명과 흐려진 버튼 확인; 버튼 문구 미교체 D1"
+    },
+    {
+      "surface": "loading",
+      "viewport": [
+        768,
+        900
+      ],
+      "evidence": [
+        "C38"
+      ],
+      "result": "부분 확인; 상태 본문 프레임 밖 D3"
+    },
+    {
+      "surface": "loading",
+      "viewport": [
+        375,
+        900
+      ],
+      "evidence": [
+        "C37"
+      ],
+      "result": "부분 확인; 상태 본문 프레임 밖 D3"
+    },
+    {
+      "surface": "disconnect",
+      "viewport": [
+        1440,
+        900
+      ],
+      "evidence": [
+        "C20",
+        "C21"
+      ],
+      "result": "오류 원인과 다음 행동 원본 확대 판독"
+    },
+    {
+      "surface": "disconnect",
+      "viewport": [
+        768,
+        900
+      ],
+      "evidence": [
+        "C23"
+      ],
+      "result": "부분 확인; 오류·복구 본문 프레임 밖 D3"
+    },
+    {
+      "surface": "disconnect",
+      "viewport": [
+        375,
+        900
+      ],
+      "evidence": [
+        "C22"
+      ],
+      "result": "부분 확인; 오류·복구 본문 프레임 밖 D3"
+    }
+  ],
+  "effect_conditions": [
+    {
+      "setting": "no-preference/자동 GPU 경로",
+      "viewport": [
+        1440,
+        900
+      ],
+      "pistol": [
+        "C12",
+        "C15"
+      ],
+      "rifle_flash": [
+        "C24"
+      ],
+      "grenade": [
+        "C08",
+        "C05",
+        "C02"
+      ],
+      "menu_and_play": [
+        "C42",
+        "C45"
+      ],
+      "result": "권총 실루엣·총구 빛·수류탄 비행/폭발/사후가 보임"
+    },
+    {
+      "setting": "reduce/자동 GPU 경로",
+      "viewport": [
+        1440,
+        900
+      ],
+      "pistol": [
+        "C14",
+        "C17"
+      ],
+      "rifle_flash": [
+        "C26"
+      ],
+      "grenade": [
+        "C10",
+        "C07",
+        "C04"
+      ],
+      "menu_and_play": [
+        "C44",
+        "C47"
+      ],
+      "result": "핵심 효과 유지가 정지 프레임에서 보임"
+    },
+    {
+      "setting": "reduce/강제 WebGL2",
+      "viewport": [
+        1440,
+        900
+      ],
+      "pistol": [
+        "C13",
+        "C16"
+      ],
+      "rifle_flash": [
+        "C25"
+      ],
+      "grenade": [
+        "C09",
+        "C06",
+        "C03"
+      ],
+      "menu_and_play": [
+        "C43",
+        "C46"
+      ],
+      "result": "핵심 효과 유지와 선택/포커스 상태 확인; 중요 효과 원본 좌표 확대 검사"
+    }
+  ],
+  "capture_semantics": {
+    "canvas_only_ids": [
+      "C05",
+      "C06",
+      "C07",
+      "C08",
+      "C09",
+      "C10",
+      "C15",
+      "C16",
+      "C17",
+      "C24",
+      "C25",
+      "C26"
+    ],
+    "canvas_only_basis": [
+      "tests/e2e/game.spec.mjs:40-42 소총 효과 canvas.toDataURL",
+      "tests/e2e/game.spec.mjs:234-237 권총 효과 canvas.toDataURL",
+      "tests/e2e/game.spec.mjs:258-265 수류탄 비행/폭발 canvas.toDataURL"
+    ],
+    "rule": "canvas-only 파일에는 DOM HUD와 OS 커서가 포함되지 않는다. HUD 누락 결함이나 정상 OS 커서 증거로 해석하지 않았다. 페이지 PNG도 OS 커서 상태를 증명하지 않는다. 중앙 고정 조준점과 OS 포인터는 별개다.",
+    "gpu_smoke": [
+      "C27",
+      "C28"
+    ],
+    "gpu_smoke_basis": "tests/e2e/gpu.spec.mjs:5-26의 최소 캔버스 큐브 테스트. 두 PNG의 동일 SHA-256은 예상 가능한 픽셀 일치이며 서로 다른 API가 실행됐다는 독립적인 시각 증명은 아니다.",
+    "setting_attribution": "reduce/no-preference/강제 WebGL2라는 조건 이름은 동결된 테스트 코드와 receipt의 실행 계보에 근거한다. PNG 픽셀만으로 브라우저 GPU API나 matchMedia 값을 독립 확인할 수는 없다."
+  },
+  "channels": {
+    "rendered_pixels": "51개 모두 관찰",
+    "cjk_hotspots": "원본과 명시 좌표 확대 관찰",
+    "objective_pixel_diff": "미실행: 설정 간 픽셀 차이를 점수로 환산하지 않음",
+    "interaction_trace": "이 리뷰에서 재실행하지 않음; 테스트 코드·receipt와 시각 프레임의 범위만 구분",
+    "console_network": "이 리뷰에서 관찰하지 않음",
+    "keyboard_accessibility": "포커스 링 모습만 관찰; Tab순서·복귀·스크린리더 동작은 미검증",
+    "motion": "활성 정지 프레임과 사후 프레임 관찰; 시간/전체 궤적/카메라 흔들림 미검증",
+    "dual_independent_review": "없음"
+  },
+  "unverified": [
+    "로딩375/768 및 연결 해제375/768의 카드 하단 한국어 상태·복구 안내(D3). 정상375 하단 캡처는 대체 증거가 아니다.",
+    "768 정상 로비의 하단 스크롤 영역. 375 하단은 C49에서 확인했지만 다른 폭의 픽셀을 대신 보증하지 않는다.",
+    "375에서 권총 3D 실루엣과 효과; 이 폭에서는 선택·탄약 HUD만 보인다. PC 키보드/마우스 대상이라는 기존 제한을 새 터치 플레이 요구로 확대하지 않았다.",
+    "no-preference+강제 WebGL2 조합은 해당 51개에 없다. 검토한 설정 조합은 자동GPU/no-preference, 자동GPU/reduce, 강제WebGL2/reduce이다. 모든 폭×상태×모션×API의 완전 교차 검증은 아니다.",
+    "실제 물리 키 입력, 포인터 잠금/OS 커서 confinement, 점프·착지·피격 판정·원격 히트박스·서버 권위·네트워크 동기화는 정지 이미지로 증명하지 않음.",
+    "효과 지속시간0.35초, 수류탄2.5초 퓨즈, 전체 비행 궤적·충돌·가림·반동 감소의 시간적 품질은 이 PNG 집합만으로 완전히 검증 불가.",
+    "hover/pressed/모든 focus 이동·음소거 실제소리·중복실행 방지·복구 버튼 성공·콘솔·네트워크·대비비율·폰트 로딩·실물 LAN/터치는 이번 시각 리뷰에서 실행하지 않음."
+  ],
+  "next_gate": "우선 D3의 네 하단 상태 캡처를 같은 계보로 보충한다. D1/D2를 반영한다면 변경 리비전과 같은 조건의 새 캡처로 다음 회차를 수행한다. 이 리뷰는 소스 수정·재캡처·빌드를 실행하지 않았다.",
+  "captured_count": 51,
+  "visually_inspected_count": 51,
+  "original_full_inspected_count": 42,
+  "original_zoom_inspected_count": 9,
+  "captures": [
+    {
+      "id": "C01",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-crouch-remote.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-crouch-remote.png",
+      "sha256": "341ba0b5530233b7ed536fc82f79a5cc36a987e9bcc047f2d5e0e1718e2f8948",
+      "bytes": 45607,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-crouch-remote.png",
+      "manifest_match": true,
+      "sheet": "contact-01.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인",
+        "원본 좌표 확대 확인"
+      ],
+      "zoom_regions": [
+        [
+          22,
+          700,
+          205,
+          849
+        ]
+      ],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 1
+      },
+      "observation": "원격 청록색 로우폴리 캐릭터와 HP100 아래 앉음 표기를 확인했다. 히트박스 일치는 이 정지 화면으로 증명하지 않는다."
+    },
+    {
+      "id": "C02",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-grenade-after-no-preference.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-grenade-after-no-preference.png",
+      "sha256": "62e228202bbd72362458acb87b85f36f848bfff059d6ff7f39e4a0006936ceb3",
+      "bytes": 53981,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-grenade-after-no-preference.png",
+      "manifest_match": true,
+      "sheet": "contact-01.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 2
+      },
+      "observation": "폭발 효과가 사라진 전체 HUD에서 HP39, 앉음, 수류탄1을 읽을 수 있다."
+    },
+    {
+      "id": "C03",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-grenade-after-reduce-webgl.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-grenade-after-reduce-webgl.png",
+      "sha256": "b16f64cb20158acedd430c585059c3d7ea963b33783777af581d5648de4016e4",
+      "bytes": 53749,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-grenade-after-reduce-webgl.png",
+      "manifest_match": true,
+      "sheet": "contact-01.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 3
+      },
+      "observation": "폭발 효과가 사라진 전체 HUD에서 HP39, 앉음, 수류탄1을 읽을 수 있다."
+    },
+    {
+      "id": "C04",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-grenade-after-reduce.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-grenade-after-reduce.png",
+      "sha256": "41f2bfca2e4fc57e199f0c12c390aa21a7665c2036936a70979113de5abf1c18",
+      "bytes": 53868,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-grenade-after-reduce.png",
+      "manifest_match": true,
+      "sheet": "contact-01.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인",
+        "원본 좌표 확대 확인"
+      ],
+      "zoom_regions": [
+        [
+          22,
+          700,
+          205,
+          849
+        ]
+      ],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 1
+      },
+      "observation": "폭발 효과가 사라진 전체 HUD에서 HP39, 앉음, 수류탄1을 읽을 수 있다."
+    },
+    {
+      "id": "C05",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-grenade-blast-no-preference.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-grenade-blast-no-preference.png",
+      "sha256": "5dd74ec11690ce2bbdd3b61048d7da72fdefe6c5d28a2510608775cf78b31b3a",
+      "bytes": 98652,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-grenade-blast-no-preference.png",
+      "manifest_match": true,
+      "sheet": "contact-01.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "동적 canvas-only PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 2
+      },
+      "observation": "노란 폭발 중심과 주변 큐브 입자가 실제로 보인다. HUD/OS 커서 검증용이 아니다."
+    },
+    {
+      "id": "C06",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-grenade-blast-reduce-webgl.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-grenade-blast-reduce-webgl.png",
+      "sha256": "234973f5d09416f421ab5b5304ef8e4dc48e50f844d7e6a8118daa6da70c92dc",
+      "bytes": 98465,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-grenade-blast-reduce-webgl.png",
+      "manifest_match": true,
+      "sheet": "contact-01.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인",
+        "원본 좌표 확대 확인"
+      ],
+      "zoom_regions": [
+        [
+          410,
+          230,
+          1030,
+          565
+        ]
+      ],
+      "capture_kind": "동적 canvas-only PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 3
+      },
+      "observation": "노란 폭발 중심과 주변 큐브 입자가 실제로 보인다. HUD/OS 커서 검증용이 아니다."
+    },
+    {
+      "id": "C07",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-grenade-blast-reduce.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-grenade-blast-reduce.png",
+      "sha256": "3d09f37d6a4b754711b8518d539cfff48ec40bc9e2a631b7ba5b087ec69f8ff1",
+      "bytes": 97928,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-grenade-blast-reduce.png",
+      "manifest_match": true,
+      "sheet": "contact-01.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "동적 canvas-only PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 1
+      },
+      "observation": "노란 폭발 중심과 주변 큐브 입자가 실제로 보인다. HUD/OS 커서 검증용이 아니다."
+    },
+    {
+      "id": "C08",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-grenade-flight-no-preference.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-grenade-flight-no-preference.png",
+      "sha256": "dcce77053fa41f1b67be5588f6b9de60917757b3e297ec76d0613f92c708e663",
+      "bytes": 45142,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-grenade-flight-no-preference.png",
+      "manifest_match": true,
+      "sheet": "contact-01.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "동적 canvas-only PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 2
+      },
+      "observation": "올리브색 수류탄 몸체와 노란 윗부분이 모두 프레임 안에 보인다. 정지 프레임이며 전체 궤적 증거는 아니다."
+    },
+    {
+      "id": "C09",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-grenade-flight-reduce-webgl.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-grenade-flight-reduce-webgl.png",
+      "sha256": "b511f9ef81b46f2d288c0e6bae5552a6fba867ca6206223f01ebc0b76f86e00f",
+      "bytes": 45918,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-grenade-flight-reduce-webgl.png",
+      "manifest_match": true,
+      "sheet": "contact-01.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인",
+        "원본 좌표 확대 확인"
+      ],
+      "zoom_regions": [
+        [
+          470,
+          95,
+          970,
+          585
+        ]
+      ],
+      "capture_kind": "동적 canvas-only PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 3
+      },
+      "observation": "올리브색 수류탄 몸체와 노란 윗부분이 모두 프레임 안에 보인다. 정지 프레임이며 전체 궤적 증거는 아니다."
+    },
+    {
+      "id": "C10",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-grenade-flight-reduce.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-grenade-flight-reduce.png",
+      "sha256": "3719153b6d092e4a92df391e57e0747d30069a5dd2d0067d8b065f58c4148abd",
+      "bytes": 45941,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-grenade-flight-reduce.png",
+      "manifest_match": true,
+      "sheet": "contact-02.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "동적 canvas-only PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 1
+      },
+      "observation": "올리브색 수류탄 몸체와 노란 윗부분이 모두 프레임 안에 보인다. 정지 프레임이며 전체 궤적 증거는 아니다."
+    },
+    {
+      "id": "C11",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-jump.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-jump.png",
+      "sha256": "750e54e1ae1d6d783734b706854a0e974fc4ed9cf3595fda1be82fddcd41c364",
+      "bytes": 54400,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-jump.png",
+      "manifest_match": true,
+      "sheet": "contact-02.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 2
+      },
+      "observation": "점프 시점의 야드/총/전체 HUD를 접촉지에서 확인했다. 프레임 한 장으로 점프 높이·착지·물리를 판정하지 않는다."
+    },
+    {
+      "id": "C12",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-pistol-no-preference.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-pistol-no-preference.png",
+      "sha256": "ce999e2d03702625c891af434c2a002aae39bf55e39e7139d2cf8ae90a0b996b",
+      "bytes": 64243,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-pistol-no-preference.png",
+      "manifest_match": true,
+      "sheet": "contact-02.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 3
+      },
+      "observation": "소총보다 짧고 상부 돌출이 적은 권총 실루엣, 권총/12와 활성2, 수류탄2를 확인했다."
+    },
+    {
+      "id": "C13",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-pistol-reduce-webgl.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-pistol-reduce-webgl.png",
+      "sha256": "e400ca715fb3b19c1870727adfec0d70559d53cceaec1cc58db76ff1b6aa80ae",
+      "bytes": 64039,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-pistol-reduce-webgl.png",
+      "manifest_match": true,
+      "sheet": "contact-02.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 1
+      },
+      "observation": "소총보다 짧고 상부 돌출이 적은 권총 실루엣, 권총/12와 활성2, 수류탄2를 확인했다."
+    },
+    {
+      "id": "C14",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-pistol-reduce.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-pistol-reduce.png",
+      "sha256": "2d490162e989aa5272c578e21d38a3c207d5d529483b72be6329d0e44e9a13c3",
+      "bytes": 64224,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-pistol-reduce.png",
+      "manifest_match": true,
+      "sheet": "contact-02.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 2
+      },
+      "observation": "소총보다 짧고 상부 돌출이 적은 권총 실루엣, 권총/12와 활성2, 수류탄2를 확인했다."
+    },
+    {
+      "id": "C15",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-pistol-shot-no-preference.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-pistol-shot-no-preference.png",
+      "sha256": "7407a4553f2ea7ad0d0ec1a0a24d00824945bf04f2bfd869275d1a90de916298",
+      "bytes": 88403,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-pistol-shot-no-preference.png",
+      "manifest_match": true,
+      "sheet": "contact-02.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "동적 canvas-only PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 3
+      },
+      "observation": "짧은 권총 상부와 그 왼쪽/위로 드러나는 밝은 노란 총구 빛을 확인했다."
+    },
+    {
+      "id": "C16",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-pistol-shot-reduce-webgl.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-pistol-shot-reduce-webgl.png",
+      "sha256": "86208c8ab54718a6ea095bead06d3ea8e35f37fb35d16141c7e206679e25a043",
+      "bytes": 90048,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-pistol-shot-reduce-webgl.png",
+      "manifest_match": true,
+      "sheet": "contact-02.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인",
+        "원본 좌표 확대 확인"
+      ],
+      "zoom_regions": [
+        [
+          700,
+          435,
+          1210,
+          900
+        ]
+      ],
+      "capture_kind": "동적 canvas-only PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 1
+      },
+      "observation": "짧은 권총 상부와 그 왼쪽/위로 드러나는 밝은 노란 총구 빛을 확인했다."
+    },
+    {
+      "id": "C17",
+      "path": "docs/evidence/20261030T104003Z/captures/actions-pistol-shot-reduce.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/actions-pistol-shot-reduce.png",
+      "sha256": "9fb7bc647e0979985e841b7525c866d1faba9105f48e3039626e34c842d55ba0",
+      "bytes": 88810,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/actions-pistol-shot-reduce.png",
+      "manifest_match": true,
+      "sheet": "contact-02.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "동적 canvas-only PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 2
+      },
+      "observation": "짧은 권총 상부와 그 왼쪽/위로 드러나는 밝은 노란 총구 빛을 확인했다."
+    },
+    {
+      "id": "C18",
+      "path": "docs/evidence/20261030T104003Z/captures/browser-damage.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/browser-damage.png",
+      "sha256": "35582df7c709bf03bc1fa4cfedf8cab15bb6c1ef29a9db640f77f45823b13e07",
+      "bytes": 496348,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/browser-damage.png",
+      "manifest_match": true,
+      "sheet": "contact-02.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 3
+      },
+      "observation": "주황/적색 피격 가장자리와 HP75가 동시에 보이며 주요 HUD 문자는 읽힌다."
+    },
+    {
+      "id": "C19",
+      "path": "docs/evidence/20261030T104003Z/captures/browser-hit.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/browser-hit.png",
+      "sha256": "3af32a28b11454a76e6bc823f4233400b2865d86cca2cc0e12b875e249122628",
+      "bytes": 49406,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/browser-hit.png",
+      "manifest_match": true,
+      "sheet": "contact-03.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 1
+      },
+      "observation": "조준점 근처 노란 X 명중 표시, 총구 빛과 탄약23을 확인했다."
+    },
+    {
+      "id": "C20",
+      "path": "docs/evidence/20261030T104003Z/captures/controlled-disconnect.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/controlled-disconnect.png",
+      "sha256": "6286da24026c924b81740cf1fed4c0aef96a810ec11fe426a90e01ee362b0362",
+      "bytes": 493554,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/controlled-disconnect.png",
+      "manifest_match": true,
+      "sheet": "contact-03.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 2
+      },
+      "observation": "서버와 연결이 끊겼어요, 서버 실행 상태 확인 후 다시 입장 안내가 산업용 실면 패널에서 보인다."
+    },
+    {
+      "id": "C21",
+      "path": "docs/evidence/20261030T104003Z/captures/disconnect-1440.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/disconnect-1440.png",
+      "sha256": "1325d78ac0c702d5f208fd952d2355fc466d14872f9b53b7ffcefe7af6bdf8fc",
+      "bytes": 494227,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/disconnect-1440.png",
+      "manifest_match": true,
+      "sheet": "contact-03.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인",
+        "원본 좌표 확대 확인"
+      ],
+      "zoom_regions": [
+        [
+          1010,
+          555,
+          1355,
+          720
+        ]
+      ],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 3
+      },
+      "observation": "서버와 연결이 끊겼어요, 서버 실행 상태 확인 후 다시 입장 안내가 산업용 실면 패널에서 보인다."
+    },
+    {
+      "id": "C22",
+      "path": "docs/evidence/20261030T104003Z/captures/disconnect-375.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/disconnect-375.png",
+      "sha256": "6bd753b0fef49c072b8aecefd03efbe0555d269824bb268ab909aa5ca5ae6172",
+      "bytes": 124727,
+      "width": 375,
+      "height": 900,
+      "original_manifest_path": "work/disconnect-375.png",
+      "manifest_match": true,
+      "sheet": "contact-03.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 1
+      },
+      "observation": "연결 해제 후 로비 상단과 참가 버튼은 보이나 오류/복구 문구 영역은 프레임 밖이다. 하단 잘림 결함으로 단정하지 않는다."
+    },
+    {
+      "id": "C23",
+      "path": "docs/evidence/20261030T104003Z/captures/disconnect-768.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/disconnect-768.png",
+      "sha256": "920dd3ba71ffce360cf88337f5ba3b5855674529912cff40dc231eaa3fa9ad47",
+      "bytes": 211481,
+      "width": 768,
+      "height": 900,
+      "original_manifest_path": "work/disconnect-768.png",
+      "manifest_match": true,
+      "sheet": "contact-03.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 2
+      },
+      "observation": "연결 해제 후 로비 상단과 참가 버튼은 보이나 오류/복구 문구 영역은 프레임 밖이다. 하단 잘림 결함으로 단정하지 않는다."
+    },
+    {
+      "id": "C24",
+      "path": "docs/evidence/20261030T104003Z/captures/firing-no-preference.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/firing-no-preference.png",
+      "sha256": "32bd7b3cbe5987197ae77a2517e5fac4b85e2e7dfa6b6e99cd74e4ac2b2ec05f",
+      "bytes": 103955,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/firing-no-preference.png",
+      "manifest_match": true,
+      "sheet": "contact-03.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "동적 canvas-only PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 3
+      },
+      "observation": "소총 총구 빛이 모델에 완전히 가려지지 않고 명확히 보인다. canvas-only이다."
+    },
+    {
+      "id": "C25",
+      "path": "docs/evidence/20261030T104003Z/captures/firing-reduce-webgl.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/firing-reduce-webgl.png",
+      "sha256": "8bc53ec0172ccc069acb462cdf3711c69c90cda51b1814d8cb6354064ebbbaab",
+      "bytes": 103579,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/firing-reduce-webgl.png",
+      "manifest_match": true,
+      "sheet": "contact-03.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "동적 canvas-only PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 1
+      },
+      "observation": "소총 총구 빛이 모델에 완전히 가려지지 않고 명확히 보인다. canvas-only이다."
+    },
+    {
+      "id": "C26",
+      "path": "docs/evidence/20261030T104003Z/captures/firing-reduce.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/firing-reduce.png",
+      "sha256": "a0a169447a672bc6c16428f03e06a5ce8e3574191f1e48970929c3d6b719086a",
+      "bytes": 102858,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/firing-reduce.png",
+      "manifest_match": true,
+      "sheet": "contact-03.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "동적 canvas-only PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 2
+      },
+      "observation": "소총 총구 빛이 모델에 완전히 가려지지 않고 명확히 보인다. canvas-only이다."
+    },
+    {
+      "id": "C27",
+      "path": "docs/evidence/20261030T104003Z/captures/gpu-auto.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/gpu-auto.png",
+      "sha256": "aaf8270446dfd2648f7496591980f646fd35c2e976d91c6facf3e5ae92c05ee2",
+      "bytes": 6003,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/gpu-auto.png",
+      "manifest_match": true,
+      "sheet": "contact-03.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "GPU 최소 재현 페이지 전체 PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 3
+      },
+      "observation": "흰 페이지 왼쪽 위 작은 청회색 캔버스와 붉은 큐브가 보이는 최소 GPU 테스트이다. 로비 누락/게임 화면 깨짐으로 판단하지 않는다."
+    },
+    {
+      "id": "C28",
+      "path": "docs/evidence/20261030T104003Z/captures/gpu-webgl.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/gpu-webgl.png",
+      "sha256": "aaf8270446dfd2648f7496591980f646fd35c2e976d91c6facf3e5ae92c05ee2",
+      "bytes": 6003,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/gpu-webgl.png",
+      "manifest_match": true,
+      "sheet": "contact-04.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "GPU 최소 재현 페이지 전체 PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 1
+      },
+      "observation": "흰 페이지 왼쪽 위 작은 청회색 캔버스와 붉은 큐브가 보이는 최소 GPU 테스트이다. 로비 누락/게임 화면 깨짐으로 판단하지 않는다."
+    },
+    {
+      "id": "C29",
+      "path": "docs/evidence/20261030T104003Z/captures/kill-confirmation.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/kill-confirmation.png",
+      "sha256": "b93d0d2d2d2b3b94cc9dcebe74fabb98f0fec632a8dbe2881accbafd706d2a5f",
+      "bytes": 47620,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/kill-confirmation.png",
+      "manifest_match": true,
+      "sheet": "contact-04.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 2
+      },
+      "observation": "처치 확인 문구와 점수1/0을 확인했다."
+    },
+    {
+      "id": "C30",
+      "path": "docs/evidence/20261030T104003Z/captures/live-hud-1440.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/live-hud-1440.png",
+      "sha256": "08e09093c2bd9458446e1e6edebb48d85750ed01578b6fa6de91b65482e4d0dd",
+      "bytes": 51026,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/live-hud-1440.png",
+      "manifest_match": true,
+      "sheet": "contact-04.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 3
+      },
+      "observation": "방/참가자/조준점/HP/권총12/선택 슬롯/수류탄2/자세가 분리되어 읽힌다. 375 프레임에서는 권총 3D 모델 자체는 보이지 않는다."
+    },
+    {
+      "id": "C31",
+      "path": "docs/evidence/20261030T104003Z/captures/live-hud-375.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/live-hud-375.png",
+      "sha256": "52f792bf06a8e5ccec8424a73c0d2667b29cd0917f8d2e9ec053a9ac045e1aca",
+      "bytes": 20717,
+      "width": 375,
+      "height": 900,
+      "original_manifest_path": "work/live-hud-375.png",
+      "manifest_match": true,
+      "sheet": "contact-04.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인",
+        "원본 좌표 확대 확인"
+      ],
+      "zoom_regions": [
+        [
+          10,
+          650,
+          365,
+          899
+        ]
+      ],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 1
+      },
+      "observation": "방/참가자/조준점/HP/권총12/선택 슬롯/수류탄2/자세가 분리되어 읽힌다. 375 프레임에서는 권총 3D 모델 자체는 보이지 않는다."
+    },
+    {
+      "id": "C32",
+      "path": "docs/evidence/20261030T104003Z/captures/live-hud-768.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/live-hud-768.png",
+      "sha256": "eba111568615d7d0c2bbed65c8cd4baaad04eca97d14021fdb15c12b2dbf03c3",
+      "bytes": 34757,
+      "width": 768,
+      "height": 900,
+      "original_manifest_path": "work/live-hud-768.png",
+      "manifest_match": true,
+      "sheet": "contact-04.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 2
+      },
+      "observation": "방/참가자/조준점/HP/권총12/선택 슬롯/수류탄2/자세가 분리되어 읽힌다. 375 프레임에서는 권총 3D 모델 자체는 보이지 않는다."
+    },
+    {
+      "id": "C33",
+      "path": "docs/evidence/20261030T104003Z/captures/live-menu-1440.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/live-menu-1440.png",
+      "sha256": "c624143d809093f93df74a1ff84cd058c9cc87774c710f62ffb377e0d4da2cbd",
+      "bytes": 52532,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/live-menu-1440.png",
+      "manifest_match": true,
+      "sheet": "contact-04.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 3
+      },
+      "observation": "메뉴의 Space/C/1/2/G 안내, 감도, 효과 줄이기, 음소거와 나가기가 읽히며 핵심 제어 잘림은 보이지 않는다."
+    },
+    {
+      "id": "C34",
+      "path": "docs/evidence/20261030T104003Z/captures/live-menu-375.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/live-menu-375.png",
+      "sha256": "9bf6891571c67f5369b4283259dd0b5504e78ccc872fcaefdf2970976f9800fc",
+      "bytes": 27212,
+      "width": 375,
+      "height": 900,
+      "original_manifest_path": "work/live-menu-375.png",
+      "manifest_match": true,
+      "sheet": "contact-04.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인",
+        "원본 좌표 확대 확인"
+      ],
+      "zoom_regions": [
+        [
+          27,
+          235,
+          345,
+          765
+        ]
+      ],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 1
+      },
+      "observation": "메뉴의 Space/C/1/2/G 안내, 감도, 효과 줄이기, 음소거와 나가기가 읽히며 핵심 제어 잘림은 보이지 않는다."
+    },
+    {
+      "id": "C35",
+      "path": "docs/evidence/20261030T104003Z/captures/live-menu-768.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/live-menu-768.png",
+      "sha256": "6dfd4a8a70d60384b3472622c23bf878710b15e5cfcfe29b970f410fb11c35a6",
+      "bytes": 41104,
+      "width": 768,
+      "height": 900,
+      "original_manifest_path": "work/live-menu-768.png",
+      "manifest_match": true,
+      "sheet": "contact-04.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 2
+      },
+      "observation": "메뉴의 Space/C/1/2/G 안내, 감도, 효과 줄이기, 음소거와 나가기가 읽히며 핵심 제어 잘림은 보이지 않는다."
+    },
+    {
+      "id": "C36",
+      "path": "docs/evidence/20261030T104003Z/captures/loading-1440.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/loading-1440.png",
+      "sha256": "79afdef717a2e02f445f04bda25163425adba3728ed5005b20c22f6813ffbb38",
+      "bytes": 320690,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/loading-1440.png",
+      "manifest_match": true,
+      "sheet": "contact-04.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 3
+      },
+      "observation": "부팅 로딩 설명은 읽힌다. 비활성처럼 보이는 주 버튼은 여전히 새 방 만들기라고 표시된다."
+    },
+    {
+      "id": "C37",
+      "path": "docs/evidence/20261030T104003Z/captures/loading-375.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/loading-375.png",
+      "sha256": "38343037910578b79eb7b9a165db4c63553f4c7afbd489073087a29ae5294357",
+      "bytes": 79652,
+      "width": 375,
+      "height": 900,
+      "original_manifest_path": "work/loading-375.png",
+      "manifest_match": true,
+      "sheet": "contact-05.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 1
+      },
+      "observation": "부팅 로딩 중 낮아진 버튼 강조는 보이나 버튼 문구는 새 방 만들기이며 설명 상태 영역은 프레임 밖이다."
+    },
+    {
+      "id": "C38",
+      "path": "docs/evidence/20261030T104003Z/captures/loading-768.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/loading-768.png",
+      "sha256": "56112e38d6dd9c45106c1c63e472e3f3ee5afbf9fdd9d3beccc21ef1a21b22cb",
+      "bytes": 122485,
+      "width": 768,
+      "height": 900,
+      "original_manifest_path": "work/loading-768.png",
+      "manifest_match": true,
+      "sheet": "contact-05.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 2
+      },
+      "observation": "부팅 로딩 중 낮아진 버튼 강조는 보이나 버튼 문구는 새 방 만들기이며 설명 상태 영역은 프레임 밖이다."
+    },
+    {
+      "id": "C39",
+      "path": "docs/evidence/20261030T104003Z/captures/lobby-1440.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/lobby-1440.png",
+      "sha256": "84baa61d1d525d22b6120f5a8512db118bd5007cc36775220c448e6fb7bc2705",
+      "bytes": 493677,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/lobby-1440.png",
+      "manifest_match": true,
+      "sheet": "contact-05.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 3
+      },
+      "observation": "큰 압축형 워드마크·산성 노랑·어두운 실면 참가 패널과 저폴리 야드가 유지된다. 375/768 상단 프레임만으로 카드 하단을 판정하지 않는다."
+    },
+    {
+      "id": "C40",
+      "path": "docs/evidence/20261030T104003Z/captures/lobby-375.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/lobby-375.png",
+      "sha256": "b000ea3532e635e7c0944d32974a5c7abebf1f6c85607fbaa79bc465af71dbfd",
+      "bytes": 124168,
+      "width": 375,
+      "height": 900,
+      "original_manifest_path": "work/lobby-375.png",
+      "manifest_match": true,
+      "sheet": "contact-05.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 1
+      },
+      "observation": "큰 압축형 워드마크·산성 노랑·어두운 실면 참가 패널과 저폴리 야드가 유지된다. 375/768 상단 프레임만으로 카드 하단을 판정하지 않는다."
+    },
+    {
+      "id": "C41",
+      "path": "docs/evidence/20261030T104003Z/captures/lobby-768.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/lobby-768.png",
+      "sha256": "eb0770ea94673ef94333c0a62a9e0069f8e71130a388a0d6f925fbaaa806fe9f",
+      "bytes": 211243,
+      "width": 768,
+      "height": 900,
+      "original_manifest_path": "work/lobby-768.png",
+      "manifest_match": true,
+      "sheet": "contact-05.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 2
+      },
+      "observation": "큰 압축형 워드마크·산성 노랑·어두운 실면 참가 패널과 저폴리 야드가 유지된다. 375/768 상단 프레임만으로 카드 하단을 판정하지 않는다."
+    },
+    {
+      "id": "C42",
+      "path": "docs/evidence/20261030T104003Z/captures/menu-no-preference.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/menu-no-preference.png",
+      "sha256": "035d23eddbdb238382bb8a40e63179f104c036b7b01377824ea58af54977aa6c",
+      "bytes": 60014,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/menu-no-preference.png",
+      "manifest_match": true,
+      "sheet": "contact-05.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 3
+      },
+      "observation": "복귀 버튼의 밝은 포커스 링과 새 키 안내가 보인다. reduce 두 장은 효과 줄이기 체크 표시가 있다."
+    },
+    {
+      "id": "C43",
+      "path": "docs/evidence/20261030T104003Z/captures/menu-reduce-webgl.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/menu-reduce-webgl.png",
+      "sha256": "d394b2405df9677d62617f68991d3beda686b8d01d50f373ef9c8e6e1a5125b4",
+      "bytes": 60420,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/menu-reduce-webgl.png",
+      "manifest_match": true,
+      "sheet": "contact-05.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 1
+      },
+      "observation": "복귀 버튼의 밝은 포커스 링과 새 키 안내가 보인다. reduce 두 장은 효과 줄이기 체크 표시가 있다."
+    },
+    {
+      "id": "C44",
+      "path": "docs/evidence/20261030T104003Z/captures/menu-reduce.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/menu-reduce.png",
+      "sha256": "9669fe50f1caaaeb0ed9f15a3d44bf369e4372560d59ab2d52d9684bce9557d1",
+      "bytes": 60078,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/menu-reduce.png",
+      "manifest_match": true,
+      "sheet": "contact-05.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 2
+      },
+      "observation": "복귀 버튼의 밝은 포커스 링과 새 키 안내가 보인다. reduce 두 장은 효과 줄이기 체크 표시가 있다."
+    },
+    {
+      "id": "C45",
+      "path": "docs/evidence/20261030T104003Z/captures/play-no-preference.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/play-no-preference.png",
+      "sha256": "59f728126a99431611b038cfed7bd4efab0337b97a47ac2d28ab8623a6f70970",
+      "bytes": 59132,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/play-no-preference.png",
+      "manifest_match": true,
+      "sheet": "contact-05.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 3,
+        "column": 3
+      },
+      "observation": "로우폴리 야드와 기존 산업용 HUD가 유지되며 주요 패널 간 필수 텍스트 겹침은 보이지 않는다."
+    },
+    {
+      "id": "C46",
+      "path": "docs/evidence/20261030T104003Z/captures/play-reduce-webgl.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/play-reduce-webgl.png",
+      "sha256": "62b7a9a1aad44adb7477ffc473727b04bad745380ea2efd6f62700b52eb0a2a7",
+      "bytes": 60342,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/play-reduce-webgl.png",
+      "manifest_match": true,
+      "sheet": "contact-06.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 1
+      },
+      "observation": "로우폴리 야드와 기존 산업용 HUD가 유지되며 주요 패널 간 필수 텍스트 겹침은 보이지 않는다."
+    },
+    {
+      "id": "C47",
+      "path": "docs/evidence/20261030T104003Z/captures/play-reduce.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/play-reduce.png",
+      "sha256": "7b248f6c781ec85bae70d5e2985ad4d5dee5be16b666202cc1602d0683a8ac0f",
+      "bytes": 59016,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/play-reduce.png",
+      "manifest_match": true,
+      "sheet": "contact-06.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 2
+      },
+      "observation": "로우폴리 야드와 기존 산업용 HUD가 유지되며 주요 패널 간 필수 텍스트 겹침은 보이지 않는다."
+    },
+    {
+      "id": "C48",
+      "path": "docs/evidence/20261030T104003Z/captures/rendered-lobby-1440.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/rendered-lobby-1440.png",
+      "sha256": "f2d4b7a2e70b04731bafb5935ba49abb6627d00d8645875dae2e0fbdaac2d0fe",
+      "bytes": 493502,
+      "width": 1440,
+      "height": 900,
+      "original_manifest_path": "work/rendered-lobby-1440.png",
+      "manifest_match": true,
+      "sheet": "contact-06.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 1,
+        "column": 3
+      },
+      "observation": "큰 압축형 워드마크·산성 노랑·어두운 실면 참가 패널과 저폴리 야드가 유지된다. 375/768 상단 프레임만으로 카드 하단을 판정하지 않는다."
+    },
+    {
+      "id": "C49",
+      "path": "docs/evidence/20261030T104003Z/captures/rendered-lobby-375-bottom.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/rendered-lobby-375-bottom.png",
+      "sha256": "8fff507ef545f4fb4851c0f159c9b4f95a92c081289fe61996dd9d740086ead0",
+      "bytes": 84182,
+      "width": 375,
+      "height": 900,
+      "original_manifest_path": "work/rendered-lobby-375-bottom.png",
+      "manifest_match": true,
+      "sheet": "contact-06.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인",
+        "원본 좌표 확대 확인"
+      ],
+      "zoom_regions": [
+        [
+          18,
+          748,
+          351,
+          891
+        ]
+      ],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 1
+      },
+      "observation": "375 하단 스크롤에서 정상 참가 안내와 PC 키보드·마우스 안내를 읽었다. Esc 키와 메뉴 라벨은 서로 다른 줄로 갈라진다."
+    },
+    {
+      "id": "C50",
+      "path": "docs/evidence/20261030T104003Z/captures/rendered-lobby-375.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/rendered-lobby-375.png",
+      "sha256": "b981480b3c06ce28032a53db605d4f27c8b1d87f945e52aab245f303f57a532d",
+      "bytes": 124196,
+      "width": 375,
+      "height": 900,
+      "original_manifest_path": "work/rendered-lobby-375.png",
+      "manifest_match": true,
+      "sheet": "contact-06.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 2
+      },
+      "observation": "큰 압축형 워드마크·산성 노랑·어두운 실면 참가 패널과 저폴리 야드가 유지된다. 375/768 상단 프레임만으로 카드 하단을 판정하지 않는다."
+    },
+    {
+      "id": "C51",
+      "path": "docs/evidence/20261030T104003Z/captures/rendered-lobby-768.png",
+      "absolute_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/captures/rendered-lobby-768.png",
+      "sha256": "69fbe46d16873ed6b206c9958b6d3de77658d1fe5a8fc38209c46e833d9badde",
+      "bytes": 211206,
+      "width": 768,
+      "height": 900,
+      "original_manifest_path": "work/rendered-lobby-768.png",
+      "manifest_match": true,
+      "sheet": "contact-06.png",
+      "visually_inspected": true,
+      "inspection": [
+        "전체 접촉지 해당 칸 확인",
+        "원본 전체 확인"
+      ],
+      "zoom_regions": [],
+      "capture_kind": "앱 전체 viewport PNG",
+      "source_lineage_ref": "target_lineage",
+      "sheet_cell": {
+        "row": 2,
+        "column": 3
+      },
+      "observation": "큰 압축형 워드마크·산성 노랑·어두운 실면 참가 패널과 저폴리 야드가 유지된다. 375/768 상단 프레임만으로 카드 하단을 판정하지 않는다."
+    }
+  ],
+  "contact_sheets": [
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/contact-01.png",
+      "sha256": "89d0e4ee1d7ed85b9761e3475f058eba66ff88c0590beb613c9815dc0783731b",
+      "bytes": 198898,
+      "width": 1536,
+      "height": 1104,
+      "visually_inspected": true
+    },
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/contact-02.png",
+      "sha256": "e8bb6578e687a8d83cebf880faa4ac41f6c33bf29ca07288fb0c8897546b46fe",
+      "bytes": 317910,
+      "width": 1536,
+      "height": 1104,
+      "visually_inspected": true
+    },
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/contact-03.png",
+      "sha256": "46fc52e08bc19b44b324fb77abddabe2383809c85285bdf2cdacdb04fb26c6e1",
+      "bytes": 378328,
+      "width": 1536,
+      "height": 1104,
+      "visually_inspected": true
+    },
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/contact-04.png",
+      "sha256": "340d875723a199a5cb80d0d0091ea03b6d32c18cc566c6596e7e9b5311ae66c5",
+      "bytes": 300692,
+      "width": 1536,
+      "height": 1104,
+      "visually_inspected": true
+    },
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/contact-05.png",
+      "sha256": "3a3bd8df15c10acd29c9d5686dfdc8daff7875a47c47e8fd79b7ef2c0e4e5dcd",
+      "bytes": 452332,
+      "width": 1536,
+      "height": 1104,
+      "visually_inspected": true
+    },
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/contact-06.png",
+      "sha256": "d19876c2bc556f5eefcc77fdea7a54325514f203ffbcb7d30125df0f0ec4615a",
+      "bytes": 331621,
+      "width": 1536,
+      "height": 1104,
+      "visually_inspected": true
+    }
+  ],
+  "receipt": {
+    "path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/20261030T104003Z/receipt.json",
+    "sha256": "7e502d84ecd6ccfa2f20970bc239392ff49d33063bd41331314767c9beb72c7a",
+    "archival_status": "현재 HEAD에 커밋되지 않은 untracked 증거 폴더. 읽기 전용으로 검증했으며 커밋하지 않았다.",
+    "claims_not_rerun": "receipt의 build/tests passed 표시는 이전 실행 기록이며 이번 실행 결과로 재주장하지 않았다."
+  },
+  "source_verification": [
+    {
+      "path": ".gitattributes",
+      "expected": "a27ec0af828b6749421ca24d1fd09b0515c3b0a79ff6ec7531bbf6d12b96e5dc",
+      "actual": "a27ec0af828b6749421ca24d1fd09b0515c3b0a79ff6ec7531bbf6d12b96e5dc",
+      "match": true
+    },
+    {
+      "path": ".gitignore",
+      "expected": "138d4ce548f2f360bbb7d08ab6111b3062b40c1b076a66de40dfb62136b818c1",
+      "actual": "138d4ce548f2f360bbb7d08ab6111b3062b40c1b076a66de40dfb62136b818c1",
+      "match": true
+    },
+    {
+      "path": "BUILD.cmd",
+      "expected": "c1b93b850fd3051268c55302d127058d1ba3c8aec70f6c2e06eabc02c274b875",
+      "actual": "c1b93b850fd3051268c55302d127058d1ba3c8aec70f6c2e06eabc02c274b875",
+      "match": true
+    },
+    {
+      "path": "client/camera.hpp",
+      "expected": "956a98462f99c24fe0e8ad50027c5a38f46c89f4c52f3ca80bd704e5e810f9b6",
+      "actual": "956a98462f99c24fe0e8ad50027c5a38f46c89f4c52f3ca80bd704e5e810f9b6",
+      "match": true
+    },
+    {
+      "path": "client/main.cpp",
+      "expected": "c23e016a789d1457d9d4a820bf477796d7c054901b0368286fe97ab059bd538f",
+      "actual": "c23e016a789d1457d9d4a820bf477796d7c054901b0368286fe97ab059bd538f",
+      "match": true
+    },
+    {
+      "path": "core/bridge.cpp",
+      "expected": "1c84eb4e6242aa971dc1d15c493b455777b42f9030a6fefb1550b47ed3645111",
+      "actual": "1c84eb4e6242aa971dc1d15c493b455777b42f9030a6fefb1550b47ed3645111",
+      "match": true
+    },
+    {
+      "path": "core/game.cpp",
+      "expected": "77804341e51d1cfd80d7a6aa963a00e36e2f96d58a23bd1373e9f2bccfdae281",
+      "actual": "77804341e51d1cfd80d7a6aa963a00e36e2f96d58a23bd1373e9f2bccfdae281",
+      "match": true
+    },
+    {
+      "path": "DESIGN.md",
+      "expected": "6394b709507a4d4d6d431d5e183cf46fab90f626c20c58a6fb7339c32380eed6",
+      "actual": "6394b709507a4d4d6d431d5e183cf46fab90f626c20c58a6fb7339c32380eed6",
+      "match": true
+    },
+    {
+      "path": "docs/ACTIONS.md",
+      "expected": "291561cf9753bd55733b2eb9bed31f87df3f9bfa9655e5db78c609c3cafc8b9a",
+      "actual": "291561cf9753bd55733b2eb9bed31f87df3f9bfa9655e5db78c609c3cafc8b9a",
+      "match": true
+    },
+    {
+      "path": "docs/PLAN.md",
+      "expected": "58840bb6272ec82e79d678873cad6c3bca7576f73ad2b9820aeb56650f52ed46",
+      "actual": "58840bb6272ec82e79d678873cad6c3bca7576f73ad2b9820aeb56650f52ed46",
+      "match": true
+    },
+    {
+      "path": "docs/PROTOCOL.md",
+      "expected": "a1a926bdc1adb1371fcea366c8d49801252b414763de7baf60b51dfb1e0a4bb8",
+      "actual": "a1a926bdc1adb1371fcea366c8d49801252b414763de7baf60b51dfb1e0a4bb8",
+      "match": true
+    },
+    {
+      "path": "include/arena.hpp",
+      "expected": "5ac5531c2b83f65d034992d5790e00511826e7a64e85b61a756c73857bc5ba17",
+      "actual": "5ac5531c2b83f65d034992d5790e00511826e7a64e85b61a756c73857bc5ba17",
+      "match": true
+    },
+    {
+      "path": "package-lock.json",
+      "expected": "f4117f70cc4d17933532d7032148512676223379c2ca8de9e5ec56f8177c4e6b",
+      "actual": "f4117f70cc4d17933532d7032148512676223379c2ca8de9e5ec56f8177c4e6b",
+      "match": true
+    },
+    {
+      "path": "package.json",
+      "expected": "74fa06267efac8cc1b9a80481b4428aa0e08a3cfcac441cfdbd01a1a05e2d0c3",
+      "actual": "74fa06267efac8cc1b9a80481b4428aa0e08a3cfcac441cfdbd01a1a05e2d0c3",
+      "match": true
+    },
+    {
+      "path": "playwright.config.mjs",
+      "expected": "11d78186ea7c8a3fb5f591c5a5bbe39769adc138153bc0fed70b76aa5a57c640",
+      "actual": "11d78186ea7c8a3fb5f591c5a5bbe39769adc138153bc0fed70b76aa5a57c640",
+      "match": true
+    },
+    {
+      "path": "playwright.game.config.mjs",
+      "expected": "49b85b3382b9ca9b6044b9e7813752e5713668b53aa82ee0d35919de8464a09c",
+      "actual": "49b85b3382b9ca9b6044b9e7813752e5713668b53aa82ee0d35919de8464a09c",
+      "match": true
+    },
+    {
+      "path": "README.md",
+      "expected": "13f49f4ae6a8375ca93813184d0e7d3504c57bba7de48b1048d73a3f78440119",
+      "actual": "13f49f4ae6a8375ca93813184d0e7d3504c57bba7de48b1048d73a3f78440119",
+      "match": true
+    },
+    {
+      "path": "scripts/build.py",
+      "expected": "93205655217756d786b5c851cbb8e821411fbcdf1a490d2d8065a1cd79edf7e7",
+      "actual": "93205655217756d786b5c851cbb8e821411fbcdf1a490d2d8065a1cd79edf7e7",
+      "match": true
+    },
+    {
+      "path": "scripts/launcher-smoke.py",
+      "expected": "57ab7f2c1cd4b551407a9e7666564f44e1d6d5006455df44e43add0c58e0c8d2",
+      "actual": "57ab7f2c1cd4b551407a9e7666564f44e1d6d5006455df44e43add0c58e0c8d2",
+      "match": true
+    },
+    {
+      "path": "scripts/live-smoke.mjs",
+      "expected": "a852d8d894a38f9dcdb3b4fa263043df7af258a8c506c567da8cb60d817641cc",
+      "actual": "a852d8d894a38f9dcdb3b4fa263043df7af258a8c506c567da8cb60d817641cc",
+      "match": true
+    },
+    {
+      "path": "scripts/verify.py",
+      "expected": "7cfa6de23997ea210f87900286db1b7d5add60ed591b6d301c0f2767aa4b5562",
+      "actual": "7cfa6de23997ea210f87900286db1b7d5add60ed591b6d301c0f2767aa4b5562",
+      "match": true
+    },
+    {
+      "path": "server/app.mjs",
+      "expected": "0901365d811654fe85d777c8a24addcf38ad34e94107482cb962b37abbc1ba4d",
+      "actual": "0901365d811654fe85d777c8a24addcf38ad34e94107482cb962b37abbc1ba4d",
+      "match": true
+    },
+    {
+      "path": "server/engine.mjs",
+      "expected": "4c9accc3862574b4927f369d8dc0f9fffc3c2123bf07c39a20806362426faaea",
+      "actual": "4c9accc3862574b4927f369d8dc0f9fffc3c2123bf07c39a20806362426faaea",
+      "match": true
+    },
+    {
+      "path": "server/main.mjs",
+      "expected": "1587233e818d7a7c0a4f240a44579d42102d33c76fa1640363033ce3af3ad485",
+      "actual": "1587233e818d7a7c0a4f240a44579d42102d33c76fa1640363033ce3af3ad485",
+      "match": true
+    },
+    {
+      "path": "server/peer.mjs",
+      "expected": "e55b49f6bbb26ae14e0245d731cf68cb2f229e10f85949dba6506fe90f2e2697",
+      "actual": "e55b49f6bbb26ae14e0245d731cf68cb2f229e10f85949dba6506fe90f2e2697",
+      "match": true
+    },
+    {
+      "path": "server/protocol.mjs",
+      "expected": "5b336558fb1768dd1d20ac18edf491290cee1acc8f813810400f7dbbd1645985",
+      "actual": "5b336558fb1768dd1d20ac18edf491290cee1acc8f813810400f7dbbd1645985",
+      "match": true
+    },
+    {
+      "path": "START.cmd",
+      "expected": "a834a91e2d01136664baabcfd92f4f1220c1dbdaffb206eb71ddcbff67697209",
+      "actual": "a834a91e2d01136664baabcfd92f4f1220c1dbdaffb206eb71ddcbff67697209",
+      "match": true
+    },
+    {
+      "path": "tests/cli-server.test.mjs",
+      "expected": "14202a70114090f1db5a552d6e4d4f898ac69860460887c5357617c1e103402d",
+      "actual": "14202a70114090f1db5a552d6e4d4f898ac69860460887c5357617c1e103402d",
+      "match": true
+    },
+    {
+      "path": "tests/client_math_tests.cpp",
+      "expected": "2c9cca94cddd678a53ff5a6bfa4fa94870e9282851cb8ed2ac78b86b761aa37d",
+      "actual": "2c9cca94cddd678a53ff5a6bfa4fa94870e9282851cb8ed2ac78b86b761aa37d",
+      "match": true
+    },
+    {
+      "path": "tests/core_tests.cpp",
+      "expected": "0bf20b4490608f4395c939909726a7c703703509e694e77c678a8e326e0fca3e",
+      "actual": "0bf20b4490608f4395c939909726a7c703703509e694e77c678a8e326e0fca3e",
+      "match": true
+    },
+    {
+      "path": "tests/e2e/client-contract.spec.mjs",
+      "expected": "36a23c6d34e7dcd58bc0fd3244aa232e76bc9eb7b51699f0f8b6dc35426ef13d",
+      "actual": "36a23c6d34e7dcd58bc0fd3244aa232e76bc9eb7b51699f0f8b6dc35426ef13d",
+      "match": true
+    },
+    {
+      "path": "tests/e2e/game.spec.mjs",
+      "expected": "c56b2c681aa5cc58c7313695a9adbefe3ea4730295ad45be97514c6d30120938",
+      "actual": "c56b2c681aa5cc58c7313695a9adbefe3ea4730295ad45be97514c6d30120938",
+      "match": true
+    },
+    {
+      "path": "tests/e2e/gpu.spec.mjs",
+      "expected": "9c61c30fec320a8b8b951c6d522a24a3146044efa883367bb54fed2057486b58",
+      "actual": "9c61c30fec320a8b8b951c6d522a24a3146044efa883367bb54fed2057486b58",
+      "match": true
+    },
+    {
+      "path": "tests/e2e/lobby-render.spec.mjs",
+      "expected": "0ebb7862244a8661299a5687b97aa6779867042e04c3b4b8bbe95c650d52df55",
+      "actual": "0ebb7862244a8661299a5687b97aa6779867042e04c3b4b8bbe95c650d52df55",
+      "match": true
+    },
+    {
+      "path": "tests/e2e/shell.spec.mjs",
+      "expected": "a66720b30a346b5d2d26c500676a18cb14e15b4b386649acd908ee3397d552df",
+      "actual": "a66720b30a346b5d2d26c500676a18cb14e15b4b386649acd908ee3397d552df",
+      "match": true
+    },
+    {
+      "path": "tests/engine-server.test.mjs",
+      "expected": "2c3f5e3af1e67fa7be517c762b796ec36979116cfac86b77dc47eec403256a29",
+      "actual": "2c3f5e3af1e67fa7be517c762b796ec36979116cfac86b77dc47eec403256a29",
+      "match": true
+    },
+    {
+      "path": "tests/gpu-geometry.test.mjs",
+      "expected": "9978d2567563978b35b466cfe99934a9119aa5a7baf8fdd708ffe62f73b8743f",
+      "actual": "9978d2567563978b35b466cfe99934a9119aa5a7baf8fdd708ffe62f73b8743f",
+      "match": true
+    },
+    {
+      "path": "tests/protocol-server.test.mjs",
+      "expected": "9f9cbcc5fa61fdf3ed6b0cae379d8c4d1ed19a9830fa634ec20fefb77ff20614",
+      "actual": "9f9cbcc5fa61fdf3ed6b0cae379d8c4d1ed19a9830fa634ec20fefb77ff20614",
+      "match": true
+    },
+    {
+      "path": "tests/transport-peer.test.mjs",
+      "expected": "12dd946e94bc0fb44283fbaec7c0082ece455a3dbebf19db17531047dc581f51",
+      "actual": "12dd946e94bc0fb44283fbaec7c0082ece455a3dbebf19db17531047dc581f51",
+      "match": true
+    },
+    {
+      "path": "tests/transport-server.test.mjs",
+      "expected": "ff42599220f46f45e63c5584ecfc5f26f7c67450f549d51fbd9fa9b3eaaaf191",
+      "actual": "ff42599220f46f45e63c5584ecfc5f26f7c67450f549d51fbd9fa9b3eaaaf191",
+      "match": true
+    },
+    {
+      "path": "web/app.mjs",
+      "expected": "2f30c048c6c407d1ce43170a2d5716ae58ccf9a51f1ad831012cb134d347e777",
+      "actual": "2f30c048c6c407d1ce43170a2d5716ae58ccf9a51f1ad831012cb134d347e777",
+      "match": true
+    },
+    {
+      "path": "web/gpu.mjs",
+      "expected": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+      "actual": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+      "match": true
+    },
+    {
+      "path": "web/index.html",
+      "expected": "f1f89d78b346e9ffd8bc7e060bf9b949e8e08e712af9c1ec76e5c84a62e2f609",
+      "actual": "f1f89d78b346e9ffd8bc7e060bf9b949e8e08e712af9c1ec76e5c84a62e2f609",
+      "match": true
+    },
+    {
+      "path": "web/style.css",
+      "expected": "be5c8afe3e5239f5d529384f0dfcf5c2106b333ea80b842d1d8849e6c2dc890e",
+      "actual": "be5c8afe3e5239f5d529384f0dfcf5c2106b333ea80b842d1d8849e6c2dc890e",
+      "match": true
+    }
+  ],
+  "build_outputs_verification": [
+    {
+      "path": "build/sim.mjs",
+      "expected": "629fc99736c1d517e531ed47125fa27854461897da0dc8344fa34be6985c5f25",
+      "actual": "629fc99736c1d517e531ed47125fa27854461897da0dc8344fa34be6985c5f25",
+      "match": true
+    },
+    {
+      "path": "build/sim.wasm",
+      "expected": "41e680cfd335059b99b488898239a0f8fc14563ab8bf42a231be99d12936fcd3",
+      "actual": "41e680cfd335059b99b488898239a0f8fc14563ab8bf42a231be99d12936fcd3",
+      "match": true
+    },
+    {
+      "path": "web/dist/client.mjs",
+      "expected": "b80adfe0d807d83a48db119f26643db3ab69fcf7d3c01974f5466daa1311d91c",
+      "actual": "b80adfe0d807d83a48db119f26643db3ab69fcf7d3c01974f5466daa1311d91c",
+      "match": true
+    },
+    {
+      "path": "web/dist/client.wasm",
+      "expected": "873ef54cf687b731f1a87c98ea5c1ed5a2594e7edff53cf0e2b985ea4d30f7fe",
+      "actual": "873ef54cf687b731f1a87c98ea5c1ed5a2594e7edff53cf0e2b985ea4d30f7fe",
+      "match": true
+    }
+  ],
+  "scope_verification": {
+    "checked_at": "2026-10-30T10:50:38.280622+00:00",
+    "head": "6f4e21867a4f2f1be777ea689d7df60925a641e3",
+    "tracked_diff_exit": 0,
+    "git_status": "?? docs/evidence/20261030T104003Z/\n",
+    "source_changed": [],
+    "build_changed": [],
+    "capture_changed": [],
+    "receipt_unchanged": true,
+    "contact_sheets": [
+      {
+        "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/contact-01.png",
+        "sha256": "89d0e4ee1d7ed85b9761e3475f058eba66ff88c0590beb613c9815dc0783731b",
+        "bytes": 198898,
+        "width": 1536,
+        "height": 1104,
+        "visually_inspected": true
+      },
+      {
+        "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/contact-02.png",
+        "sha256": "e8bb6578e687a8d83cebf880faa4ac41f6c33bf29ca07288fb0c8897546b46fe",
+        "bytes": 317910,
+        "width": 1536,
+        "height": 1104,
+        "visually_inspected": true
+      },
+      {
+        "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/contact-03.png",
+        "sha256": "46fc52e08bc19b44b324fb77abddabe2383809c85285bdf2cdacdb04fb26c6e1",
+        "bytes": 378328,
+        "width": 1536,
+        "height": 1104,
+        "visually_inspected": true
+      },
+      {
+        "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/contact-04.png",
+        "sha256": "340d875723a199a5cb80d0d0091ea03b6d32c18cc566c6596e7e9b5311ae66c5",
+        "bytes": 300692,
+        "width": 1536,
+        "height": 1104,
+        "visually_inspected": true
+      },
+      {
+        "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/contact-05.png",
+        "sha256": "3a3bd8df15c10acd29c9d5686dfdc8daff7875a47c47e8fd79b7ef2c0e4e5dcd",
+        "bytes": 452332,
+        "width": 1536,
+        "height": 1104,
+        "visually_inspected": true
+      },
+      {
+        "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/contact-06.png",
+        "sha256": "d19876c2bc556f5eefcc77fdea7a54325514f203ffbcb7d30125df0f0ec4615a",
+        "bytes": 331621,
+        "width": 1536,
+        "height": 1104,
+        "visually_inspected": true
+      }
+    ]
+  },
+  "target_lineage": {
+    "repository": "D:/Projects/Vibe_Coding/cpp-web-fps",
+    "target_revision": "6f4e21867a4f2f1be777ea689d7df60925a641e3",
+    "observed_head": "6f4e21867a4f2f1be777ea689d7df60925a641e3",
+    "receipt_tested_revision": "6f4e21867a4f2f1be777ea689d7df60925a641e3",
+    "tracked_diff_vs_head_exit": 0,
+    "source_hashes_matched": 44,
+    "build_hashes_matched": 4,
+    "capture_hash_size_dimension_matches": 51,
+    "source_lineage_assessment": "HEAD·receipt revision 동일, 기록된 소스44개와 빌드4개의 현재 바이트 해시 일치, tracked diff 없음. receipt가 주장하는 당시 served_assets 일치는 기록으로 읽었으며 앱 네트워크 호출로 재검증하지 않았다."
+  }
+}

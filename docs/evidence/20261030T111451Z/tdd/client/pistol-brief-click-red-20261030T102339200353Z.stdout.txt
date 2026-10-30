@@ -1,0 +1,37 @@
+
+Running 1 test using 1 worker
+
+Pistol brief-click observation {"player":{"id":0,"x":-18,"y":0,"z":-18,"yaw":2.356194496154785,"pitch":-0.24639999866485596,"hp":100,"ammo":11,"vy":0,"grounded":true,"crouch":false,"weapon":1,"rifleAmmo":24,"pistolAmmo":11,"grenadeCount":2,"equip":0,"kills":0,"deaths":0,"reload":0,"respawn":0,"shield":0,"shot":1,"hit":0,"damage":0,"ack":56,"trace":[-5,1.600000023841858,-5]},"changes":[{"type":"input","seq":1,"forward":0,"strafe":0,"yaw":2.356194496154785,"pitch":0,"fire":false,"reload":false,"sprint":false,"jump":false,"crouch":false,"weapon":0,"grenade":false},{"type":"input","seq":10,"forward":0,"strafe":0,"yaw":2.356194496154785,"pitch":0,"fire":true,"reload":false,"sprint":false,"jump":false,"crouch":false,"weapon":1,"grenade":false},{"type":"input","seq":21,"forward":0,"strafe":0,"yaw":2.356194496154785,"pitch":-0.24639999866485596,"fire":false,"reload":false,"sprint":false,"jump":false,"crouch":false,"weapon":1,"grenade":false}]}
+  x  1 tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce) (2.9s)
+
+
+  1) tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce) 
+
+    Error: missing brief second pistol click
+
+      229 |   expect(c.state.players.find(p=>p.id===id)).toMatchObject({ammo:11,pistolAmmo:11,rifleAmmo:24});await page.mouse.up();
+      230 |   await expect.poll(()=>page.evaluate(()=>!!window.__pistolShot)).toBe(true);const image=await page.evaluate(()=>window.__pistolShot);await writeFile(`work/actions-pistol-shot-${scenario}.png`,Buffer.from(image.split(',')[1],'base64'));
+    > 231 |   await page.mouse.click(720,450);await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.ammo===10),1500).catch(()=>{const changes=c.inputs.filter((p,i,a)=>!i||p.fire!==a[i-1].fire);console.log('Pistol brief-click observation',JSON.stringify({player:c.state.players.find(p=>p.id===id),changes}));throw Error('missing brief second pistol click');});
+          |                                                                                                                                                                                                                                                                                                                         ^
+      232 |   await page.keyboard.press('Digit1');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.weapon===0&&p.ammo===24));await expect(page.locator('#weapon-name')).toHaveText('소총 / 24');
+      233 |   await page.keyboard.press('Digit2');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.weapon===1&&p.equip===0&&p.ammo===10));
+      234 |   await page.keyboard.press('KeyR');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.weapon===1&&p.reload>0));
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:231:313
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:231:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-1917f-nd-visible-feedback-reduce-\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\game-tests\game-Digit2-selects-a-semi-1917f-nd-visible-feedback-reduce-\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-1917f-nd-visible-feedback-reduce-\trace.zip
+    Usage:
+
+        npx playwright show-trace work\game-tests\game-Digit2-selects-a-semi-1917f-nd-visible-feedback-reduce-\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce) 

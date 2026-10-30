@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "exports": [
+    "_room_create",
+    "_room_destroy",
+    "_room_input",
+    "_room_input_v2",
+    "_room_join",
+    "_room_leave",
+    "_room_snapshot",
+    "_room_tick"
+  ],
+  "inputArity": 10,
+  "inputV2Arity": 14,
+  "scope": "Actual generated server Wasm module; direct C ABI and parsed JSON, not sockets/browser",
+  "hashes": {
+    "include/arena.hpp": "694dcedeb074f692befe7c329dccf7ca34f451b4c7a86d539d6aa9a606a861c1",
+    "core/game.cpp": "bbf455ba50e5e1ccff234e0f3d075994a7676330cebd54cd7cdcf46c34b8f033",
+    "core/bridge.cpp": "1c84eb4e6242aa971dc1d15c493b455777b42f9030a6fefb1550b47ed3645111",
+    "tests/core_tests.cpp": "ad47adeedacf8c0dcb771ce9e4b17c9ede15fdf21b026d0414e98287eba731fa",
+    "scripts/build.py": "93205655217756d786b5c851cbb8e821411fbcdf1a490d2d8065a1cd79edf7e7",
+    "build/sim.mjs": "629fc99736c1d517e531ed47125fa27854461897da0dc8344fa34be6985c5f25",
+    "build/sim.wasm": "90297d4c5a8e455335c68105553c893a06a898492e95aa9262ceec3d7b50fc59"
+  }
+}

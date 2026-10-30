@@ -1,0 +1,8 @@
+
+Running 2 tests using 1 worker
+
+Observed local lobby {"api":"WebGPU / C++ WASM","lcp":[{"time":164,"tag":"H1"}],"reduced":false}
+  ok 1 tests\e2e\lobby-render.spec.mjs:14:1 › real C++ Wasm renders the lobby and fits three widths (819ms)
+  ok 2 tests\e2e\lobby-render.spec.mjs:31:1 › real Wasm loading disables competing actions and then recovers (526ms)
+
+  2 passed (1.9s)

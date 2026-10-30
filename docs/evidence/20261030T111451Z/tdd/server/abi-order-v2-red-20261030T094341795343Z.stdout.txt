@@ -1,0 +1,91 @@
+✖ engine awaits Emscripten factory then forwards exact room ABI with no JS gameplay (3.0106ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 51.399
+
+✖ failing tests:
+
+test at tests\engine-server.test.mjs:21:1
+✖ engine awaits Emscripten factory then forwards exact room ABI with no JS gameplay (3.0106ms)
+  AssertionError [ERR_ASSERTION]: 14 v2 ABI arguments must be passed in contract order without legacy fallback
+  + actual - expected
+  ... Skipped lines
+  
+    [
+      [
+        'create'
+      ],
+      [
+  ...
+      [
+  +     'legacy-input',
+  -     'input',
+        128,
+        2,
+        1,
+        -1,
+        0.25,
+  ...
+        5,
+  -     1,
+  -     0,
+  -     1,
+  -     0
+      ],
+      [
+  +     'legacy-input',
+  -     'input',
+        128,
+        2,
+        1,
+        -1,
+        0.25,
+  ...
+        6,
+  -     0,
+  -     1,
+  -     0,
+  -     1
+      ],
+      [
+        'tick',
+        128,
+        0.016666666666666666
+  
+      at TestContext.<anonymous> (file:///D:/Projects/Vibe_Coding/cpp-web-fps/tests/engine-server.test.mjs:36:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ [ 'create' ], [ 'join', 128 ], [ 'legacy-input', 128, 2, 1, -1, 0.25, 0.5, 1, 0, 1, 5 ], [ 'legacy-input', 128, 2, 1, -1, 0.25, 0.5, 0, 1, 0, 6 ], [ 'tick', 128, 0.016666666666666666 ], [ 'snapshot', 128 ], [ 'string', 256 ], [ 'leave', 128, 2 ], [ 'destroy', 128 ] ],
+    expected: [
+      [ 'create' ],
+      [ 'join', 128 ],
+      [
+        'input', 128, 2,
+        1,       -1,  0.25,
+        0.5,     1,   0,
+        1,       5,   1,
+        0,       1,   0
+      ],
+      [
+        'input', 128, 2,
+        1,       -1,  0.25,
+        0.5,     0,   1,
+        0,       6,   0,
+        1,       0,   1
+      ],
+      [ 'tick', 128, 0.016666666666666666 ],
+      [ 'snapshot', 128 ],
+      [ 'string', 256 ],
+      [ 'leave', 128, 2 ],
+      [ 'destroy', 128 ]
+    ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

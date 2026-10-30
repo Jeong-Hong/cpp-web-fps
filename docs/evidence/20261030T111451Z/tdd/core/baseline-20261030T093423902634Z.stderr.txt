@@ -1,0 +1,20 @@
+In file included from core/game.cpp:1:
+D:\Projects\Vibe_Coding\cpp-web-fps\include\arena.hpp:81:19: error: private field 'next_grenade_id_' is not used [-Werror,-Wunused-private-field]
+   81 |     std::uint32_t next_grenade_id_=1;
+      |                   ^
+1 error generated.
+em++: error: ''D:\Tools\emsdk/upstream/bin\clang++.exe' -target wasm32-unknown-emscripten -fignore-exceptions -mllvm -combiner-global-alias-analysis=false -mllvm -enable-emscripten-sjlj -mllvm -disable-lsr '--sysroot=D:\Tools\emsdk\upstream\emscripten\cache\sysroot' -Xclang '-iwithsysroot/include\fakesdl' -Xclang '-iwithsysroot/include\compat' -std=c++20 -Wall -Wextra -Werror '-ID:\Projects\Vibe_Coding\cpp-web-fps\include' -O1 -g -c core/game.cpp -o 'D:\Tools\Hermes\profiles\omh\cache\scratch\emscripten_temp_2gnebahe\game.o'' failed (returned 1)
+Traceback (most recent call last):
+  File [35m"D:\Projects\Vibe_Coding\cpp-web-fps\scripts\build.py"[0m, line [35m50[0m, in [35m<module>[0m
+    [31mmain[0m[1;31m()[0m
+    [31m~~~~[0m[1;31m^^[0m
+  File [35m"D:\Projects\Vibe_Coding\cpp-web-fps\scripts\build.py"[0m, line [35m36[0m, in [35mmain[0m
+    [31mrun[0m[1;31m(["-O1", "-g", *sources, "-sENVIRONMENT=node", "-sEXIT_RUNTIME=1", "-sASSERTIONS=2", "-o", str(target)])[0m
+    [31m~~~[0m[1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"D:\Projects\Vibe_Coding\cpp-web-fps\scripts\build.py"[0m, line [35m32[0m, in [35mrun[0m
+    [31msubprocess.run[0m[1;31m(command, cwd=ROOT, env=env, check=True, timeout=240)[0m
+    [31m~~~~~~~~~~~~~~[0m[1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  File [35m"D:\Tools\Hermes\tools\python-3.14.7+20260901-win32-x64\Lib\subprocess.py"[0m, line [35m578[0m, in [35mrun[0m
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+[1;35msubprocess.CalledProcessError[0m: [35mCommand '['D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe', 'D:\\Tools\\emsdk\\upstream\\emscripten\\em++.py', '-std=c++20', '-Wall', '-Wextra', '-Werror', '-I', 'D:\\Projects\\Vibe_Coding\\cpp-web-fps\\include', '-O1', '-g', 'core/game.cpp', 'tests/core_tests.cpp', '-sENVIRONMENT=node', '-sEXIT_RUNTIME=1', '-sASSERTIONS=2', '-o', 'D:\\Projects\\Vibe_Coding\\cpp-web-fps\\build\\core-tests.cjs']' returned non-zero exit status 1.[0m

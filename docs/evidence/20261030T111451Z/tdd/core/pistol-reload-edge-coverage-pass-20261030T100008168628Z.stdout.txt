@@ -1,0 +1,2 @@
+BUILD D:\Tools\Hermes\installs\85e954bd52912826\environments\9381b9ce0cd947368603931f57d410ba\venv\Scripts\python.exe D:\Tools\emsdk\upstream\emscripten\em++.py -std=c++20 -Wall -Wextra -Werror -I D:\Projects\Vibe_Coding\cpp-web-fps\include -O1 -g core/game.cpp tests/core_tests.cpp -sENVIRONMENT=node -sEXIT_RUNTIME=1 -sASSERTIONS=2 -o D:\Projects\Vibe_Coding\cpp-web-fps\build\core-tests.cjs
+PASS 2503 C++ checks

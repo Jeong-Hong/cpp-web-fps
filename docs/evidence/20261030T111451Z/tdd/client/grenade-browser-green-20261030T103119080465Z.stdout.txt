@@ -1,0 +1,11 @@
+
+Running 3 tests using 1 worker
+
+Observed four-peer grenade agreement {"scenario":"reduce","id":0,"projectile":1,"blastTime":3716.6668605059385,"selfHp":39,"observers":[1,2,3]}
+  ok 1 tests\e2e\game.spec.mjs:241:100 › G edge renders authoritative grenade flight and blast with four-peer agreement (reduce) (5.3s)
+Observed four-peer grenade agreement {"scenario":"no-preference","id":0,"projectile":1,"blastTime":3716.6668605059385,"selfHp":39,"observers":[1,2,3]}
+  ok 2 tests\e2e\game.spec.mjs:241:100 › G edge renders authoritative grenade flight and blast with four-peer agreement (no-preference) (5.1s)
+Observed four-peer grenade agreement {"scenario":"reduce-webgl","id":0,"projectile":1,"blastTime":3666.6668578982353,"selfHp":39,"observers":[1,2,3]}
+  ok 3 tests\e2e\game.spec.mjs:241:100 › G edge renders authoritative grenade flight and blast with four-peer agreement (reduce/WebGL2) (5.0s)
+
+  3 passed (16.2s)

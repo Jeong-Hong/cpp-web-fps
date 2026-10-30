@@ -1,0 +1,138 @@
+{
+  "origin": "http://127.0.0.1:8088",
+  "width": 1440,
+  "height": 900,
+  "visibility": "visible",
+  "api": "WebGPU / C++ WASM",
+  "locked": "game",
+  "weapon": "권총 / 12",
+  "ammo": "11",
+  "stance": "앉음",
+  "grenades": "2",
+  "reduced": true,
+  "room": "82EF80",
+  "capture": "C:\\Users\\Jeongki\\.config\\browser-harness\\tmp\\p-20797bc8156b\\shot.png",
+  "additional_public_socket_observations": {
+    "source": "ordinary observer joined the real browser room; no private game edits",
+    "airborne": {
+      "time": 93516.6715439409,
+      "player": {
+        "id": 0,
+        "x": -18,
+        "y": 0.4833333492279053,
+        "z": -18,
+        "yaw": 2.356194496154785,
+        "pitch": 0,
+        "hp": 100,
+        "ammo": 11,
+        "vy": 6.799999237060547,
+        "grounded": false,
+        "crouch": true,
+        "weapon": 1,
+        "rifleAmmo": 24,
+        "pistolAmmo": 11,
+        "grenadeCount": 2,
+        "equip": 0,
+        "kills": 0,
+        "deaths": 0,
+        "reload": 0,
+        "respawn": 0,
+        "shield": 0,
+        "shot": 1,
+        "hit": 0,
+        "damage": 0,
+        "ack": 2100,
+        "trace": [
+          -5,
+          0.949999988079071,
+          -5
+        ]
+      }
+    },
+    "landed": {
+      "time": 94366.67158827186,
+      "player": {
+        "id": 0,
+        "x": -18,
+        "y": 0,
+        "z": -18,
+        "yaw": 2.356194496154785,
+        "pitch": 0,
+        "hp": 100,
+        "ammo": 11,
+        "vy": 0,
+        "grounded": true,
+        "crouch": true,
+        "weapon": 1,
+        "rifleAmmo": 24,
+        "pistolAmmo": 11,
+        "grenadeCount": 2,
+        "equip": 0,
+        "kills": 0,
+        "deaths": 0,
+        "reload": 0,
+        "respawn": 0,
+        "shield": 0,
+        "shot": 1,
+        "hit": 0,
+        "damage": 0,
+        "ack": 2118,
+        "trace": [
+          -5,
+          0.949999988079071,
+          -5
+        ]
+      }
+    },
+    "thrown": {
+      "time": 94450.00492595136,
+      "player": {
+        "id": 0,
+        "x": -18,
+        "y": 0,
+        "z": -18,
+        "yaw": 2.356194496154785,
+        "pitch": 0,
+        "hp": 100,
+        "ammo": 11,
+        "vy": 0,
+        "grounded": true,
+        "crouch": true,
+        "weapon": 1,
+        "rifleAmmo": 24,
+        "pistolAmmo": 11,
+        "grenadeCount": 1,
+        "equip": 0,
+        "kills": 0,
+        "deaths": 0,
+        "reload": 0,
+        "respawn": 0,
+        "shield": 0,
+        "shot": 1,
+        "hit": 0,
+        "damage": 0,
+        "ack": 2120,
+        "trace": [
+          -5,
+          0.949999988079071,
+          -5
+        ]
+      },
+      "grenades": [
+        {
+          "id": 1,
+          "owner": 0,
+          "x": -17.858577728271484,
+          "y": 1.0116666555404663,
+          "z": -17.858577728271484,
+          "vx": 8.485280990600586,
+          "vy": 3.700000047683716,
+          "vz": 8.485280990600586,
+          "fuse": 2483.3333492279053,
+          "explosion": 0,
+          "exploding": false
+        }
+      ]
+    }
+  }
+}

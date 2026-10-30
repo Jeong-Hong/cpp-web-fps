@@ -1,0 +1,25 @@
+{
+  "schema": "crossyard_owned_runtime/v1",
+  "observed_at": "2026-10-30T11:14:50.547594+00:00",
+  "revision": "7a1cc3a6f76dcb6a7afa4a10624b917dc272369c",
+  "origin": "http://127.0.0.1:8088",
+  "listener": {
+    "ProcessId": 32988,
+    "ParentProcessId": 37096,
+    "CommandLine": "\"C:\\Program Files\\nodejs\\node.exe\" server/main.mjs"
+  },
+  "health": {
+    "ok": true,
+    "engine": "C++/Wasm",
+    "rooms": 0,
+    "clients": 0,
+    "tickRate": 60
+  },
+  "launch_handle": "proc_099da4ab6245",
+  "outputs": {
+    "build/sim.mjs": "629fc99736c1d517e531ed47125fa27854461897da0dc8344fa34be6985c5f25",
+    "build/sim.wasm": "90297d4c5a8e455335c68105553c893a06a898492e95aa9262ceec3d7b50fc59",
+    "web/dist/client.mjs": "b80adfe0d807d83a48db119f26643db3ab69fcf7d3c01974f5466daa1311d91c",
+    "web/dist/client.wasm": "7f108051b4b87c62aa2a4b27fc57bd73d35c0faf9c7c431decb1e369d8504a89"
+  }
+}

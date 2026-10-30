@@ -1,0 +1,25 @@
+{
+  "kind": "observed_public_protocol",
+  "automatedParticipants": 4,
+  "base": "http://127.0.0.1:8088",
+  "joinedIds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "fifthRejected": "ROOM_FULL",
+  "combat": {
+    "kills": 1,
+    "hits": 4,
+    "ammoAfterFire": 18,
+    "allFourSawDeath": true
+  },
+  "respawn": true,
+  "reload": true,
+  "movement": {
+    "distanceMeters": 3.0000104904174805
+  },
+  "disconnectRemoved": true,
+  "emptyRoomCleaned": true
+}

@@ -1,0 +1,8 @@
+
+Running 3 tests using 1 worker
+
+  ok 1 tests\e2e\client-contract.spec.mjs:15:1 › compiled C++ exports actual game, snapshot and input entry points (217ms)
+  ok 2 tests\e2e\client-contract.spec.mjs:23:1 › compiled C++ sends complete v2 action fields even in a neutral input snapshot (159ms)
+  ok 3 tests\e2e\client-contract.spec.mjs:35:1 › compiled grenade snapshots retain existing IDs when an earlier pool slot is reused (149ms)
+
+  3 passed (1.0s)

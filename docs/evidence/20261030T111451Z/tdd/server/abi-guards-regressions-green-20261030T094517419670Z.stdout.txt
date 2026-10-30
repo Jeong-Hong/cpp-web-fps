@@ -1,0 +1,31 @@
+✔ engine awaits Emscripten factory then forwards exact room ABI with no JS gameplay (2.44ms)
+✔ engine destroys exactly once and prevents calls through a freed pointer (0.3542ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":2147483648,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true,"jump":false,"crouch":false,"weapon":0,"grenade":false} (0.1717ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":-1,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true,"jump":false,"crouch":false,"weapon":0,"grenade":false} (0.0892ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":null,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true,"jump":false,"crouch":false,"weapon":0,"grenade":false} (0.1058ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":1.00001,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true,"jump":false,"crouch":false,"weapon":0,"grenade":false} (0.092ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":1e+100,"pitch":0.5,"fire":true,"reload":false,"sprint":true,"jump":false,"crouch":false,"weapon":0,"grenade":false} (0.0836ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":"0","fire":true,"reload":false,"sprint":true,"jump":false,"crouch":false,"weapon":0,"grenade":false} (0.0978ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":1,"reload":false,"sprint":true,"jump":false,"crouch":false,"weapon":0,"grenade":false} (0.1562ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":null,"sprint":true,"jump":false,"crouch":false,"weapon":0,"grenade":false} (0.6302ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":"false","jump":false,"crouch":false,"weapon":0,"grenade":false} (0.1096ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true,"jump":false,"crouch":false,"weapon":0,"grenade":false,"id":0} (0.0647ms)
+✔ engine rejects legacy-only Module before any room allocation (0.1541ms)
+✔ bridge refuses omitted fields and legacy network inputs before v2 ABI entry (0.2921ms)
+✔ bridge refuses invalid v2 actions before numeric ABI conversion (0.3474ms)
+✔ engine preserves native input refusal without adding JS game rules (0.1474ms)
+✔ engine rejects zero allocation pointer and missing ABI exports (0.1631ms)
+✔ strict v2 input accepts the complete action shape unchanged (0.8963ms)
+✔ strict v2 weapon accepts only integer zero or one (0.8477ms)
+✔ strict v2 input refuses every omitted field and the old network shape (0.2782ms)
+✔ strict v2 input refuses unknown and client-owned state fields (0.1595ms)
+✔ strict v2 preserves inclusive movement and sequence bounds before conversion (0.2879ms)
+✔ strict v2 action flags require exact booleans (0.2283ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 56.5812

@@ -1,0 +1,11 @@
+✔ strict v2 input accepts the complete action shape unchanged (0.881ms)
+✔ strict v2 weapon accepts only integer zero or one (0.3747ms)
+✔ strict v2 action flags require exact booleans (0.7316ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 49.8828

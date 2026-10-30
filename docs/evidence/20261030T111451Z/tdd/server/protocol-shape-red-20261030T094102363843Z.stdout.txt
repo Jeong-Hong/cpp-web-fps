@@ -1,0 +1,38 @@
+✖ strict v2 input accepts the complete action shape unchanged (0.7485ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60.0231
+
+✖ failing tests:
+
+test at tests\protocol-server.test.mjs:12:1
+✖ strict v2 input accepts the complete action shape unchanged (0.7485ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception: strict v2 input must be accepted
+  Actual message: "Invalid message."
+      at TestContext.<anonymous> (file:///D:/Projects/Vibe_Coding/cpp-web-fps/tests/protocol-server.test.mjs:15:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: Error: Invalid message.
+        at invalid (file:///D:/Projects/Vibe_Coding/cpp-web-fps/server/protocol.mjs:18:55)
+        at parseMessage (file:///D:/Projects/Vibe_Coding/cpp-web-fps/server/protocol.mjs:28:123)
+        at parse (file:///D:/Projects/Vibe_Coding/cpp-web-fps/tests/protocol-server.test.mjs:10:24)
+        at file:///D:/Projects/Vibe_Coding/cpp-web-fps/tests/protocol-server.test.mjs:15:42
+        at getActual (node:assert:611:5)
+        at strict.doesNotThrow (node:assert:779:32)
+        at TestContext.<anonymous> (file:///D:/Projects/Vibe_Coding/cpp-web-fps/tests/protocol-server.test.mjs:15:12)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.start (node:internal/test_runner/test:1262:17),
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }

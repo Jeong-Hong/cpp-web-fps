@@ -1,0 +1,96 @@
+
+Running 3 tests using 1 worker
+
+  x  1 tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce) (1.9s)
+  x  2 tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (no-preference) (1.8s)
+  x  3 tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce/WebGL2) (1.8s)
+
+
+  1) tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce) 
+
+    Error: missing authoritative pistol selection
+
+      222 |   await enter(page,'QA_PISTOL');await c.wait(m=>m.type==='state');const id=c.welcome.id;
+      223 |   await page.bringToFront();await page.locator('#resume').click();await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('game');
+    > 224 |   await page.keyboard.press('Digit2');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.weapon===1),1200).catch(()=>{throw Error('missing authoritative pistol selection');});
+          |                                                                                                                                           ^
+      225 |   await expect(page.locator('#weapon-name')).toHaveText('권총 / 12');await expect(page.locator('#weapon-slot-1')).toHaveAttribute('aria-current','true');
+      226 |   await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.equip===0&&p.weapon===1));
+      227 |   await page.evaluate(()=>{window.__pistolFlash=0;window.__pistolShot=null;const hud=CY.hud;CY.hud=s=>{hud(s);window.__pistolFlash=s.flash;};const draw=CY.renderer.draw.bind(CY.renderer);CY.renderer.draw=(...args)=>{draw(...args);if(window.__pistolFlash>0&&!window.__pistolShot)window.__pistolShot=document.querySelector('canvas').toDataURL('image/png');};});
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:224:139
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:224:39
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-1917f-nd-visible-feedback-reduce-\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\game-tests\game-Digit2-selects-a-semi-1917f-nd-visible-feedback-reduce-\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-1917f-nd-visible-feedback-reduce-\trace.zip
+    Usage:
+
+        npx playwright show-trace work\game-tests\game-Digit2-selects-a-semi-1917f-nd-visible-feedback-reduce-\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (no-preference) 
+
+    Error: missing authoritative pistol selection
+
+      222 |   await enter(page,'QA_PISTOL');await c.wait(m=>m.type==='state');const id=c.welcome.id;
+      223 |   await page.bringToFront();await page.locator('#resume').click();await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('game');
+    > 224 |   await page.keyboard.press('Digit2');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.weapon===1),1200).catch(()=>{throw Error('missing authoritative pistol selection');});
+          |                                                                                                                                           ^
+      225 |   await expect(page.locator('#weapon-name')).toHaveText('권총 / 12');await expect(page.locator('#weapon-slot-1')).toHaveAttribute('aria-current','true');
+      226 |   await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.equip===0&&p.weapon===1));
+      227 |   await page.evaluate(()=>{window.__pistolFlash=0;window.__pistolShot=null;const hud=CY.hud;CY.hud=s=>{hud(s);window.__pistolFlash=s.flash;};const draw=CY.renderer.draw.bind(CY.renderer);CY.renderer.draw=(...args)=>{draw(...args);if(window.__pistolFlash>0&&!window.__pistolShot)window.__pistolShot=document.querySelector('canvas').toDataURL('image/png');};});
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:224:139
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:224:39
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-eba70-ble-feedback-no-preference-\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\game-tests\game-Digit2-selects-a-semi-eba70-ble-feedback-no-preference-\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-eba70-ble-feedback-no-preference-\trace.zip
+    Usage:
+
+        npx playwright show-trace work\game-tests\game-Digit2-selects-a-semi-eba70-ble-feedback-no-preference-\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce/WebGL2) 
+
+    Error: missing authoritative pistol selection
+
+      222 |   await enter(page,'QA_PISTOL');await c.wait(m=>m.type==='state');const id=c.welcome.id;
+      223 |   await page.bringToFront();await page.locator('#resume').click();await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('game');
+    > 224 |   await page.keyboard.press('Digit2');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.weapon===1),1200).catch(()=>{throw Error('missing authoritative pistol selection');});
+          |                                                                                                                                           ^
+      225 |   await expect(page.locator('#weapon-name')).toHaveText('권총 / 12');await expect(page.locator('#weapon-slot-1')).toHaveAttribute('aria-current','true');
+      226 |   await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.equip===0&&p.weapon===1));
+      227 |   await page.evaluate(()=>{window.__pistolFlash=0;window.__pistolShot=null;const hud=CY.hud;CY.hud=s=>{hud(s);window.__pistolFlash=s.flash;};const draw=CY.renderer.draw.bind(CY.renderer);CY.renderer.draw=(...args)=>{draw(...args);if(window.__pistolFlash>0&&!window.__pistolShot)window.__pistolShot=document.querySelector('canvas').toDataURL('image/png');};});
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:224:139
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:224:39
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-99bae-ble-feedback-reduce-WebGL2-\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\game-tests\game-Digit2-selects-a-semi-99bae-ble-feedback-reduce-WebGL2-\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-99bae-ble-feedback-reduce-WebGL2-\trace.zip
+    Usage:
+
+        npx playwright show-trace work\game-tests\game-Digit2-selects-a-semi-99bae-ble-feedback-reduce-WebGL2-\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce) 
+    tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (no-preference) 
+    tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce/WebGL2) 
