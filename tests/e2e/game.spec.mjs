@@ -96,7 +96,14 @@ test('served C++ lobby and live menu retain layout at desktop, tablet and phone 
   await page.setViewportSize({width,height:900});expect(await page.locator('#copy-code').textContent()).toBe(room);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:`work/live-menu-${width}.png`});
  }
- await page.locator('#leave').click();expect(c.errors).toEqual([]);
+ await page.bringToFront();await page.locator('#resume').click();await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('game');
+ await page.keyboard.press('Digit2');await page.keyboard.press('KeyC');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===c.welcome.id&&p.weapon===1&&p.crouch));
+ for(const width of [1440,768,375]){
+  await page.setViewportSize({width,height:900});expect(await page.locator('#copy-code').textContent()).toBe(room);
+  const layout=await page.evaluate(()=>{const a=document.querySelector('.life').getBoundingClientRect(),b=document.querySelector('.ammo').getBoundingClientRect();return {width:innerWidth,overflow:document.documentElement.scrollWidth>innerWidth,separate:a.right<=b.left||b.right<=a.left||a.bottom<=b.top||b.bottom<=a.top,fonts:['stance-state','weapon-name','grenade-label'].map(id=>parseFloat(getComputedStyle(document.getElementById(id)).fontSize))};});
+  expect(layout.width).toBe(width);expect(layout.overflow).toBe(false);expect(layout.separate).toBe(true);expect(layout.fonts.every(n=>n>=14)).toBe(true);await page.screenshot({path:`work/live-hud-${width}.png`});
+ }
+ await page.keyboard.press('Escape');await page.locator('#leave').click();expect(c.errors).toEqual([]);
 });
 
 for(const direction of ['down','up'])test(`extreme mouse pitch ${direction} remains in the strict wire range without disconnecting`,async({page})=>{
@@ -184,9 +191,9 @@ test('Space edge jumps, lands and does not repeat while held through real C++ in
 });
 
 async function publicPeer(baseURL,room,name){
- const ws=new WebSocket(baseURL.replace('http:','ws:')+'/ws',{origin:baseURL}),events=new EventEmitter();let latest,welcome,seq=0;
- ws.on('message',raw=>{const m=JSON.parse(String(raw));if(m.type==='state')latest=m;if(m.type==='welcome')welcome=m;events.emit('data',m);});
- const wait=(predicate,timeout=6000)=>{for(const m of [latest,welcome])if(m&&predicate(m))return Promise.resolve(m);return new Promise((resolve,reject)=>{const handler=m=>{if(predicate(m)){clearTimeout(timer);events.off('data',handler);resolve(m);}};const timer=setTimeout(()=>{events.off('data',handler);reject(Error('public peer state deadline'));},timeout);events.on('data',handler);});};
+ const ws=new WebSocket(baseURL.replace('http:','ws:')+'/ws',{origin:baseURL}),events=new EventEmitter();let latest,welcome,seq=0;const history=[];
+ ws.on('message',raw=>{const m=JSON.parse(String(raw));if(m.type==='state'){latest=m;history.push(m);if(history.length>64)history.shift();}if(m.type==='welcome')welcome=m;events.emit('data',m);});
+ const wait=(predicate,timeout=6000)=>{for(const m of [latest,welcome,...history])if(m&&predicate(m))return Promise.resolve(m);return new Promise((resolve,reject)=>{const handler=m=>{if(predicate(m)){clearTimeout(timer);events.off('data',handler);resolve(m);}};const timer=setTimeout(()=>{events.off('data',handler);reject(Error('public peer state deadline'));},timeout);events.on('data',handler);});};
  await new Promise((resolve,reject)=>{ws.once('open',resolve);ws.once('error',reject);});
  ws.send(JSON.stringify({type:'join',name,code:room}));const joined=await wait(m=>m.type==='welcome');
  return {id:joined.id,wait,input(fields={}){ws.send(JSON.stringify({type:'input',seq:++seq,forward:0,strafe:0,yaw:0,pitch:0,fire:false,reload:false,sprint:false,jump:false,crouch:false,weapon:0,grenade:false,...fields}));},close(){ws.close();}};
@@ -236,4 +243,32 @@ for(const [reducedMotion,forceWebGL] of [['reduce',false],['no-preference',false
   await page.keyboard.press('Escape');await expect(page.locator('#pause')).toBeVisible();await page.waitForTimeout(100);expect(c.state.players.find(p=>p.id===id).weapon).toBe(1);
   await page.locator('#leave').click();expect(c.errors).toEqual([]);
  }finally{await context.close();}
+});
+
+for(const [reducedMotion,forceWebGL] of [['reduce',false],['no-preference',false],['reduce',true]])test(`G edge renders authoritative grenade flight and blast with four-peer agreement (${reducedMotion}${forceWebGL?'/WebGL2':''})`,async({browser,baseURL})=>{
+ const context=await browser.newContext({reducedMotion,viewport:{width:1440,height:900}});if(forceWebGL)await context.addInitScript(()=>Object.defineProperty(navigator,'gpu',{value:undefined,configurable:true}));
+ const page=await context.newPage(),c=observe(page),peers=[],scenario=reducedMotion+(forceWebGL?'-webgl':'');
+ try{
+  await enter(page,'QA_GRENADE');await c.wait(m=>m.type==='state');const id=c.welcome.id;
+  for(let i=0;i<3;i++)peers.push(await publicPeer(baseURL,c.welcome.room,`QA_OBSERVER_${i}`));await c.wait(m=>m.type==='state'&&m.players.length===4);
+  const button=await page.locator('#resume').boundingBox();await page.bringToFront();expect(await page.evaluate(()=>document.visibilityState)).toBe('visible');await page.locator('#resume').click();await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('game');
+  await page.keyboard.press('Space');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.y>.1&&!p.grounded));await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.grounded&&p.y===0));
+  await page.keyboard.press('KeyC');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.crouch));await expect(page.locator('#stance-state')).toHaveText('앉음');
+  await page.mouse.move(button.x+button.width/2,button.y+button.height/2+1.15/.0022);await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.pitch<-1.1));
+  await page.evaluate(()=>{window.__grenadeFlight=null;window.__grenadeBlast=null;window.__blastSounds=0;const feedback=CY.feedback;CY.feedback=k=>{feedback(k);if(k===3)window.__blastSounds++;};const draw=CY.renderer.draw.bind(CY.renderer);CY.renderer.draw=(...args)=>{draw(...args);let flight=false,blast=false;const d=args[1];for(let i=0;i<d.length;i+=11)if(d[i+6]>1.7&&d[i+7]>1.3&&d[i+8]<.4){if(d[i+4]<.1)flight=true;if(d[i+4]>.3)blast=true;}if(flight&&!window.__grenadeFlight)window.__grenadeFlight=document.querySelector('canvas').toDataURL('image/png');if(blast&&!window.__grenadeBlast)window.__grenadeBlast=document.querySelector('canvas').toDataURL('image/png');};});
+  await page.keyboard.down('KeyG');const flying=await c.wait(m=>m.type==='state'&&m.grenades.some(g=>g.owner===id&&!g.exploding),1200).catch(()=>{throw Error('missing authoritative grenade throw');});const projectile=flying.grenades.find(g=>g.owner===id);
+  const firstStates=await Promise.all(peers.map(p=>p.wait(m=>m.type==='state'&&m.time===flying.time)));for(const state of firstStates){expect(state.grenades).toEqual(flying.grenades);expect(state.players).toEqual(flying.players);}
+  await expect(page.locator('#grenade-count')).toHaveText('1');await expect.poll(()=>page.evaluate(()=>!!window.__grenadeFlight)).toBe(true);let image=await page.evaluate(()=>window.__grenadeFlight);await writeFile(`work/actions-grenade-flight-${scenario}.png`,Buffer.from(image.split(',')[1],'base64'));
+  await page.mouse.move(button.x+button.width/2,button.y+button.height/2+.45/.0022);
+  const blast=await c.wait(m=>m.type==='state'&&m.grenades.some(g=>g.id===projectile.id&&g.exploding)&&m.players.some(p=>p.id===id&&p.hp>0&&p.hp<100));
+  const blastStates=await Promise.all(peers.map(p=>p.wait(m=>m.type==='state'&&m.time===blast.time)));for(const state of blastStates){expect(state.grenades).toEqual(blast.grenades);expect(state.players).toEqual(blast.players);}
+  await expect.poll(()=>page.evaluate(()=>!!window.__grenadeBlast)).toBe(true);image=await page.evaluate(()=>window.__grenadeBlast);await writeFile(`work/actions-grenade-blast-${scenario}.png`,Buffer.from(image.split(',')[1],'base64'));expect(await page.evaluate(()=>window.__blastSounds)).toBe(1);
+  await c.wait(m=>m.type==='state'&&m.grenades.length===0);expect(c.state.players.find(p=>p.id===id).grenadeCount).toBe(1);expect(c.inputs.filter(p=>p.grenade)).toHaveLength(1);await page.keyboard.up('KeyG');
+  await page.screenshot({path:`work/actions-grenade-after-${scenario}.png`});
+  await page.keyboard.press('KeyC');await page.mouse.move(button.x+button.width/2,button.y+button.height/2);await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&!p.crouch&&Math.abs(p.pitch)<.02));
+  await page.keyboard.press('KeyG');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.grenadeCount===0)&&m.grenades.length===1);await expect(page.locator('#grenade-count')).toHaveText('0');
+  await page.keyboard.press('KeyG');await page.waitForTimeout(150);expect(c.state.grenades).toHaveLength(1);expect(c.state.players.find(p=>p.id===id).grenadeCount).toBe(0);
+  await page.keyboard.press('Escape');await page.locator('#leave').click();await Promise.all(peers.map(p=>p.wait(m=>m.type==='state'&&m.players.length===3&&!m.grenades.some(g=>g.owner===id))));expect(c.errors).toEqual([]);
+  console.log('Observed four-peer grenade agreement',JSON.stringify({scenario,id,projectile:projectile.id,blastTime:blast.time,selfHp:blast.players.find(p=>p.id===id).hp,observers:peers.map(p=>p.id)}));
+ }finally{for(const peer of peers)peer.close();await context.close();}
 });

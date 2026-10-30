@@ -78,6 +78,6 @@ private:
     std::array<Player,kCapacity> players_{};
     double time_ms_=0;
     std::array<Grenade,kMaxGrenades> grenades_{};
-    [[maybe_unused]] std::uint32_t next_grenade_id_=1; // Declaration scaffold; remove attribute once grenade behavior uses it.
+    std::uint32_t next_grenade_id_=1;
 };
 }

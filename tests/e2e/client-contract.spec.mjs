@@ -16,7 +16,7 @@ test('compiled C++ exports actual game, snapshot and input entry points',async({
  await page.goto(url);
  const exports=await page.evaluate(async()=>{
   const {default:factory}=await import('/client.mjs');const m=await factory({noInitialRun:true});
-  return ['_client_start','_client_stop','_client_player','_client_lock','_client_release','_client_settings'].map(k=>[k,typeof m[k]]);
+  return ['_client_start','_client_stop','_client_player','_client_motion','_client_loadout','_client_grenade','_client_lock','_client_release','_client_settings'].map(k=>[k,typeof m[k]]);
  });
  for(const [name,kind] of exports)expect(kind,name).toBe('function');
 });

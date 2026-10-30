@@ -13,10 +13,10 @@
 EM_JS(void, draw_platform,(const float* matrix,const float* data,int length,float x,float y,float z),{
  globalThis.CY.renderer.draw(HEAPF32.subarray(matrix>>2,(matrix>>2)+16),HEAPF32.subarray(data>>2,(data>>2)+length),new Float32Array([x,y,z]));
 });
-EM_JS(void, send_platform,(float f,float s,float yaw,float pitch,int fire,int reload,int sprint,unsigned seq,int jump,int crouch,int weapon),{
+EM_JS(void, send_platform,(float f,float s,float yaw,float pitch,int fire,int reload,int sprint,unsigned seq,int jump,int crouch,int weapon,int grenade),{
  // Float32 endpoints can lie a few ulps outside the JSON double contract.
  // Bound the producer's encoding; keep server validation strict.
- globalThis.CY.sendInput({type:'input',seq:seq,forward:f,strafe:s,yaw:Math.max(-Math.PI,Math.min(Math.PI,yaw)),pitch:Math.max(-1.45,Math.min(1.45,pitch)),fire:!!fire,reload:!!reload,sprint:!!sprint,jump:!!jump,crouch:!!crouch,weapon:weapon,grenade:false});
+ globalThis.CY.sendInput({type:'input',seq:seq,forward:f,strafe:s,yaw:Math.max(-Math.PI,Math.min(Math.PI,yaw)),pitch:Math.max(-1.45,Math.min(1.45,pitch)),fire:!!fire,reload:!!reload,sprint:!!sprint,jump:!!jump,crouch:!!crouch,weapon:weapon,grenade:!!grenade});
 });
 EM_JS(void, lock_platform,(int locked),{globalThis.CY.lockChanged(!!locked);});
 EM_JS(void, lock_error_platform,(),{globalThis.CY.lockError();});
@@ -36,11 +36,13 @@ struct Remote {
  unsigned shot=0,hit=0,damage=0,ack=0;
 };
 std::array<Remote,arena::kCapacity> peers{};
+struct VisualGrenade{bool active=false,seen=false,exploding=false;unsigned id=0;int owner=-1;Vec3 position{},target{};float explosion=0;};
+std::array<VisualGrenade,arena::kMaxGrenades> projectiles{};
 std::vector<float> instances;
 int mine=-1,weapon_wanted=0;
 bool locked=false,fire=false,ads=false,reload_pressed=false,reduced=false;
 bool key_w=false,key_a=false,key_s=false,key_d=false,key_shift=false;
-bool jump_pressed=false,jump_predict=false,grounded=true,crouching=false,crouch_wanted=false;
+bool jump_pressed=false,jump_predict=false,grenade_pressed=false,grounded=true,crouching=false,crouch_wanted=false;
 float vertical_velocity=0;
 float yaw=0,pitch=0,sensitivity=.0022f,hit_time=0,damage_time=0;
 Vec3 position{};
@@ -51,12 +53,12 @@ Vec3 plus(Vec3 a,Vec3 b){return {a.x+b.x,a.y+b.y,a.z+b.z};}
 Vec3 scale(Vec3 a,float f){return {a.x*f,a.y*f,a.z*f};}
 float distance2(Vec3 a,Vec3 b){return (a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y)+(a.z-b.z)*(a.z-b.z);}
 float wrap(float angle){while(angle>arena::kPi)angle-=2*arena::kPi;while(angle<-arena::kPi)angle+=2*arena::kPi;return angle;}
-void clear_controls(){key_w=key_a=key_s=key_d=key_shift=fire=ads=reload_pressed=jump_pressed=jump_predict=crouch_wanted=false;}
+void clear_controls(){key_w=key_a=key_s=key_d=key_shift=fire=ads=reload_pressed=jump_pressed=jump_predict=grenade_pressed=crouch_wanted=false;}
 void send_controls(){
  if(mine<0)return;
  const bool alive=peers[mine].active&&peers[mine].hp>0;
- send_platform(locked&&alive?float(key_w)-float(key_s):0,locked&&alive?float(key_d)-float(key_a):0,yaw,pitch,locked&&alive&&fire,locked&&alive&&reload_pressed,locked&&alive&&key_shift,++sequence,locked&&alive&&jump_pressed,locked&&alive&&crouch_wanted,weapon_wanted);
- reload_pressed=jump_pressed=false;
+ send_platform(locked&&alive?float(key_w)-float(key_s):0,locked&&alive?float(key_d)-float(key_a):0,yaw,pitch,locked&&alive&&fire,locked&&alive&&reload_pressed,locked&&alive&&key_shift,++sequence,locked&&alive&&jump_pressed,locked&&alive&&crouch_wanted,weapon_wanted,locked&&alive&&grenade_pressed);
+ reload_pressed=jump_pressed=grenade_pressed=false;
 }
 void add_box(Vec3 p,Vec3 size,Vec3 color,float y=0,float t=0){
  instances.insert(instances.end(),{p.x,p.y,p.z,size.x,size.y,size.z,color.x,color.y,color.z,y,t});
@@ -132,6 +134,19 @@ void frame(){
    beam(muzzle,me.trace,{2.f,1.4f,.35f});
   }
  }
+ for(auto& g:projectiles)if(g.active){
+  if(g.exploding){
+   g.explosion=std::max(0.f,g.explosion-dt*1000);
+   const float age=std::clamp(1-g.explosion/350.f,0.f,1.f),size=reduced?.85f:.45f+age*1.5f;
+   add_box(g.position,{size,size,size},{2.6f,1.4f,.28f});
+   const float radius=reduced?1.f:.75f+age*2.3f;
+   for(int i=0;i<8;++i){const float a=i*arena::kPi/4;add_box(plus(g.position,{std::sin(a)*radius,.04f,std::cos(a)*radius}),{.13f,.13f,.13f},{2.f,1.5f,.25f});}
+  }else{
+   const float a=1-std::exp(-dt*22.f);g.position=plus(g.position,scale({g.target.x-g.position.x,g.target.y-g.position.y,g.target.z-g.position.z},a));
+   add_box(g.position,{.22f,.22f,.22f},{.32f,.42f,.18f},reduced?0:float(now)*.004f);
+   add_box(plus(g.position,{0,.12f,0}),{.07f,.07f,.07f},g.owner==mine?Vec3{1.8f,1.45f,.25f}:Vec3{1.8f,.8f,.25f});
+  }
+ }
  const auto matrix=client::multiply(client::perspective(fov,float(canvas_aspect()),.035f,155.f),client::view(eye,camera_yaw,camera_pitch));
  draw_platform(matrix.data(),instances.data(),int(instances.size()),eye.x,eye.y,eye.z);
 }
@@ -151,6 +166,7 @@ EM_BOOL key_event(int type,const EmscriptenKeyboardEvent* event,void*){
  if(locked&&down&&!event->repeat&&std::strcmp(event->code,"KeyC")==0){crouch_wanted=!crouch_wanted;return EM_TRUE;}
  if(locked&&down&&!event->repeat&&std::strcmp(event->code,"Digit1")==0){weapon_wanted=0;return EM_TRUE;}
  if(locked&&down&&!event->repeat&&std::strcmp(event->code,"Digit2")==0){weapon_wanted=1;return EM_TRUE;}
+ if(locked&&down&&!event->repeat&&std::strcmp(event->code,"KeyG")==0){grenade_pressed=true;return EM_TRUE;}
  return EM_FALSE;
 }
 EM_BOOL mouse_move(int,const EmscriptenMouseEvent* event,void*){
@@ -174,10 +190,10 @@ EM_BOOL visibility_event(int,const EmscriptenVisibilityChangeEvent* event,void*)
 extern "C" {
 EMSCRIPTEN_KEEPALIVE void client_start(int slot){
  if(slot<0||slot>=arena::kCapacity)return;
- mine=slot;weapon_wanted=0;sequence=0;next_input=0;hit_time=damage_time=0;clear_controls();for(auto& p:peers)p=Remote{};
+ mine=slot;weapon_wanted=0;sequence=0;next_input=0;hit_time=damage_time=0;clear_controls();for(auto& p:peers)p=Remote{};for(auto& g:projectiles)g=VisualGrenade{};
  position=arena::spawn_point(slot);yaw=arena::spawn_yaw(slot);pitch=0;vertical_velocity=0;grounded=true;crouching=false;
 }
-EMSCRIPTEN_KEEPALIVE void client_stop(){mine=-1;clear_controls();locked=false;emscripten_exit_pointerlock();for(auto& p:peers)p=Remote{};}
+EMSCRIPTEN_KEEPALIVE void client_stop(){mine=-1;clear_controls();locked=false;emscripten_exit_pointerlock();for(auto& p:peers)p=Remote{};for(auto& g:projectiles)g=VisualGrenade{};}
 EMSCRIPTEN_KEEPALIVE void client_release(){clear_controls();send_controls();emscripten_exit_pointerlock();}
 EMSCRIPTEN_KEEPALIVE void client_lock(){
  if(mine<0)return;
@@ -185,7 +201,7 @@ EMSCRIPTEN_KEEPALIVE void client_lock(){
  if(result!=EMSCRIPTEN_RESULT_SUCCESS&&result!=EMSCRIPTEN_RESULT_DEFERRED)lock_error_platform();
 }
 EMSCRIPTEN_KEEPALIVE void client_settings(float value,int reduce){sensitivity=std::clamp(value,.25f,3.f)*.0022f;reduced=reduce!=0;}
-EMSCRIPTEN_KEEPALIVE void client_begin_state(){for(auto& p:peers)p.seen=false;}
+EMSCRIPTEN_KEEPALIVE void client_begin_state(){for(auto& p:peers)p.seen=false;for(auto& g:projectiles)g.seen=false;}
 EMSCRIPTEN_KEEPALIVE void client_player(int slot,float x,float y,float z,float server_yaw,float server_pitch,int hp,int ammo,int kills,int deaths,float reload,float respawn,float shield,unsigned shot,unsigned hit,unsigned damage,unsigned ack,float tx,float ty,float tz){
  if(slot<0||slot>=arena::kCapacity)return;
  auto& p=peers[slot];const bool first=!p.seeded,reborn=p.hp<=0&&hp>0;
@@ -212,7 +228,19 @@ EMSCRIPTEN_KEEPALIVE void client_loadout(int slot,int weapon,int grenades,float 
  if(slot<0||slot>=arena::kCapacity)return;
  auto& p=peers[slot];p.weapon=weapon;p.grenades=grenades;p.equip=equip;
 }
-EMSCRIPTEN_KEEPALIVE void client_end_state(){for(auto& p:peers)if(!p.seen){p.active=false;p.seeded=false;p.flash=0;}}
+EMSCRIPTEN_KEEPALIVE void client_grenade(unsigned id,int owner,float x,float y,float z,float explosion,int exploding){
+ if(id==0)return;
+ auto it=std::find_if(projectiles.begin(),projectiles.end(),[id](const VisualGrenade& g){return g.active&&g.id==id;});
+ if(it==projectiles.end()){
+  it=std::find_if(projectiles.begin(),projectiles.end(),[](const VisualGrenade& g){return !g.active||!g.seen;});
+  if(it==projectiles.end())return;
+  *it=VisualGrenade{};it->position={x,y,z};
+ }
+ if(exploding&&!it->exploding)feedback_platform(3);
+ it->active=it->seen=true;it->id=id;it->owner=owner;it->target={x,y,z};it->explosion=explosion;it->exploding=exploding!=0;
+ if(it->exploding)it->position=it->target;
+}
+EMSCRIPTEN_KEEPALIVE void client_end_state(){for(auto& p:peers)if(!p.seen){p.active=false;p.seeded=false;p.flash=0;}for(auto& g:projectiles)if(!g.seen)g=VisualGrenade{};}
 }
 int main(){
  instances.reserve(4096*11);
