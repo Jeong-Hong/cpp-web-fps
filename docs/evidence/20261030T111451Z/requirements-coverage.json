@@ -1,0 +1,123 @@
+{
+  "schema": "crossyard_requirement_coverage/v1",
+  "assessment": "model read-only six-pass assessment; not independent review, execution, approval or a pass-rate claim",
+  "created_at_utc": "2026-10-30T12:00:49.591107+00:00",
+  "source_revision": "7a1cc3a6f76dcb6a7afa4a10624b917dc272369c",
+  "documentation_revision": "f4c5ba8529fd82b5e61df2c4ec1d7f9065896d65",
+  "documents": {
+    "docs/ACTIONS.md": "291561cf9753bd55733b2eb9bed31f87df3f9bfa9655e5db78c609c3cafc8b9a",
+    "docs/PLAN.md": "58840bb6272ec82e79d678873cad6c3bca7576f73ad2b9820aeb56650f52ed46",
+    "docs/VERIFICATION.md": "e3857fcdc88a2807e6819fa7c5fe6190ea82f4cabe38fd6ab1b23a4bf2b84e87"
+  },
+  "requirements": [
+    {
+      "id": "FR-006",
+      "requirement": "실제 점프·앉기·공유 충돌",
+      "tasks": [
+        "actions-core",
+        "actions-client"
+      ],
+      "evidence": "C++ 규칙·Space/C 브라우저 검사",
+      "mapping_basis": "inferred from behavior names; IDs assigned by the existing report"
+    },
+    {
+      "id": "FR-007",
+      "requirement": "권총·독립 자원·반자동",
+      "tasks": [
+        "actions-core",
+        "actions-client"
+      ],
+      "evidence": "C++ 쿨다운/에지·만료 후 재개 실제 소켓·Digit2 3조건",
+      "mapping_basis": "inferred from behavior names; IDs assigned by the existing report"
+    },
+    {
+      "id": "FR-008",
+      "requirement": "수류탄·차폐·자해·수명주기",
+      "tasks": [
+        "actions-core",
+        "actions-client"
+      ],
+      "evidence": "C++ 투사체/폭발·G 4자 동일 상태·기존 ID/16개 교체 ABI",
+      "mapping_basis": "inferred from behavior names; IDs assigned by the existing report"
+    },
+    {
+      "id": "FR-009",
+      "requirement": "strict v2·ABI·서버 권위",
+      "tasks": [
+        "actions-contract",
+        "actions-server"
+      ],
+      "evidence": "protocol/engine/실제 Wasm 소켓·전체 Node",
+      "mapping_basis": "inferred from behavior names; IDs assigned by the existing report"
+    },
+    {
+      "id": "SC-009",
+      "requirement": "HUD·모델·효과·3폭",
+      "tasks": [
+        "actions-client",
+        "actions-verify"
+      ],
+      "evidence": "실제 뷰포트·사격/폭발 캡처",
+      "mapping_basis": "inferred from behavior names; IDs assigned by the existing report"
+    },
+    {
+      "id": "SC-010",
+      "requirement": "전체 회귀·리뷰·보관·실행 안내",
+      "tasks": [
+        "actions-verify",
+        "actions-deliver"
+      ],
+      "evidence": "현재 receipt·두 수정 검토·시각 2회차·보관 색인·이 문서/README",
+      "mapping_basis": "inferred from behavior names; IDs assigned by the existing report"
+    }
+  ],
+  "passes": [
+    {
+      "pass_name": "Duplication",
+      "findings": [],
+      "basis": "FR-006 motion, FR-007 pistol, FR-008 grenade and FR-009 transport have distinct objects; SC-009 rendered coverage and SC-010 regression/review/archive are separate outcomes."
+    },
+    {
+      "pass_name": "Ambiguity",
+      "findings": [],
+      "basis": "ACTIONS fixes units, timer/range/default values, new-input shape and edge semantics. Defaults are explicitly not individually user-approved balance choices. Historical death/respawn wording is clarified at ACTIONS:15."
+    },
+    {
+      "pass_name": "Underspecification",
+      "findings": [],
+      "basis": "ACTIONS:53-57 defines actual Wasm, socket, public observer, key, rendered-frame, viewport and closure evidence. No unnamed performance or Internet-security guarantee is treated as an acceptance result."
+    },
+    {
+      "pass_name": "Principle conflict",
+      "findings": [],
+      "basis": "ACTIONS:5 and PLAN:4-8 retain original project, native shared simulation, server authority, one map/four members and local-only operation. Dependency manifests are byte-identical to baseline; final provenance records the loopback listener. No new permission is inferred."
+    },
+    {
+      "pass_name": "Coverage gaps",
+      "findings": [],
+      "basis": "Every mapped requirement has tasks and named regression/artifact evidence; every one of the six implementation/verification/delivery tasks is used. This is a coverage assessment, not another execution."
+    },
+    {
+      "pass_name": "Inconsistency",
+      "findings": [],
+      "basis": "PLAN:10-22 labels no-jump as v0.1 baseline and explicitly supersedes it with approved actions. ACTIONS:7 describes the initial planned state; current PLAN and VERIFICATION distinguish implementation, original no_ship/BLOCK, corrected scoped reviews and remaining device limits. Old receipts were not reattributed."
+    }
+  ],
+  "metrics": {
+    "requirements_mapped_by_kind": {
+      "FR": 4,
+      "SC": 2
+    },
+    "tasks_mapped": 6,
+    "tasks_mapped_to_no_requirement": 0,
+    "coverage_percentage": 100.0,
+    "requirements_with_zero_tasks": [],
+    "requirements_with_tasks_but_no_evidence": [],
+    "findings_by_severity": {
+      "Critical": 0,
+      "High": 0,
+      "Medium": 0,
+      "Low": 0
+    }
+  }
+}
