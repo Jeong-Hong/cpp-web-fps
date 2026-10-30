@@ -1,0 +1,23 @@
+{
+  "name": "cpp-web-fps",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "python scripts/build.py",
+    "test:core": "python scripts/build.py --test",
+    "test:server": "node --test tests/*.test.mjs",
+    "test": "npm run test:core && npm run test:server",
+    "start": "node server/main.mjs",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "ws": "8.22.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}
