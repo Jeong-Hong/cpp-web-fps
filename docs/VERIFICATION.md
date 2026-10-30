@@ -59,13 +59,14 @@
 
 [보충 색인](evidence/20261030T111451Z/supplement-index.json)은 `node .omh/artifacts/actions-tdd/core/export-smoke.mjs`의 현재 실제 실행(exit 0), 공개 export 8개·구형 10인자/v2 14인자·실제 JSON 단위 검사와 기본 주소 재검사·도구 버전을 연결한다. 주 receipt를 덮어쓰지 않았다. TDD 보관 색인의 파일은 376개이며 과거의 예상 밖 실패도 남아 있다. 일부 부모 TDD의 client 명명 범위에는 공통 구현 파일 전체 지문이 포함되지 않았으므로, 각 시도의 선언 범위와 현재 45경로 통합 지문을 구별한다.
 
-코드와 시각의 최초 no_ship/BLOCK 원본은 `reviews/core-server-initial.md`, `reviews/client-initial.json`, `reviews/visual-round-1.json`에 따로 보존했다. 두 수정의 소스 재검토와 새 56개 이미지의 시각 2회차는 진행 중이다. 부모의 실행 통과를 독립 검토자의 재실행으로 표현하지 않는다.
+코드와 시각의 최초 no_ship/BLOCK 원본은 `reviews/core-server-initial.md`, `reviews/client-initial.json`, `reviews/visual-round-1.json`에 따로 보존했다. [두 수정의 독립 재검토](evidence/20261030T111451Z/reviews/fixes.json)는 `b3ee71a4cb82aa31a9611c887b62b3f92b20a80a`의 여섯 파일을 확인해 두 수정 한정 ship, 미해결 findings 없음으로 판정했다. 기존 TDD 로그를 읽은 소스 재검토이며 빌드·테스트를 새로 실행한 결과가 아니다. 그 여섯 파일은 현재도 동일하고, 부모의 후속 전체 실행은 별도의 45경로/산출물 지문으로 확인했다. 과거 TDD 입력 지문이 일부 공통 소스·C++ 검사·산출물을 포괄하지 못하는 한계는 소급 수정하지 않았다. 새 56개 이미지의 시각 2회차 결과는 아직 대기 중이다.
 
 | 보관 ID | 현재 대상 |
 |---|---|
 | `20261030T111451Z` | `docs/evidence/20261030T111451Z/receipt.json` 및 원시 로그·PNG |
 | `crossyard-v2-tdd-archive` | 같은 폴더의 `archive-index.json`·`tdd/` |
 | `crossyard-v2-supplements` | 같은 폴더의 `supplement-index.json`·ABI/도구 로그·`primary-origin/` |
+| `crossyard-v2-fixes-review` | 같은 폴더의 `reviews/fixes.json` — 두 P2 수정 한정 독립 소스 검토 |
 
 ### 확장 요구·작업·증거 대응
 
@@ -84,7 +85,7 @@
 
 ### 현재 남은 경계
 
-독립 코드/화면 검토와 그 결과의 보관은 진행 중이다. 실제 별도 PC의 LAN·방화벽·공유기·모바일 터치·다른 브라우저 엔진·사용자 물리 입력은 미검증이다. 자동 WebGPU 초기화 실패/장치 손실 복구를 새로 유발하지 않았다. 계정·상용 안티치트·되감기 지연 보상·인터넷 공개 서비스는 구현 범위 밖이다. 원격 push·CI·배포는 실행하지 않았다.
+독립 시각 재검토와 그 결과의 보관은 진행 중이다. 실제 별도 PC의 LAN·방화벽·공유기·모바일 터치·다른 브라우저 엔진·사용자 물리 입력은 미검증이다. 자동 WebGPU 초기화 실패/장치 손실 복구를 새로 유발하지 않았다. 계정·상용 안티치트·되감기 지연 보상·인터넷 공개 서비스는 구현 범위 밖이다. 원격 push·CI·배포는 실행하지 않았다.
 
 ---
 

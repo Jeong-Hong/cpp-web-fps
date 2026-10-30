@@ -1,0 +1,110 @@
+{
+  "schema": "crossyard_actions_review/v1",
+  "language": "ko",
+  "lane": "fixes",
+  "repository": "D:/Projects/Vibe_Coding/cpp-web-fps",
+  "base": "6096622dad367fc56e99c7df4592c0fb507f2a76",
+  "head": "b3ee71a4cb82aa31a9611c887b62b3f92b20a80a",
+  "claim": "입력 만료가 권총 press를 합성하지 않으며, 새 수류탄 ID가 같은 snapshot 뒤에 올 기존 ID를 덮어쓰지 않는다.",
+  "requirements": ["docs/ACTIONS.md:22-23", "docs/ACTIONS.md:31", "docs/PROTOCOL.md:21-24", ".omh/artifacts/actions-review/client.json:CLIENT-001/002"],
+  "scope": {
+    "method": "고정 BASE..HEAD의 지정 diff와 인접 호출 경계 정적 검토, 기존 RED/GREEN 원시 로그 및 SHA-256 대조",
+    "paths": ["include/arena.hpp", "core/game.cpp", "client/main.cpp", "tests/core_tests.cpp", "tests/actions-integration.test.mjs", "tests/e2e/client-contract.spec.mjs"],
+    "worktree_target_contents_match_head": true,
+    "test_rerun": false,
+    "build_run": false,
+    "source_edits": false,
+    "commits": false,
+    "external_network": false,
+    "user_8088_contact": false,
+    "tracked_task_closed": false,
+    "only_output": ".omh/artifacts/actions-review/fixes.json"
+  },
+  "findings": [],
+  "closed_findings": [
+    {
+      "id": "CLIENT-001",
+      "original_priority": "P2",
+      "confidence": 0.98,
+      "axis": "correctness_and_spec",
+      "status": "closed_in_reviewed_diff",
+      "path": "core/game.cpp",
+      "line_range": {"start": 100, "end": 105},
+      "evidence": {
+        "implementation": "accepted fire level을 Player.last_fire_down에 분리했다. old/duplicate seq와 dead 입력은 edge 상태 변경 전에 반환한다. timeout은 실행용 player.input.fire만 지우므로 held true 재개는 rising edge가 아니다. fresh false→true는 semi_pending을 다시 설정하며 뒤따른 false가 이를 지우지 않는다.",
+        "lifecycle": "include/arena.hpp:50-51 기본 false; core/game.cpp:62,75의 Player{} 초기화 및 begin_respawn/respawn의 명시적 false reset으로 이전 membership/death 상태를 유지하지 않는다.",
+        "regression": "tests/core_tests.cpp:390-406에 timeout 후 held true, old release 무시, fresh release/brief press를 추가했다. tests/actions-integration.test.mjs:19-37은 실제 엔진·live server clock·loopback socket과 observer snapshot을 사용한다. 소켓 검사는 첫 shot 후 state.time 400ms 경과를 기다려 250ms 만료 경로를 통과한다.",
+        "raw_red": "journal.jsonl:35 core stderr의 FAIL: stale held true cannot synthesize a pistol press; :36 socket stdout의 같은 assertion에서 actual 2 / expected 1, exit 1.",
+        "raw_green": "journal.jsonl:37 core stdout PASS 2516 C++ checks, exit 0; :38 실제 core module build exit 0; :39 socket stdout tests 1 / pass 1 / fail 0, exit 0.",
+        "boundary": "위 실행 결과는 기존 파일에서 직접 확인한 역사적 결과다. 이번 리뷰에서 빌드나 테스트를 실행한 결과가 아니다."
+      }
+    },
+    {
+      "id": "CLIENT-002",
+      "original_priority": "P2",
+      "confidence": 0.98,
+      "axis": "correctness_and_spec",
+      "status": "closed_in_reviewed_diff",
+      "path": "client/main.cpp",
+      "line_range": {"start": 235, "end": 247},
+      "evidence": {
+        "implementation": "새 ID는 !active 슬롯만 사용한다. begin_state의 seen=false가 기존 active ID를 신규 할당 대상으로 만들지 않는다. 기존 ID는 ID lookup으로 같은 슬롯을 갱신하고 end_state에서 미수신 ID를 정리한다.",
+        "capacity": "client/main.cpp:40-42는 임시 보존 공간을 kMaxGrenades*2로 늘렸다. authoritative snapshot 최대 16개와 직전 snapshot 최대 16개의 합집합을 수용하므로 완전 교체에서도 아직 정리하지 않은 기존 슬롯을 빼앗거나 새 ID를 버릴 필요가 없다. end_state 후에는 현재 snapshot ID만 남는다. 이는 서버의 16-slot 제한 변경이 아니다.",
+        "regression": "tests/e2e/client-contract.spec.mjs:35-58의 실제 컴파일 C++ snapshot ABI fixture가 [10 blast,11 blast]→[12 flying,10 blast,11 blast], 포화 상태의 앞쪽 신규 ID, 16개 완전 교체, 역순 재수신, 빈 snapshot 후 재사용을 검사한다.",
+        "raw_red": "journal.jsonl:40 기존 client build exit 0 뒤 :41의 new ID must not replay existing grenade explosions assertion에서 Expected 2 / Received 4, exit 1.",
+        "raw_green": "journal.jsonl:42 수정 client build exit 0 뒤 :43의 client contract 3 passed, exit 0. grenade regression을 포함한다.",
+        "boundary": "브라우저에서 컴파일된 snapshot 소비 ABI와 feedback 호출을 검사한 기존 결과다. 공개 소켓으로 해당 pool 순서를 재현했거나 실제 소리를 청취한 증거로 확대하지 않는다."
+      }
+    }
+  ],
+  "correctness_axis": {
+    "verdict": "checked_clean",
+    "confidence": 0.97,
+    "finding_ids": [],
+    "summary": "두 수정의 원인 제거, 순서/수명 경계 및 추가 회귀 검사를 확인했다. 지정 diff에서 미해결 결함을 발견하지 않았다."
+  },
+  "spec_axis": {
+    "verdict": "met_in_reviewed_scope",
+    "confidence": 0.97,
+    "claim_source": "사용자 Claim; docs/ACTIONS.md:22-23,31; docs/PROTOCOL.md:21-24; 기존 CLIENT-001/002",
+    "finding_ids": [],
+    "summary": "수신 press 이력과 만료 실행 상태를 분리해 fresh-edge 계약을 보존한다. snapshot 내 ID 보존 및 완전 교체 수용으로 stable grenade ID 계약과 기존 feedback 전이를 보존한다. 전체 ACTIONS 수용 판정은 아니다."
+  },
+  "release_verdict": {
+    "verdict": "ship",
+    "confidence": 0.96,
+    "scope": "고정 HEAD의 CLIENT-001/002 수정 diff에 한정한 코드리뷰 판정",
+    "blocking_policy_source": "REVIEW.md 없음. 지정된 두 Claim에 대한 미해결 재현 결함 또는 정적 계약 위반을 차단 기준으로 사용했다.",
+    "reason": "두 기존 P2를 해소하는 작은 수정과 의도한 RED→GREEN 증거가 일치하며, 검토 범위에서 남은 차단 결함을 찾지 못했다.",
+    "not_evidence_of": ["현재 트리 전체 빌드·테스트 통과", "최종 UI 변경 검증", "CI", "merge", "배포", "tracked task 완료"],
+    "parent_obligation": "부모가 수행할 동일 최종 트리 전체검사/빌드 및 최종 수용 판정은 별도로 남아 있다."
+  },
+  "checked_clean": [
+    {"surface": "지정 revision 및 소스 경계", "evidence": "HEAD 일치와 여섯 대상 파일의 worktree/HEAD 내용 일치를 확인하고 BASE..HEAD 해당 diff만 검토했다."},
+    {"surface": "권총 stale-resume edge", "evidence": "수신 레벨 분리, old seq 조기 반환, 초기화/reset 및 fresh release 회귀를 확인했다. 원시 core/socket RED와 GREEN을 대조했다."},
+    {"surface": "수류탄 ID retention 및 bounded 공간", "evidence": "inactive-only 할당, 두 snapshot 합집합 공간, end_state 정리와 삽입·포화·완전교체·역순·재사용 ABI 회귀를 확인했다."},
+    {"surface": "원시 증거 무결성", "evidence": "journal의 stale-edge-* 및 grenade-slots-* 각 stdout/stderr 실제 바이트 SHA-256이 선언값과 모두 일치했다. 로그의 실패 assertion과 통과 수치를 직접 읽었다."},
+    {"surface": "GREEN manifest의 관련 입력", "evidence": "grenade build/GREEN에 포함된 include/arena.hpp, client/main.cpp, tests/actions-integration.test.mjs, tests/e2e/client-contract.spec.mjs 해시가 현재 고정 대상과 일치한다. stale core/socket GREEN의 include/arena.hpp 및 socket test 해시도 일치한다. 이후 바뀐 client/E2E 입력은 이전 stale 실행과 구분했다."}
+  ],
+  "could_not_assess": [
+    {"surface": "독립 재빌드·테스트 및 최종 전체검사", "reason": "사용자 금지에 따라 실행하지 않았다. 2516 C++ / socket 1 / client contract 3은 원시 파일에서 확인한 기존 실행 수치다. 부모가 언급한 전체 Node 115/115는 이 지정 로그 검토에서 확인하지 않아 통과로 인용하지 않는다."},
+    {"surface": "모든 실행 입력과 산출물의 완전한 HEAD 귀속", "reason": "지정 journal input_sha256에는 core/game.cpp와 tests/core_tests.cpp가 없고 실행 산출물 digest도 없다. 일부 입력 일치와 raw log 무결성은 확인했지만 전체 tested-tree/compiled-module 동일성을 완전히 입증하는 manifest로 간주하지 않는다."},
+    {"surface": "수류탄 순서의 공개 소켓·실제 음향·보간 시각 결과", "reason": "회귀는 제어된 compiled-client ABI와 feedback 호출 검사다. 실제 socket pool 배치 및 렌더 보간/음향의 독립 동적 관찰은 수행하지 않았다."},
+    {"surface": "대상 밖 변경 및 제품 전체 출하", "reason": "web UI, 다른 게임 경로, 사용자 8088 서버, 기기/LAN, CI와 배포는 범위 밖이다. 이 결과로 전체 제품/작업 완료를 선언하지 않는다."}
+  ],
+  "provenance": {
+    "journal": ".omh/artifacts/actions-tdd/client/journal.jsonl",
+    "journal_lines": [35, 36, 37, 38, 39, 40, 41, 42, 43],
+    "raw_log_path_rule": ".omh/artifacts/actions-tdd/client/<run_id>.stdout.txt 및 <run_id>.stderr.txt",
+    "run_ids": ["stale-edge-core-red-20261030T105841670621Z", "stale-edge-socket-red-20261030T105849201525Z", "stale-edge-core-green-20261030T110141901324Z", "stale-edge-core-module-green-20261030T110144638085Z", "stale-edge-socket-green-20261030T110147761900Z", "grenade-slots-current-build-20261030T110650612810Z", "grenade-slots-red-20261030T110654759172Z", "grenade-slots-build-green-20261030T110708753592Z", "grenade-slots-green-20261030T110712859537Z"],
+    "raw_stdout_stderr_hashes_match_journal": true,
+    "current_target_sha256": {
+      "include/arena.hpp": "694dcedeb074f692befe7c329dccf7ca34f451b4c7a86d539d6aa9a606a861c1",
+      "core/game.cpp": "bbf455ba50e5e1ccff234e0f3d075994a7676330cebd54cd7cdcf46c34b8f033",
+      "client/main.cpp": "8b130af5dfb1e1d3c1135bea90eaebf5d974542e257cd683b89fd1ad266b7dcd",
+      "tests/core_tests.cpp": "ad47adeedacf8c0dcb771ce9e4b17c9ede15fdf21b026d0414e98287eba731fa",
+      "tests/actions-integration.test.mjs": "5c7547c6121535fd27772b55b053c8d7b04a041453cc260367a876504235286d",
+      "tests/e2e/client-contract.spec.mjs": "235331f1a0a44e412fa0a12ff2b90afd0965d9e2bc4e1435e1434f08bf5ffc92"
+    }
+  }
+}
