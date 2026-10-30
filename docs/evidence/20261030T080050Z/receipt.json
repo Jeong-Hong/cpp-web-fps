@@ -1,0 +1,385 @@
+{
+  "schema": "crossyard_verification/v1",
+  "run_id": "20261030T080050Z",
+  "repository": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+  "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+  "tested_revision": "10f3d8f7f4a2cc71a06b9a7adc11de2199c74af8",
+  "initial_git_state": "",
+  "python": "3.14.7 (main, Sep  1 2026, 14:17:30) [MSC v.1944 64 bit (AMD64)]",
+  "source_sha256": {
+    ".gitattributes": "a27ec0af828b6749421ca24d1fd09b0515c3b0a79ff6ec7531bbf6d12b96e5dc",
+    ".gitignore": "138d4ce548f2f360bbb7d08ab6111b3062b40c1b076a66de40dfb62136b818c1",
+    "BUILD.cmd": "c1b93b850fd3051268c55302d127058d1ba3c8aec70f6c2e06eabc02c274b875",
+    "client/camera.hpp": "956a98462f99c24fe0e8ad50027c5a38f46c89f4c52f3ca80bd704e5e810f9b6",
+    "client/main.cpp": "6ba7c1133ffc17861e9b89c32afaf87aad57b51bc5e1611e6abd1fff2445f2f9",
+    "core/bridge.cpp": "8ca75f6d6f047f3b3cf1abec5b5d2a1ddb5e1fabc0c1a3b48ca10c852a86ddad",
+    "core/game.cpp": "07928895104625962e87ac14f4cc4877851772990e9f49fd664f6b2e24dc69ef",
+    "DESIGN.md": "718d12ffa8c5d055ed36aa936647f276484304e9c6717e71889827fcfceec8ae",
+    "docs/PLAN.md": "473ff7bd1f7ad0e9a55366d55973c71e39406cd3686b133482207d6bbc62504c",
+    "docs/PROTOCOL.md": "6656937d22b574273d47656ccddcd4280c9e4b659b5c9d28c86af68c44d18eb9",
+    "include/arena.hpp": "b8a1719f57c8d14619c58839ebc2e9fb0fe26791f05a147d74fde41dc9de9207",
+    "package-lock.json": "f4117f70cc4d17933532d7032148512676223379c2ca8de9e5ec56f8177c4e6b",
+    "package.json": "74fa06267efac8cc1b9a80481b4428aa0e08a3cfcac441cfdbd01a1a05e2d0c3",
+    "playwright.config.mjs": "11d78186ea7c8a3fb5f591c5a5bbe39769adc138153bc0fed70b76aa5a57c640",
+    "playwright.game.config.mjs": "49b85b3382b9ca9b6044b9e7813752e5713668b53aa82ee0d35919de8464a09c",
+    "README.md": "3c8bb4254283400d535171b42377db0855a7885bbafb2855fb394c694495ab12",
+    "scripts/build.py": "93205655217756d786b5c851cbb8e821411fbcdf1a490d2d8065a1cd79edf7e7",
+    "scripts/launcher-smoke.py": "57ab7f2c1cd4b551407a9e7666564f44e1d6d5006455df44e43add0c58e0c8d2",
+    "scripts/live-smoke.mjs": "0d20a8b312ae15e701a8aacd4b549021c2fce11fc1421ba714fe179d550302c5",
+    "scripts/verify.py": "0b9364ca6e29d08aafc458821491d8188ccede6f7085355f588b164d4ada4730",
+    "server/app.mjs": "0901365d811654fe85d777c8a24addcf38ad34e94107482cb962b37abbc1ba4d",
+    "server/engine.mjs": "d163e9b6c6eeb4ec1b848ca6d988f78bc4f8489ed8b46e02f7319caa748e1cc5",
+    "server/main.mjs": "1587233e818d7a7c0a4f240a44579d42102d33c76fa1640363033ce3af3ad485",
+    "server/peer.mjs": "e55b49f6bbb26ae14e0245d731cf68cb2f229e10f85949dba6506fe90f2e2697",
+    "server/protocol.mjs": "c94141cdcb2a76bddf5939407f7b37ad602317af3f7b833e2898f99e57354027",
+    "START.cmd": "a834a91e2d01136664baabcfd92f4f1220c1dbdaffb206eb71ddcbff67697209",
+    "tests/cli-server.test.mjs": "14202a70114090f1db5a552d6e4d4f898ac69860460887c5357617c1e103402d",
+    "tests/client_math_tests.cpp": "2c9cca94cddd678a53ff5a6bfa4fa94870e9282851cb8ed2ac78b86b761aa37d",
+    "tests/core_tests.cpp": "215022be92720d985867583154e14fe96f5a33d3b1e15d69246dfdca6b8ecbba",
+    "tests/e2e/client-contract.spec.mjs": "ee208383c993e89c61d5f3058ce22728477f3c3e1ae08d6996abf833942d77d6",
+    "tests/e2e/game.spec.mjs": "64d29c3af2454cdcd23348a581ad7cfa870ae4f457d8e98e69cafdd3c5e63340",
+    "tests/e2e/gpu.spec.mjs": "9c61c30fec320a8b8b951c6d522a24a3146044efa883367bb54fed2057486b58",
+    "tests/e2e/lobby-render.spec.mjs": "0ebb7862244a8661299a5687b97aa6779867042e04c3b4b8bbe95c650d52df55",
+    "tests/e2e/shell.spec.mjs": "4982f5e4347370f24d691a1dbddeaea3a1dc72b2e064ebae4f504123333d4eea",
+    "tests/engine-server.test.mjs": "ae3c3cd4e9547f886d94213a1afb53795d746b4bda6cf3ce5608a6eb79658725",
+    "tests/gpu-geometry.test.mjs": "9978d2567563978b35b466cfe99934a9119aa5a7baf8fdd708ffe62f73b8743f",
+    "tests/transport-peer.test.mjs": "12dd946e94bc0fb44283fbaec7c0082ece455a3dbebf19db17531047dc581f51",
+    "tests/transport-server.test.mjs": "f5dd62584b2382588ae8602da37a478fde11ddd82ed908bd4edf21dc01415de8",
+    "web/app.mjs": "bb6f08be3cfce41e4accd4261303ad184c9a9e6aa5c8db1fc13a210061e30a7c",
+    "web/gpu.mjs": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+    "web/index.html": "d78510edeef3b5d0a0d8a458f7cd6ace7fefaa48420324ad2f6233d022e36719",
+    "web/style.css": "35daae19adcf4601e854799385c02f9a9845014944ee87184166bb8d1e7c5870"
+  },
+  "checks": [
+    {
+      "name": "build",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:00:50.984693+00:00",
+      "finished_at": "2026-10-30T08:00:54.752176+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "544fd12716a8d76854c23cf058ef2705d6c345408d62d627fd85cef92d838508",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "build"
+    },
+    {
+      "name": "core",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py",
+        "--test"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:00:54.752226+00:00",
+      "finished_at": "2026-10-30T08:00:56.730212+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "4b6d7ace7fd9293015a72704cc87c9cc74830b3f80e9598b80ba329e0c40182f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "core"
+    },
+    {
+      "name": "camera",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py",
+        "--client-test"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:00:56.730252+00:00",
+      "finished_at": "2026-10-30T08:00:57.972954+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "a44754135d36f56551f7f7003fdde7ce61d8872e799381d3f4bb483b7a3a8c4b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "camera"
+    },
+    {
+      "name": "node",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "--test",
+        "tests/*.test.mjs"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:00:57.972997+00:00",
+      "finished_at": "2026-10-30T08:00:58.638100+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "249aa18b9573fe61d22af2938af683ceab23ad46090dcd1a497a1221a55479cd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "node"
+    },
+    {
+      "name": "browser",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "node_modules/@playwright/test/cli.js",
+        "test"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:00:58.638192+00:00",
+      "finished_at": "2026-10-30T08:01:02.456842+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "9a98532031ba2fa8a0cd2bec2bb8f50a129dd503b94a8b95e3238fcac9a7417d",
+      "stderr_sha256": "3432b056eab5ea8f21dd3c508d615d9b07fd5af0eb8bb6b650498366408174b8",
+      "scope": "browser"
+    },
+    {
+      "name": "game",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "-c",
+        "playwright.game.config.mjs"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:01:02.456897+00:00",
+      "finished_at": "2026-10-30T08:01:23.274649+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "8fb56b75dc68a551a978f64d2db032cde36d0360f19eb5ad9d2a01f586199dea",
+      "stderr_sha256": "2b283e07b5d71894d187bc114833a5aff025318ca840430ac332f60a36546295",
+      "scope": "game"
+    },
+    {
+      "name": "live",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "scripts/live-smoke.mjs",
+        "--url",
+        "http://127.0.0.1:8088"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:01:23.274703+00:00",
+      "finished_at": "2026-10-30T08:01:30.136957+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "f6affa5fbcd701c044e5fe1e7f429690a342dfc0842bd21fdb45d46e40357882",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "live"
+    },
+    {
+      "name": "launcher",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/launcher-smoke.py"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:01:30.136999+00:00",
+      "finished_at": "2026-10-30T08:01:30.566879+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "0b3755b77744ff235f2c07a9517adce654d0449153314052addc1718b45343dc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "launcher"
+    },
+    {
+      "name": "diff",
+      "command": [
+        "D:\\Tools\\Hermes\\tools\\git-2.53.0+3-win32-x64\\mingw64\\bin\\git.EXE",
+        "diff",
+        "--check"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:01:30.566916+00:00",
+      "finished_at": "2026-10-30T08:01:30.584622+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "diff"
+    }
+  ],
+  "inputs_unchanged": true,
+  "served_assets": {
+    "index.html": {
+      "origin": "http://127.0.0.1:8088",
+      "served_sha256": "d78510edeef3b5d0a0d8a458f7cd6ace7fefaa48420324ad2f6233d022e36719",
+      "local_sha256": "d78510edeef3b5d0a0d8a458f7cd6ace7fefaa48420324ad2f6233d022e36719",
+      "matches": true
+    },
+    "style.css": {
+      "origin": "http://127.0.0.1:8088",
+      "served_sha256": "35daae19adcf4601e854799385c02f9a9845014944ee87184166bb8d1e7c5870",
+      "local_sha256": "35daae19adcf4601e854799385c02f9a9845014944ee87184166bb8d1e7c5870",
+      "matches": true
+    },
+    "app.mjs": {
+      "origin": "http://127.0.0.1:8088",
+      "served_sha256": "bb6f08be3cfce41e4accd4261303ad184c9a9e6aa5c8db1fc13a210061e30a7c",
+      "local_sha256": "bb6f08be3cfce41e4accd4261303ad184c9a9e6aa5c8db1fc13a210061e30a7c",
+      "matches": true
+    },
+    "gpu.mjs": {
+      "origin": "http://127.0.0.1:8088",
+      "served_sha256": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+      "local_sha256": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+      "matches": true
+    },
+    "dist/client.mjs": {
+      "origin": "http://127.0.0.1:8088",
+      "served_sha256": "3ef01cbad0f8be7bffbacaf2303c38db48d47e6f16c9b9d957ae3315598195ee",
+      "local_sha256": "3ef01cbad0f8be7bffbacaf2303c38db48d47e6f16c9b9d957ae3315598195ee",
+      "matches": true
+    },
+    "dist/client.wasm": {
+      "origin": "http://127.0.0.1:8088",
+      "served_sha256": "8942aff0ca09a0d92ec6915394d7c433ec10bb49fbac45867613461f9f8f318d",
+      "local_sha256": "8942aff0ca09a0d92ec6915394d7c433ec10bb49fbac45867613461f9f8f318d",
+      "matches": true
+    }
+  },
+  "outputs": {
+    "build/sim.mjs": "8e8d918d2fe30ca54eb03ed3a86437c97b2b937f1ee68de41bb64b52b63fb176",
+    "build/sim.wasm": "8c40d6fbb3ff7f33f1709caa26d7c18b7c8dc3caa47bf10d2a346cac08328db6",
+    "web/dist/client.mjs": "3ef01cbad0f8be7bffbacaf2303c38db48d47e6f16c9b9d957ae3315598195ee",
+    "web/dist/client.wasm": "8942aff0ca09a0d92ec6915394d7c433ec10bb49fbac45867613461f9f8f318d"
+  },
+  "captures": {
+    "work/browser-damage.png": {
+      "sha256": "5a824fd2eae701291f3e2dc5fd98f9df423d56929c095169e3385b10ee9958c0",
+      "bytes": 501809
+    },
+    "work/browser-hit.png": {
+      "sha256": "93a377c63717ce5f414c209f9a290c938c6a64f694355c7c619a495f1eea065f",
+      "bytes": 46867
+    },
+    "work/controlled-disconnect.png": {
+      "sha256": "5a7a0d3b875f0dd4e94f7a3ec704ff051e50d701396837b0b5ae3a3214275220",
+      "bytes": 494187
+    },
+    "work/disconnect-1440.png": {
+      "sha256": "b0ff95ff6c4e0d8e5fdb17e67e5c584f2447c8527289e4d71bcb394707d044c4",
+      "bytes": 494290
+    },
+    "work/disconnect-375.png": {
+      "sha256": "050ec91fc52967f89fdcbe5aaa56792874a4e0d0927ab7d7824915e61787f0bb",
+      "bytes": 124761
+    },
+    "work/disconnect-768.png": {
+      "sha256": "ed6cd67734b42f346b7766b0a8d8af90c249fc9b52cb6a8efd11647480406b48",
+      "bytes": 235997
+    },
+    "work/firing-no-preference.png": {
+      "sha256": "1bd7c619f65bc2349930268bb52b6236081085f5d4f6992f7d675e888b479901",
+      "bytes": 101490
+    },
+    "work/firing-reduce-webgl.png": {
+      "sha256": "c8a65f6d7778b4d247db1af5cc48f13c5b83165c88977811fdcdc20f423e579e",
+      "bytes": 101866
+    },
+    "work/firing-reduce.png": {
+      "sha256": "c918d9245f9ba6befc9dcf89e2db36ec83fb646c825da95f722243e39eccb9ef",
+      "bytes": 102871
+    },
+    "work/gpu-auto.png": {
+      "sha256": "aaf8270446dfd2648f7496591980f646fd35c2e976d91c6facf3e5ae92c05ee2",
+      "bytes": 6003
+    },
+    "work/gpu-webgl.png": {
+      "sha256": "aaf8270446dfd2648f7496591980f646fd35c2e976d91c6facf3e5ae92c05ee2",
+      "bytes": 6003
+    },
+    "work/live-menu-1440.png": {
+      "sha256": "81191540773831b0927ba33bcfb2f4ed829e121f6a74e5c54661aabd5e5f9064",
+      "bytes": 47909
+    },
+    "work/live-menu-375.png": {
+      "sha256": "48e5de210fe0fdb329716a4f3e9847d29ae0ddd234db428273ce2509bfe5a698",
+      "bytes": 26676
+    },
+    "work/live-menu-768.png": {
+      "sha256": "dc91e85b38a8a554f738faef4e44e4933194bf690abb296206937a93bb3f1d0c",
+      "bytes": 36795
+    },
+    "work/loading-1440.png": {
+      "sha256": "79afdef717a2e02f445f04bda25163425adba3728ed5005b20c22f6813ffbb38",
+      "bytes": 320690
+    },
+    "work/loading-375.png": {
+      "sha256": "38343037910578b79eb7b9a165db4c63553f4c7afbd489073087a29ae5294357",
+      "bytes": 79652
+    },
+    "work/loading-768.png": {
+      "sha256": "8fd3cbc7dc3e2c2978d4933b7c9c4d675918f21af89773af9bf3efbbde5d0fde",
+      "bytes": 148218
+    },
+    "work/lobby-1440.png": {
+      "sha256": "cd71114cb973507f6f705111314cc2be1895debae4510904ffddb125379d18a3",
+      "bytes": 493506
+    },
+    "work/lobby-375.png": {
+      "sha256": "e9829d870822663879fd68531bc5935e09e559c0a3156cd66ca6c3391b3612cd",
+      "bytes": 124203
+    },
+    "work/lobby-768.png": {
+      "sha256": "ed9bbf49cea3b5e32ab54654a33911e0e8e9f25fe1a5185e9291a8c3cd66c40b",
+      "bytes": 234160
+    },
+    "work/menu-no-preference.png": {
+      "sha256": "3737576f2a190f945c34bc7375216381eb02cea86cbb724dafabbf8d6bfb29e0",
+      "bytes": 54298
+    },
+    "work/menu-reduce-webgl.png": {
+      "sha256": "9a52bedbbe40d6be7812c9ab02e04b484781623de38da52612e0359f6e529371",
+      "bytes": 54322
+    },
+    "work/menu-reduce.png": {
+      "sha256": "f274d179e0aca11da091d9530527a85ffe48111d888dcc2a7496fb2ad462abd0",
+      "bytes": 54845
+    },
+    "work/play-no-preference.png": {
+      "sha256": "7d3622e533311429befb102ec877e3a44dfbf0ff7e10d69cef96bf43c3c20e31",
+      "bytes": 58561
+    },
+    "work/play-reduce-webgl.png": {
+      "sha256": "861d03860b2e3e08a281f644534f7cf2d1e9fb6d4fd9a15c0cb9eddbba468f7c",
+      "bytes": 56990
+    },
+    "work/play-reduce.png": {
+      "sha256": "d45449a9d2276e56d6188563dfc22db529a5aa37bf50b61f26a3e8cf7db8d2a2",
+      "bytes": 57744
+    },
+    "work/rendered-lobby-1440.png": {
+      "sha256": "b18083f8eace5bb147107c84077c364443c3193da6aef8f52113c6dbcc5e25a0",
+      "bytes": 493473
+    },
+    "work/rendered-lobby-375-bottom.png": {
+      "sha256": "8859a334db7a1d6268840c59c066c12a03ce889c8ba7ba2d8c3de30dfe98fc0c",
+      "bytes": 84185
+    },
+    "work/rendered-lobby-375.png": {
+      "sha256": "2b82979548d6e75dc45c96047278d76fdb9db15e12eb91e2f22b46ac60fad696",
+      "bytes": 124238
+    },
+    "work/rendered-lobby-768.png": {
+      "sha256": "85769b032936dc3d37e5d4b6899ca8d573e49fcbd210ce59269714928f9e7911",
+      "bytes": 234385
+    }
+  },
+  "counts": {
+    "core_checks": 940,
+    "camera_checks": 6,
+    "node_tests": 84,
+    "browser_tests": 8,
+    "game_tests": 9,
+    "browser_total": 17
+  },
+  "passed": true
+}

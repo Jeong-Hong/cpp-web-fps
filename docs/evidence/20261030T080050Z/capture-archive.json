@@ -1,0 +1,122 @@
+{
+  "work/browser-damage.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/browser-damage.png",
+    "sha256": "5a824fd2eae701291f3e2dc5fd98f9df423d56929c095169e3385b10ee9958c0"
+  },
+  "work/browser-hit.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/browser-hit.png",
+    "sha256": "93a377c63717ce5f414c209f9a290c938c6a64f694355c7c619a495f1eea065f"
+  },
+  "work/controlled-disconnect.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/controlled-disconnect.png",
+    "sha256": "5a7a0d3b875f0dd4e94f7a3ec704ff051e50d701396837b0b5ae3a3214275220"
+  },
+  "work/disconnect-1440.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/disconnect-1440.png",
+    "sha256": "b0ff95ff6c4e0d8e5fdb17e67e5c584f2447c8527289e4d71bcb394707d044c4"
+  },
+  "work/disconnect-375.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/disconnect-375.png",
+    "sha256": "050ec91fc52967f89fdcbe5aaa56792874a4e0d0927ab7d7824915e61787f0bb"
+  },
+  "work/disconnect-768.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/disconnect-768.png",
+    "sha256": "ed6cd67734b42f346b7766b0a8d8af90c249fc9b52cb6a8efd11647480406b48"
+  },
+  "work/firing-no-preference.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/firing-no-preference.png",
+    "sha256": "1bd7c619f65bc2349930268bb52b6236081085f5d4f6992f7d675e888b479901"
+  },
+  "work/firing-reduce-webgl.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/firing-reduce-webgl.png",
+    "sha256": "c8a65f6d7778b4d247db1af5cc48f13c5b83165c88977811fdcdc20f423e579e"
+  },
+  "work/firing-reduce.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/firing-reduce.png",
+    "sha256": "c918d9245f9ba6befc9dcf89e2db36ec83fb646c825da95f722243e39eccb9ef"
+  },
+  "work/gpu-auto.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/gpu-auto.png",
+    "sha256": "aaf8270446dfd2648f7496591980f646fd35c2e976d91c6facf3e5ae92c05ee2"
+  },
+  "work/gpu-webgl.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/gpu-webgl.png",
+    "sha256": "aaf8270446dfd2648f7496591980f646fd35c2e976d91c6facf3e5ae92c05ee2"
+  },
+  "work/live-menu-1440.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/live-menu-1440.png",
+    "sha256": "81191540773831b0927ba33bcfb2f4ed829e121f6a74e5c54661aabd5e5f9064"
+  },
+  "work/live-menu-375.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/live-menu-375.png",
+    "sha256": "48e5de210fe0fdb329716a4f3e9847d29ae0ddd234db428273ce2509bfe5a698"
+  },
+  "work/live-menu-768.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/live-menu-768.png",
+    "sha256": "dc91e85b38a8a554f738faef4e44e4933194bf690abb296206937a93bb3f1d0c"
+  },
+  "work/loading-1440.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/loading-1440.png",
+    "sha256": "79afdef717a2e02f445f04bda25163425adba3728ed5005b20c22f6813ffbb38"
+  },
+  "work/loading-375.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/loading-375.png",
+    "sha256": "38343037910578b79eb7b9a165db4c63553f4c7afbd489073087a29ae5294357"
+  },
+  "work/loading-768.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/loading-768.png",
+    "sha256": "8fd3cbc7dc3e2c2978d4933b7c9c4d675918f21af89773af9bf3efbbde5d0fde"
+  },
+  "work/lobby-1440.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/lobby-1440.png",
+    "sha256": "cd71114cb973507f6f705111314cc2be1895debae4510904ffddb125379d18a3"
+  },
+  "work/lobby-375.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/lobby-375.png",
+    "sha256": "e9829d870822663879fd68531bc5935e09e559c0a3156cd66ca6c3391b3612cd"
+  },
+  "work/lobby-768.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/lobby-768.png",
+    "sha256": "ed9bbf49cea3b5e32ab54654a33911e0e8e9f25fe1a5185e9291a8c3cd66c40b"
+  },
+  "work/menu-no-preference.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/menu-no-preference.png",
+    "sha256": "3737576f2a190f945c34bc7375216381eb02cea86cbb724dafabbf8d6bfb29e0"
+  },
+  "work/menu-reduce-webgl.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/menu-reduce-webgl.png",
+    "sha256": "9a52bedbbe40d6be7812c9ab02e04b484781623de38da52612e0359f6e529371"
+  },
+  "work/menu-reduce.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/menu-reduce.png",
+    "sha256": "f274d179e0aca11da091d9530527a85ffe48111d888dcc2a7496fb2ad462abd0"
+  },
+  "work/play-no-preference.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/play-no-preference.png",
+    "sha256": "7d3622e533311429befb102ec877e3a44dfbf0ff7e10d69cef96bf43c3c20e31"
+  },
+  "work/play-reduce-webgl.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/play-reduce-webgl.png",
+    "sha256": "861d03860b2e3e08a281f644534f7cf2d1e9fb6d4fd9a15c0cb9eddbba468f7c"
+  },
+  "work/play-reduce.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/play-reduce.png",
+    "sha256": "d45449a9d2276e56d6188563dfc22db529a5aa37bf50b61f26a3e8cf7db8d2a2"
+  },
+  "work/rendered-lobby-1440.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/rendered-lobby-1440.png",
+    "sha256": "b18083f8eace5bb147107c84077c364443c3193da6aef8f52113c6dbcc5e25a0"
+  },
+  "work/rendered-lobby-375-bottom.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/rendered-lobby-375-bottom.png",
+    "sha256": "8859a334db7a1d6268840c59c066c12a03ce889c8ba7ba2d8c3de30dfe98fc0c"
+  },
+  "work/rendered-lobby-375.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/rendered-lobby-375.png",
+    "sha256": "2b82979548d6e75dc45c96047278d76fdb9db15e12eb91e2f22b46ac60fad696"
+  },
+  "work/rendered-lobby-768.png": {
+    "archived_path": "docs/evidence/20261030T080050Z/captures/rendered-lobby-768.png",
+    "sha256": "85769b032936dc3d37e5d4b6899ca8d573e49fcbd210ce59269714928f9e7911"
+  }
+}
