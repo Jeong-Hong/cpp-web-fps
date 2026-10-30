@@ -16,7 +16,7 @@ EM_JS(void, draw_platform,(const float* matrix,const float* data,int length,floa
 EM_JS(void, send_platform,(float f,float s,float yaw,float pitch,int fire,int reload,int sprint,unsigned seq),{
  // Float32 endpoints can lie a few ulps outside the JSON double contract.
  // Bound the producer's encoding; keep server validation strict.
- globalThis.CY.sendInput({type:'input',seq:seq,forward:f,strafe:s,yaw:Math.max(-Math.PI,Math.min(Math.PI,yaw)),pitch:Math.max(-1.45,Math.min(1.45,pitch)),fire:!!fire,reload:!!reload,sprint:!!sprint});
+ globalThis.CY.sendInput({type:'input',seq:seq,forward:f,strafe:s,yaw:Math.max(-Math.PI,Math.min(Math.PI,yaw)),pitch:Math.max(-1.45,Math.min(1.45,pitch)),fire:!!fire,reload:!!reload,sprint:!!sprint,jump:false,crouch:false,weapon:0,grenade:false});
 });
 EM_JS(void, lock_platform,(int locked),{globalThis.CY.lockChanged(!!locked);});
 EM_JS(void, lock_error_platform,(),{globalThis.CY.lockError();});

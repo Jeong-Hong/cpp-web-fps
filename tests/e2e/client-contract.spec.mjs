@@ -20,3 +20,14 @@ test('compiled C++ exports actual game, snapshot and input entry points',async({
  });
  for(const [name,kind] of exports)expect(kind,name).toBe('function');
 });
+test('compiled C++ sends complete v2 action fields even in a neutral input snapshot',async({page})=>{
+ await page.goto(url);
+ const packet=await page.evaluate(async()=>{
+  const packets=[];globalThis.CY={renderer:{draw(){}},sendInput:p=>packets.push(p),hud(){},lockChanged(){},lockError(){},feedback(){}};
+  const {default:factory}=await import('/client.mjs');const m=await factory();
+  m._client_start(0);m._client_player(0,-18,0,-18,0,0,100,24,0,0,0,0,0,0,0,0,0,0,1.6,-18);
+  const start=performance.now();while(!packets.length&&performance.now()-start<2000)await new Promise(r=>setTimeout(r,16));
+  m._client_stop();return packets[0];
+ });
+ expect(packet).toMatchObject({type:'input',jump:false,crouch:false,weapon:0,grenade:false});
+});

@@ -159,7 +159,7 @@ test('real browser hit, kill and incoming-damage feedback through an ordinary so
   await expect(page.locator('#action-state')).toHaveText('');
   await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===other.id&&p.hp===100&&p.deaths===1));
   const aimBack={yaw:Math.atan2(-dx,dz),pitch:wantedPitch};
-  const send=fire=>target.send(JSON.stringify({type:'input',seq:++sequence,forward:0,strafe:0,...aimBack,fire,reload:false,sprint:false}));
+  const send=fire=>target.send(JSON.stringify({type:'input',seq:++sequence,forward:0,strafe:0,...aimBack,fire,reload:false,sprint:false,jump:false,crouch:false,weapon:0,grenade:false}));
   send(true);timer=setInterval(()=>send(true),33);
   await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===me.id&&p.hp<=75));clearInterval(timer);timer=null;send(false);
   await expect(page.locator('#damage-vignette')).toHaveClass(/active/);await page.screenshot({path:'work/browser-damage.png'});
