@@ -1,0 +1,172 @@
+{
+  "schema": "clean_install_verification/v1",
+  "tested_revision": "329881a9158814f5113db50dabe5f2c95c74a43f",
+  "source": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+  "clone": "D:\\Tools\\Hermes\\profiles\\omh\\cache\\scratch\\cpp-web-fps-clean-20261030T084415Z",
+  "checks": [
+    {
+      "name": "versions",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "-p",
+        "JSON.stringify({node:process.version,platform:process.platform,arch:process.arch})"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "parent checkout",
+      "started_at": "2026-10-30T08:47:08.990608+00:00",
+      "finished_at": "2026-10-30T08:47:09.022020+00:00",
+      "exit_status": 0,
+      "stdout_sha256": "580f0bb4ee9ca28b46bad04440a56da0484913af765e816eca7d46e273257ce3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "compiler",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "D:/Tools/emsdk/upstream/emscripten/em++.py",
+        "--version"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "parent checkout",
+      "started_at": "2026-10-30T08:47:09.022088+00:00",
+      "finished_at": "2026-10-30T08:47:09.165685+00:00",
+      "exit_status": 0,
+      "stdout_sha256": "8072ce3f5941ca8f562e1c7fcde359cf95be8402ff116d2475f12d5ba061a217",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "clone",
+      "command": [
+        "D:\\Tools\\Hermes\\tools\\git-2.53.0+3-win32-x64\\mingw64\\bin\\git.EXE",
+        "clone",
+        "--no-hardlinks",
+        "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+        "D:\\Tools\\Hermes\\profiles\\omh\\cache\\scratch\\cpp-web-fps-clean-20261030T084415Z"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "parent checkout",
+      "started_at": "2026-10-30T08:47:09.165726+00:00",
+      "finished_at": "2026-10-30T08:47:09.483584+00:00",
+      "exit_status": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "cd5e5074f63ac0805c0ae4a4f034160b1df113a069538025c3559fe453d03d20"
+    },
+    {
+      "name": "install",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "cwd": "D:\\Tools\\Hermes\\profiles\\omh\\cache\\scratch\\cpp-web-fps-clean-20261030T084415Z",
+      "source": "clean local clone",
+      "started_at": "2026-10-30T08:47:09.695853+00:00",
+      "finished_at": "2026-10-30T08:47:10.288778+00:00",
+      "exit_status": 0,
+      "stdout_sha256": "01b9ad2e8cb1a4be6b93b4f6c53bb03b558819fc1dde7a90826508021400e9eb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "build",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py"
+      ],
+      "cwd": "D:\\Tools\\Hermes\\profiles\\omh\\cache\\scratch\\cpp-web-fps-clean-20261030T084415Z",
+      "source": "clean local clone",
+      "started_at": "2026-10-30T08:47:10.288822+00:00",
+      "finished_at": "2026-10-30T08:47:13.965883+00:00",
+      "exit_status": 0,
+      "stdout_sha256": "e0a3203ba83c79a6f7f3f8c1245a96886ec61d54520977c4d2c3f0e620ed23d6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "test",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+        "test"
+      ],
+      "cwd": "D:\\Tools\\Hermes\\profiles\\omh\\cache\\scratch\\cpp-web-fps-clean-20261030T084415Z",
+      "source": "clean local clone",
+      "started_at": "2026-10-30T08:47:13.965925+00:00",
+      "finished_at": "2026-10-30T08:47:17.118406+00:00",
+      "exit_status": 0,
+      "stdout_sha256": "7a440527ef2f407a472d11158f844f9b562d16d118b9179cea89b7a9e78457f1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "camera",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py",
+        "--client-test"
+      ],
+      "cwd": "D:\\Tools\\Hermes\\profiles\\omh\\cache\\scratch\\cpp-web-fps-clean-20261030T084415Z",
+      "source": "clean local clone",
+      "started_at": "2026-10-30T08:47:17.118470+00:00",
+      "finished_at": "2026-10-30T08:47:18.291912+00:00",
+      "exit_status": 0,
+      "stdout_sha256": "faca3c81c0b648a442b58c9ca407a1a3da7a1442a27888a3728771663f3a4ece",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "audit",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+        "audit",
+        "--audit-level=high",
+        "--json"
+      ],
+      "cwd": "D:\\Tools\\Hermes\\profiles\\omh\\cache\\scratch\\cpp-web-fps-clean-20261030T084415Z",
+      "source": "clean local clone",
+      "started_at": "2026-10-30T08:47:18.291954+00:00",
+      "finished_at": "2026-10-30T08:47:18.850903+00:00",
+      "exit_status": 0,
+      "stdout_sha256": "14401d877791cd0c0bb97e28ee36c2184f95c5b27dcb2ece0c37af1fc1c8247d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "passed": true,
+  "clone_retained": true,
+  "source_files_checked": 42,
+  "audit_vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "compared_outputs": {
+    "build/sim.mjs": {
+      "expected_sha256": "8e8d918d2fe30ca54eb03ed3a86437c97b2b937f1ee68de41bb64b52b63fb176",
+      "clone_sha256": "8e8d918d2fe30ca54eb03ed3a86437c97b2b937f1ee68de41bb64b52b63fb176",
+      "matches": true
+    },
+    "build/sim.wasm": {
+      "expected_sha256": "605c4e89328c4981cd18fdd1132b97eba86bac8e8cf404cba524f9dcce21a27c",
+      "clone_sha256": "605c4e89328c4981cd18fdd1132b97eba86bac8e8cf404cba524f9dcce21a27c",
+      "matches": true
+    },
+    "web/dist/client.mjs": {
+      "expected_sha256": "3ef01cbad0f8be7bffbacaf2303c38db48d47e6f16c9b9d957ae3315598195ee",
+      "clone_sha256": "3ef01cbad0f8be7bffbacaf2303c38db48d47e6f16c9b9d957ae3315598195ee",
+      "matches": true
+    },
+    "web/dist/client.wasm": {
+      "expected_sha256": "8942aff0ca09a0d92ec6915394d7c433ec10bb49fbac45867613461f9f8f318d",
+      "clone_sha256": "8942aff0ca09a0d92ec6915394d7c433ec10bb49fbac45867613461f9f8f318d",
+      "matches": true
+    }
+  },
+  "static_source_byte_match": true,
+  "final_clone_git_state": "",
+  "python": "3.14.7 (main, Sep  1 2026, 14:17:30) [MSC v.1944 64 bit (AMD64)]",
+  "finished_at": "2026-10-30T08:47:18.887489+00:00",
+  "runner_sha256": "a489078ff3007725a715192c985274101611a7e0c9b24b78ae54f07e4d21d9d0"
+}

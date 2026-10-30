@@ -1,0 +1,7 @@
+
+Running 1 test using 1 worker
+
+Observed browser combat {"mine":0,"target":1,"health":75,"kills":1}
+  ok 1 tests\e2e\game.spec.mjs:136:1 › real browser hit, kill and incoming-damage feedback through an ordinary socket peer (5.6s)
+
+  1 passed (6.3s)

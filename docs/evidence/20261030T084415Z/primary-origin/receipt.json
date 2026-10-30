@@ -1,0 +1,34 @@
+{
+  "schema": "primary_origin_controls/v1",
+  "origin": "http://127.0.0.1:8088",
+  "tested_revision": "329881a9158814f5113db50dabe5f2c95c74a43f",
+  "command": [
+    "C:\\Program Files\\nodejs\\node.EXE",
+    "node_modules/@playwright/test/cli.js",
+    "test",
+    "-c",
+    ".omh/artifacts/direct.config.mjs",
+    "--grep",
+    "actual C"
+  ],
+  "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+  "source": "this checkout, owned primary loopback server",
+  "started_at": "2026-10-30T08:49:15.840358+00:00",
+  "finished_at": "2026-10-30T08:49:25.797706+00:00",
+  "exit_status": 0,
+  "stdout_sha256": "3ba1cbb55d728a068760f3b28cfd272969ccc8d1e59e0e056e044131dca23bf4",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "browser_scope": "fresh headless Chromium contexts, not physical hand input or an existing user profile",
+  "config_sha256": "c7db718d6d71debdfd2655e00395ffe4dc78aaf052fd0fe04294c4f2e6d47523",
+  "captures": {
+    "firing-reduce.png": "eaa748f2189603d474c1cf2ab3af45deadbe9cd123f3c6db7d58d38afcd496b6",
+    "play-reduce.png": "13fac2a4297089eaff69b0925361b91b9d9d53c5224d8b8f928660cdccaa5f7b",
+    "menu-reduce.png": "25aeb24a6efd99e4b1741277f71c57aa9317cbee739fe9090936ccddb5959f90",
+    "firing-no-preference.png": "08dfff6a23950a7ec237079ecf67caf58323f24778566c4f7879e54291d80e5b",
+    "play-no-preference.png": "a4fe4a30e277bd0410bddb51438c9d06d449049825ec155947c8282b9ea80d01",
+    "menu-no-preference.png": "0686027636aedc96ed74303b8defb165dad7ee1612228d6582aad85037a8d879",
+    "firing-reduce-webgl.png": "3f2c9af135cada57335339f96ecbddc9c5dde9637987ff61edd7bf0c29c0faaa",
+    "play-reduce-webgl.png": "b417e32d2b826141fbfbc0e662916fbbb0dec90010d1530729229841cd1ba765",
+    "menu-reduce-webgl.png": "1e44c841b761ea79ecf40c36f88e4a0b09025dd48e4aefb3186b9f02d1824e9b"
+  }
+}

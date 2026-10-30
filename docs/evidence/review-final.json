@@ -1,0 +1,127 @@
+{
+  "schema": "crossyard_bounded_followup_review/v1",
+  "checked_revision": "79e20a50d72af0a46924c2f9ed3252c16eea5e57",
+  "base_revision": "7c392b2d262a1360348478af778f370602be01e2",
+  "report_path": "D:/Projects/Vibe_Coding/cpp-web-fps/docs/evidence/review-final.json",
+  "findings": [],
+  "verdict": "ship",
+  "confidence": "높음. 세 수정의 소스와 보존된 회귀 증거에 한정하며, 새 전체 실행이나 프로덕션 승인을 뜻하지 않는다.",
+  "summary": "세 구체적 결함은 수정되었으며 이 범위에서 아직 열린 조치 가능한 결함은 발견하지 못했다. 로컬 프로토타입 사용 기준으로 승인한다. 소스 수정, 빌드, 테스트 실행, 브라우저 또는 서버 실행은 하지 않았다.",
+  "source_scope": {
+    "kind": "동결 BASE..HEAD 차이와 직접 연관된 부정 조건만 읽기 전용 검토",
+    "paths": [
+      "include/arena.hpp",
+      "core/game.cpp",
+      "web/app.mjs",
+      "tests/core_tests.cpp",
+      "tests/transport-server.test.mjs",
+      "tests/e2e/game.spec.mjs",
+      "docs/PROTOCOL.md"
+    ],
+    "working_tree_matches_frozen_head": true,
+    "sha256": {
+      "include/arena.hpp": "9fb07a63d6b1b0f9774234712072a96ad424cb210becb68a432ab4f6e2f0bb9a",
+      "core/game.cpp": "9a5d57bb3d7ae091ed07d52b1b13f487cedf831b0b1a148940002e315cbc7042",
+      "web/app.mjs": "4f7edd1b4f1949c6dcf61b1f21b212903395eccd8b8b31f9a204f74ee51d8ec0",
+      "tests/core_tests.cpp": "7971c6ccf0fa62383192fec6e5fa2d10651f5e1dd68653c573f45925bddb29b8",
+      "tests/transport-server.test.mjs": "4b8fe49880a5f6b54d127d8fc5011de51cce028c892f34471509de3d88604f20",
+      "tests/e2e/game.spec.mjs": "b6ca856db6d0c629c85f9bbefe587f01820752106afd6daca09e987a939662b3",
+      "docs/PROTOCOL.md": "94b7278b392e0f5cce1bf2bdaa9ae0a583b6bc52ba49fb1886b1980a25de77a0"
+    },
+    "context_fingerprint": {
+      "client/main.cpp": "6ba7c1133ffc17861e9b89c32afaf87aad57b51bc5e1611e6abd1fff2445f2f9"
+    }
+  },
+  "resolved_findings": [
+    {
+      "id": "first-valid-sequence-zero",
+      "original_priority": "P2",
+      "status": "resolved",
+      "confidence": "높음",
+      "source": "core/game.cpp:86-98; include/arena.hpp:21; core/game.cpp:59-73",
+      "semantics": "별도 received_input으로 최초 입력과 ack=0을 구분한다. 전체 유효성 검사를 먼저 수행하고 최초 seq=0은 적용한다. 이후 동일하거나 오래된 순서는 무시하며, leave/join의 Player{} 초기화가 수신 상태를 재설정한다.",
+      "negative_guards": "tests/core_tests.cpp:28-43은 실제 이동, 중복 seq=0 무시, 새 순서 적용, 재입장 후 seq=0 수용을 검사한다. 175-182의 중복/역순/잘못된 입력 거부 순서도 유지된다.",
+      "regression_proof": "seq-red의 C++/실제 Wasm 소켓 검사 모두 exit 1이며 이동 assertion에서 실패했다. seq-green은 exit [0,0,0], C++ 944 checks와 실제 소켓 검사 통과다. 최신 reload-green의 948 checks와 같은 소켓 검사에도 해당 검사가 포함된다.",
+      "evidence": [
+        "docs/evidence/review-fixes/seq-red.json",
+        "docs/evidence/review-fixes/seq-red-0.stderr.txt",
+        "docs/evidence/review-fixes/seq-red-1.stdout.txt",
+        "docs/evidence/review-fixes/seq-green.json",
+        "docs/evidence/review-fixes/seq-green-0.stdout.txt",
+        "docs/evidence/review-fixes/seq-green-2.stdout.txt",
+        "tests/transport-server.test.mjs:479-498"
+      ]
+    },
+    {
+      "id": "cross-frame-kill-notice",
+      "original_priority": "P3",
+      "status": "resolved",
+      "confidence": "높음",
+      "source": "web/app.mjs:5,14-16,85-94",
+      "semantics": "처치 증가 시 단조 시계 performance.now() 기준 900ms 만료 시각을 설정하여 다음 프레임에서도 유지한다. 같은 처치 수는 시간을 갱신하지 않는다. 사망/재장전/빈 탄창 안내를 우선하며 로비 복귀 시 처치 수와 만료 시각을 초기화한다.",
+      "negative_guards": "만료 후 빈 문자열로 돌아가는 경로와 세션 초기화를 소스로 확인했다. 상태 우선순위를 뒤집거나 계속 같은 처치로 타이머를 연장하지 않는다.",
+      "regression_proof": "실제 브라우저 hud-red는 350ms 후 처치 확인 대신 빈 문자열을 받아 exit 1이었다. 동일 테스트의 hud-green은 exit 0이며, tests/e2e/game.spec.mjs:155-159에서 350ms 후 표시 유지와 추가 900ms 후 소멸을 함께 검사한다.",
+      "evidence": [
+        "docs/evidence/review-fixes/hud-red.json",
+        "docs/evidence/review-fixes/hud-red-0.stdout.txt",
+        "docs/evidence/review-fixes/hud-green.json",
+        "docs/evidence/review-fixes/hud-green-0.stdout.txt",
+        "tests/e2e/game.spec.mjs:150-159"
+      ]
+    },
+    {
+      "id": "coalesced-reload-pulse",
+      "status": "resolved",
+      "confidence": "높음",
+      "source": "core/game.cpp:86-99,115-149,173-179; docs/PROTOCOL.md:22",
+      "semantics": "유효하고 신선하며 살아 있는 플레이어의 reload true를 기존 대기 요청과 OR하여 보존한다. 후속 false 입력이 이를 지우지 못하며 다음 유효 tick에서 한 번 소비한다. 중복/과거 입력과 사망 중 입력은 요청 합치기 전에 반환한다. 사망/부활/탈퇴 초기화도 대기 요청을 제거한다.",
+      "negative_guards": "tests/core_tests.cpp:45-58의 소비 후 false 및 과거 reload 재생 무효를 확인했다. 188-204의 stale 만료, 257-288의 가득 찬 탄창/진행 중 재장전/사격 차단/정확한 완료 경계, 330-354의 사망 입력 검증·ack 및 부활 후 무동작 검사가 유지된다. 이동·조준·fire는 여전히 최신 입력을 사용한다.",
+      "regression_proof": "reload-red의 C++/실제 Wasm 소켓 검사는 각각 해당 reload 보존 assertion에서 exit 1이었다. reload-green은 exit [0,0,0], C++ 948 checks 및 실제 Wasm 소켓 검사 통과다. 소켓 테스트는 true와 후속 false를 연속 전송하고 pong으로 수신 순서를 확인한 뒤 서버 시계를 진행한다.",
+      "evidence": [
+        "docs/evidence/review-fixes/reload-red.json",
+        "docs/evidence/review-fixes/reload-red-0.stderr.txt",
+        "docs/evidence/review-fixes/reload-red-1.stdout.txt",
+        "docs/evidence/review-fixes/reload-green.json",
+        "docs/evidence/review-fixes/reload-green-0.stdout.txt",
+        "docs/evidence/review-fixes/reload-green-2.stdout.txt",
+        "tests/transport-server.test.mjs:499-509"
+      ]
+    }
+  ],
+  "evidence_validation": {
+    "raw_logs": "각 seq/hud/reload RED·GREEN 기록의 지정 stdout/stderr 파일을 직접 SHA-256 계산하여 기록과 비교했다. 불일치 없음. RED는 환경·컴파일 실패가 아니라 목표 행동 assertion 실패임을 원문으로 확인했다.",
+    "red_green_isolation": "각 쌍에서 테스트 지문은 동일하다. seq 쌍은 arena.hpp/game.cpp만, hud 쌍은 web/app.mjs만, reload 쌍은 game.cpp만 지문이 달라진다.",
+    "current_source_binding": "reload-green input_sha256의 모든 경로가 현재 바이트 및 동결 HEAD의 Git blob과 일치한다. 여기에는 변경된 구현과 세 회귀 테스트 및 변경 없는 client/main.cpp가 포함된다. 범위 내 Git diff HEAD는 비어 있다.",
+    "intermediate_binding": "seq-green/hud-green은 중간 작업 트리의 실행이므로 revision 문자열만으로 최종 HEAD 실행이라고 주장하지 않았다. seq-green game.cpp 지문은 65913dcc41e03eebf720e40a8d9e3c3631fe1355의 blob과 일치한다. hud-green app.mjs 지문은 현재 HEAD 및 0987de5609f71d14a9b83641b715e231b8121fc0의 blob과 일치하고 HUD 테스트 지문도 현재와 같다.",
+    "initial_review": [
+      "docs/evidence/review-initial/manifest.json",
+      "docs/evidence/review-initial/task-0.log:135-138"
+    ],
+    "parent_reload_trace": {
+      "path": "docs/evidence/20261030T082733Z/failed-reload.trace.zip",
+      "sha256": "58684ca2c37d1ebd2e88b23234071fc7a2a90fc427dbca61d0c5755b7a0d7a47",
+      "status": "아카이브와 해시만 확인했다. seq22/23 및 ack23 세부 이벤트는 이번 제한된 파싱에서 추출되지 않아 부모의 재현 설명으로만 취급했다. 수정 판단은 별도 행동 RED/GREEN과 소스에 근거한다."
+    }
+  },
+  "spec_axis": {
+    "verdict": "pass",
+    "claim_source": "이번 요청의 세 구체적 수정 범위; docs/PROTOCOL.md:17,22",
+    "reason": "최초 0 허용·회원별 단조 순서, tick까지 reload 펄스 보존·일회 소비, 여러 HUD 프레임에 걸친 처치 안내라는 요구와 구현·회귀 검사가 일치한다. 새로운 게임 정책이나 제품 범위를 승인하지 않는다."
+  },
+  "blocking_definition": "REVIEW.md가 없어 이번 수정으로 요구 행동이나 입력/세션 격리를 깨뜨리는 P0/P1 결함을 차단 기준으로 삼았다. 세 수정 범위에서 해당 결함을 발견하지 못했다.",
+  "checked_and_clean": [
+    "동결 HEAD 및 지정 일곱 파일의 실제 차이와 범위 내 작업 트리 일치",
+    "seq=0 최초 처리, 중복/역순 무시, 잘못된 입력 선검증, 재입장 초기화",
+    "reload true/false 병합, tick당 일회 소비, 오래된 요청 재생 방지, 사망·부활·stale 경계",
+    "처치 안내 시간 유지·만료·세션 초기화 및 중요한 상태 메시지 우선순위",
+    "회귀 기록의 원문 실패 원인, GREEN 결과, 원시 로그 해시와 실제 소스 지문"
+  ],
+  "unassessed": [
+    "독립적인 새 테스트 실행은 금지 범위라 수행하지 않았다. 병행 중인 부모의 최종 전체 검증 결과를 기다리거나 읽어 성공을 가정하지 않았다.",
+    "회귀 기록은 입력 소스 지문을 보존하지만 당시 생성된 Wasm 출력의 별도 바이트 지문을 제공하지 않는다. 최종 실행 빌드와 전체 결과 결합은 부모 검증 책임이다.",
+    "HUD의 사망·빈 탄창·재장전 우선순위와 재입장 초기화는 소스 검토이며 별도 브라우저 부정 시나리오 실행은 아니다. 정확히 900ms 경계의 렌더링 지연도 새로 측정하지 않았다.",
+    "failed-reload.trace.zip의 개별 네트워크 이벤트를 독립 재구성하지 못했다. 목표 소켓 회귀는 보존된 RED/GREEN으로 확인했다.",
+    "전체 제품 재리뷰, 새 시각 QA, 실제 다른 기기/LAN 수용, 운영 배포·보안·성능·장시간 부하 검증은 범위 밖이다.",
+    "세션 파일 활동 원장은 제공받지 않았으며 별도로 조회하지 않았다. 소스 변경 없이 이 JSON 보고서만 작성했다."
+  ]
+}

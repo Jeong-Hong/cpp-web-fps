@@ -1,0 +1,18 @@
+{
+  "delegation_id": "deleg_dcab7a26",
+  "started": "2026-10-30 17:08:10",
+  "task_count": 1,
+  "model": "gpt-6.1-sol-900k",
+  "provider": null,
+  "tasks": [
+    {
+      "index": 0,
+      "goal": "Independently review the complete approved CROSSYARD C++/Wasm multiplayer FPS at 7c392b2d262a1360348478af778f370602be01e2 for concrete code/spec defects and inspect the supplied matching browser captures. Read-only; no code edits. Return ranked findings, ship/no_ship, verified surfaces, limitations and an evidence-bound visual score/verdict.",
+      "log": "D:\\Tools\\Hermes\\profiles\\omh\\cache\\delegation\\live\\deleg_dcab7a26\\task-0.log",
+      "status": "completed",
+      "exit_reason": "completed",
+      "model": "gpt-6.1-sol-900k"
+    }
+  ],
+  "completed": "2026-10-30 17:12:46"
+}

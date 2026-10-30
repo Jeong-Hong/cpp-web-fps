@@ -1,0 +1,11 @@
+
+Running 3 tests using 1 worker
+
+Escape diagnostic {"received":true}
+  ok 1 tests\e2e\game.spec.mjs:30:101 › actual C++ controls, server ammo, reload and Esc (reduce) (3.2s)
+Escape diagnostic {"received":true}
+  ok 2 tests\e2e\game.spec.mjs:30:101 › actual C++ controls, server ammo, reload and Esc (no-preference) (3.0s)
+Escape diagnostic {"received":true}
+  ok 3 tests\e2e\game.spec.mjs:30:101 › actual C++ controls, server ammo, reload and Esc (reduce/WebGL2) (2.9s)
+
+  3 passed (9.6s)

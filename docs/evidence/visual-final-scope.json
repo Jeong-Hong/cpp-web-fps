@@ -1,0 +1,97 @@
+{
+  "schema": "crossyard_visual_review_scope/v1",
+  "target_repository": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+  "target_revision": "329881a9158814f5113db50dabe5f2c95c74a43f",
+  "verdict_file": "docs/evidence/visual-final.json",
+  "direction": "bold/expressive industrial arena (reviewer classification)",
+  "confidence": "moderate; no claim of two independent visual reviews on the final revision",
+  "required_viewports": [
+    375,
+    768,
+    1440
+  ],
+  "capture_matrix": [
+    {
+      "state": "lobby",
+      "viewport_width": 375,
+      "capture": "docs/evidence/20261030T084415Z/captures/lobby-375.png",
+      "capture_width": 375,
+      "capture_height": 900,
+      "sha256": "0f5e1e92c4b585e31f41fa584fa986da36a7b89bb5a3908cd1e031508b237297",
+      "visually_inspected": true
+    },
+    {
+      "state": "lobby",
+      "viewport_width": 768,
+      "capture": "docs/evidence/20261030T084415Z/captures/lobby-768.png",
+      "capture_width": 768,
+      "capture_height": 900,
+      "sha256": "8c74470c26c6026eb98f3977de8303e7f6c8acebc84853387d2aead8c65c7929",
+      "visually_inspected": true
+    },
+    {
+      "state": "lobby",
+      "viewport_width": 1440,
+      "capture": "docs/evidence/20261030T084415Z/captures/lobby-1440.png",
+      "capture_width": 1440,
+      "capture_height": 900,
+      "sha256": "1063e0dab5e81c8e65b5e979c909f0d1c00b45989b895124948676e20256e8e9",
+      "visually_inspected": true
+    },
+    {
+      "state": "live room menu",
+      "viewport_width": 375,
+      "capture": "docs/evidence/20261030T084415Z/captures/live-menu-375.png",
+      "capture_width": 375,
+      "capture_height": 900,
+      "sha256": "feddf703ab9dfbd182c588a04d248acf94b4323dbdfff66fd280e8af86689e0c",
+      "visually_inspected": true
+    },
+    {
+      "state": "live room menu",
+      "viewport_width": 768,
+      "capture": "docs/evidence/20261030T084415Z/captures/live-menu-768.png",
+      "capture_width": 768,
+      "capture_height": 900,
+      "sha256": "05de4373f275149a6001c75515d1fd40f44cc1c2331637801ef2371857975cdc",
+      "visually_inspected": true
+    },
+    {
+      "state": "live room menu",
+      "viewport_width": 1440,
+      "capture": "docs/evidence/20261030T084415Z/captures/live-menu-1440.png",
+      "capture_width": 1440,
+      "capture_height": 900,
+      "sha256": "e6204d1f65f34bdf5fce7f4682a38893fdeca1570a75efec41bd36d004ec7a27",
+      "visually_inspected": true
+    }
+  ],
+  "primary_game_capture": "docs/evidence/20261030T084415Z/primary-origin/captures/play-reduce.png",
+  "criteria": {
+    "hierarchy": "CROSSYARD wordmark leads; the bright create/play action is distinct from secondary join/settings.",
+    "type_discipline": "Large condensed Latin display with separate readable Korean body and labels; reviewed at all three widths.",
+    "spacing_rhythm": "Aligned form edges and regular inset/gaps; 768px now joins the single-column contract.",
+    "color_system": "Dark layered scene/panels, off-white labels, acid-yellow primary action and warm exit link.",
+    "state_coverage": "Rendered lobby, live menu and gameplay inspected. Loading/error/retry and disabled actions exercised by retained E2E; this is not an all-control accessibility audit.",
+    "signature": "Industrial yard backdrop, stencil-like wordmark, thin accent rule and minimal field-test HUD.",
+    "motion_restraint": "Both reduced-motion settings and essential firing/hit/damage feedback exercised by the game E2E.",
+    "cjk_fit": "Six final lobby/menu captures show readable, uncut Korean controls; mobile lobby continues via vertical scrolling.",
+    "default_prior_fit": "Arena/field-test vocabulary and utilitarian gun/HUD fit this small FPS rather than an editorial dashboard.",
+    "chosen_treatments": "No framework-blue dashboard, external artwork or glass-card layout; existing project tokens retained."
+  },
+  "interaction_evidence": "20261030T084415Z game/browser receipts and primary-origin control receipt",
+  "console_network_health": "Retained E2E checks and real WebSocket/HTTP observations; not a comprehensive independent network audit.",
+  "keyboard_accessibility": "Observed game keys, Esc and settings keyboard input; full Tab-order, screen-reader play and automated a11y scan not assessed.",
+  "objective_diff": "No pixel-similarity result asserted. Layout boundary regression uses actual DOM coordinates; immutable capture dimensions and hashes are checked.",
+  "hotspot_review": "Title/body wrap, nickname/code controls, play/settings/exit controls and 768px one-column boundary.",
+  "alpha_scope": "Opaque app screenshots; no transparent asset export claim.",
+  "dual_oracle_visual_review": "not_observed for this final revision; independent code review is recorded separately.",
+  "blocking_violations": [],
+  "not_observed": [
+    "physical phone/touch gameplay",
+    "existing user tab or OS cursor hand-input behavior",
+    "automatic GPU-loss/fallback recovery",
+    "complete screen-reader/Tab-order audit"
+  ],
+  "scope_boundary": "Visual verdict covers the named rendered surfaces, not proof of networking or a production release. The primary-origin actual compiled-game capture is separate from shell/layout and synthetic-GPU checks."
+}

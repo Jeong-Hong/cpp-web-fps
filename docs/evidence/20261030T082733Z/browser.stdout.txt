@@ -1,0 +1,16 @@
+
+Running 8 tests using 1 worker
+
+  ok 1 tests\e2e\client-contract.spec.mjs:15:1 › compiled C++ exports actual game, snapshot and input entry points (228ms)
+GPU smoke {"api":"WebGPU","reason":"","width":640}
+  ok 2 tests\e2e\gpu.spec.mjs:13:39 › real GPU adapter draws an instanced cube (fallback=false) (252ms)
+GPU smoke {"api":"WebGL2","reason":"WebGL2 selected","width":640}
+  ok 3 tests\e2e\gpu.spec.mjs:13:39 › real GPU adapter draws an instanced cube (fallback=true) (201ms)
+Observed local lobby {"api":"WebGPU / C++ WASM","lcp":[{"time":64,"tag":"H1"}],"reduced":false}
+  ok 4 tests\e2e\lobby-render.spec.mjs:14:1 › real C++ Wasm renders the lobby and fits three widths (675ms)
+  ok 5 tests\e2e\lobby-render.spec.mjs:31:1 › real Wasm loading disables competing actions and then recovers (524ms)
+  ok 6 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 1440px (249ms)
+  ok 7 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 768px (217ms)
+  ok 8 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 375px (200ms)
+
+  8 passed (3.2s)

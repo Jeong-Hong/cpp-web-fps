@@ -1,0 +1,106 @@
+
+> cpp-web-fps@0.1.0 test
+> npm run test:core && npm run test:server
+
+
+> cpp-web-fps@0.1.0 test:core
+> python scripts/build.py --test
+
+BUILD D:\Tools\Hermes\installs\85e954bd52912826\environments\9381b9ce0cd947368603931f57d410ba\venv\Scripts\python.exe D:\Tools\emsdk\upstream\emscripten\em++.py -std=c++20 -Wall -Wextra -Werror -I D:\Tools\Hermes\profiles\omh\cache\scratch\cpp-web-fps-clean-20261030T083508Z\include -O1 -g core/game.cpp tests/core_tests.cpp -sENVIRONMENT=node -sEXIT_RUNTIME=1 -sASSERTIONS=2 -o D:\Tools\Hermes\profiles\omh\cache\scratch\cpp-web-fps-clean-20261030T083508Z\build\core-tests.cjs
+PASS 948 C++ checks
+
+> cpp-web-fps@0.1.0 test:server
+> node --test tests/*.test.mjs
+
+✔ CLI help documents loopback defaults, explicit host/port and interface discovery (66.4164ms)
+✔ CLI starts real Wasm server on owned ephemeral loopback port and exits on teardown (97.9942ms)
+✔ CLI host selection requires a specific discovered local address and strict numeric port (14.0714ms)
+✔ engine awaits Emscripten factory then forwards exact room ABI with no JS gameplay (2.3831ms)
+✔ engine destroys exactly once and prevents calls through a freed pointer (0.3595ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":2147483648,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true} (0.1641ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":-1,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true} (0.1001ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":null,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true} (0.0992ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":1.00001,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true} (0.0889ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":1e+100,"pitch":0.5,"fire":true,"reload":false,"sprint":true} (0.0853ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":"0","fire":true,"reload":false,"sprint":true} (0.0769ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":1,"reload":false,"sprint":true} (0.147ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":null,"sprint":true} (0.141ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":"false"} (0.522ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true,"id":0} (0.1019ms)
+✔ engine rejects zero allocation pointer and missing ABI exports (0.1702ms)
+✔ unit cube supplies 36 face vertices with unit normals (0.5052ms)
+✔ peer serializes reliable controls and coalesces only the latest full snapshot (2.7356ms)
+✔ peer bounds reliable control count including in-flight write at 32 (0.2476ms)
+✔ peer bounds retained UTF-8 bytes including in-flight frames and mailbox (3.3621ms)
+✔ peer closes only itself when native buffered bytes exceed inclusive limit (0.2324ms)
+✔ leave clears pending state without losing reliable controls (0.184ms)
+✔ terminal error drains reliable controls before close and discards state (0.1596ms)
+✔ blocked write is reaped at 10 seconds even if no new output arrives (0.1455ms)
+✔ peer reports callback send failure as fixed diagnostic and closes 1011 (0.2135ms)
+✔ peer reports throw send failure as fixed diagnostic and closes 1011 (0.1423ms)
+✔ strict protocol rejects unknown field / spoofed id without entering engine (25.6023ms)
+✔ strict protocol rejects array without entering engine (3.009ms)
+✔ strict protocol rejects array message type without entering engine (2.0652ms)
+✔ strict protocol rejects object message type without entering engine (1.8673ms)
+✔ strict protocol rejects null without entering engine (1.9199ms)
+✔ strict protocol rejects invalid JSON without entering engine (1.8442ms)
+✔ strict protocol rejects unknown type without entering engine (1.8641ms)
+✔ strict protocol rejects missing field without entering engine (1.7826ms)
+✔ strict protocol rejects empty name without entering engine (1.9559ms)
+✔ strict protocol rejects long scalar name without entering engine (2.3479ms)
+✔ strict protocol rejects non-string name without entering engine (1.9112ms)
+✔ strict protocol rejects unpaired high surrogate without entering engine (1.7147ms)
+✔ strict protocol rejects unpaired low surrogate without entering engine (2.3861ms)
+✔ strict protocol rejects C0 newline name without entering engine (1.6014ms)
+✔ strict protocol rejects C1 name without entering engine (1.5402ms)
+✔ strict protocol rejects DEL name without entering engine (1.5408ms)
+✔ strict protocol rejects lowercase code without entering engine (1.6138ms)
+✔ strict protocol rejects whitespace code without entering engine (1.4981ms)
+✔ strict protocol rejects non-string code without entering engine (1.5204ms)
+✔ strict protocol rejects huge finite magnitude without entering engine (1.5064ms)
+✔ strict protocol rejects nonfinite JSON magnitude without entering engine (1.534ms)
+✔ strict protocol rejects numeric string without entering engine (1.4665ms)
+✔ strict protocol rejects flag not boolean without entering engine (1.4388ms)
+✔ strict protocol rejects fractional sequence without entering engine (1.4377ms)
+✔ strict protocol rejects large sequence without entering engine (1.4694ms)
+✔ strict protocol rejects negative sequence without entering engine (1.5077ms)
+✔ strict protocol rejects yaw outside bounds without entering engine (1.4444ms)
+✔ strict protocol rejects pitch outside bounds without entering engine (1.416ms)
+✔ strict protocol rejects strafe outside bounds without entering engine (1.4556ms)
+✔ strict protocol rejects unsafe ping without entering engine (1.4317ms)
+✔ ping echoes only the allowed safe integer in idle and active states (3.0641ms)
+✔ validated inputs reach only the socket slot; duplicate and old sequence are ignored (2.2665ms)
+✔ leave clears identity and sequence; valid idle input is ignored; empty room is destroyed (2.1258ms)
+✔ active socket cannot create a second identity or leak its previous room (1.6089ms)
+✔ room limit is 16 and SERVER_FULL leaves socket idle for join retry (12.3509ms)
+✔ upgrades require exact same Origin and locally bound Host; route is exact (9.0952ms)
+✔ 64 sockets is a hard transport limit and excess upgrade gets HTTP 503 (37.2578ms)
+✔ static root serves only exact web assets with correct Wasm MIME and rejects traversal/methods (15.661ms)
+✔ server clock advances injected engine at 60 Hz and publishes full states at 20 Hz (2.0477ms)
+✔ idle handshake expires at 10 seconds, including renewed idle after leave (2.9807ms)
+✔ transport heartbeat pings at 30 seconds and removes non-pong peers without hurting healthy sockets (2.9078ms)
+✔ message token bucket allows 120 burst, refills by server time, then closes RATE_LIMIT (11.6726ms)
+✔ input bucket limits 60 burst before Wasm including correctly shaped stale input (2.8554ms)
+✔ UTF-8 payload byte limit accepts 1024 and rejects 1025 with close 1009 (2.0525ms)
+✔ blocked sender never stalls shared ticks or a healthy peer and holds one latest state (2.4852ms)
+✔ shared tick reaps an expired blocked sender and cleans its room (9.323ms)
+✔ engine creation failure becomes fixed 1011 response and observable sanitized diagnostic (4.72ms)
+✔ engine input failure isolates the affected room and does not leak exceptions (4.6318ms)
+✔ engine tick failure isolates the affected room and does not leak exceptions (3.2389ms)
+✔ engine snapshot failure isolates the affected room and does not leak exceptions (2.6262ms)
+✔ engine leave failure isolates the affected room and does not leak exceptions (2.6063ms)
+✔ engine destroy failure isolates the affected room and does not leak exceptions (2.5729ms)
+✔ REAL C++/Wasm default engine loads, joins and acknowledges input through actual socket (8.168ms)
+✔ app close owns live socket teardown, destroys rooms and is idempotent (1.7962ms)
+✔ unexpected static delivery error returns empty 500 and a sanitized observable diagnostic (1.5471ms)
+✔ health reports actual transport counts without claiming injected engine is Wasm (1.8539ms)
+✔ create assigns socket identity and sends welcome before authoritative snapshot (2.8967ms)
+✔ four socket memberships share a room; fifth can recover from ROOM_FULL and ROOM_NOT_FOUND (4.1997ms)
+ℹ tests 84
+ℹ suites 0
+ℹ pass 84
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 628.0311

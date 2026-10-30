@@ -1,0 +1,45 @@
+{
+  "stage": "seq-red",
+  "revision": "7c392b2d262a1360348478af778f370602be01e2",
+  "dirty_tree": " M tests/core_tests.cpp\n M tests/transport-server.test.mjs\n?? docs/VERIFICATION.md\n?? docs/evidence/20261030T080600Z/browser.stderr.txt\n?? docs/evidence/20261030T080600Z/browser.stdout.txt\n?? docs/evidence/20261030T080600Z/build.stderr.txt\n?? docs/evidence/20261030T080600Z/build.stdout.txt\n?? docs/evidence/20261030T080600Z/camera.stderr.txt\n?? docs/evidence/20261030T080600Z/camera.stdout.txt\n?? docs/evidence/20261030T080600Z/captures/browser-damage.png\n?? docs/evidence/20261030T080600Z/captures/browser-hit.png\n?? docs/evidence/20261030T080600Z/captures/controlled-disconnect.png\n?? docs/evidence/20261030T080600Z/captures/disconnect-1440.png\n?? docs/evidence/20261030T080600Z/captures/disconnect-375.png\n?? docs/evidence/20261030T080600Z/captures/disconnect-768.png\n?? docs/evidence/20261030T080600Z/captures/firing-no-preference.png\n?? docs/evidence/20261030T080600Z/captures/firing-reduce-webgl.png\n?? docs/evidence/20261030T080600Z/captures/firing-reduce.png\n?? docs/evidence/20261030T080600Z/captures/gpu-auto.png\n?? docs/evidence/20261030T080600Z/captures/gpu-webgl.png\n?? docs/evidence/20261030T080600Z/captures/live-menu-1440.png\n?? docs/evidence/20261030T080600Z/captures/live-menu-375.png\n?? docs/evidence/20261030T080600Z/captures/live-menu-768.png\n?? docs/evidence/20261030T080600Z/captures/loading-1440.png\n?? docs/evidence/20261030T080600Z/captures/loading-375.png\n?? docs/evidence/20261030T080600Z/captures/loading-768.png\n?? docs/evidence/20261030T080600Z/captures/lobby-1440.png\n?? docs/evidence/20261030T080600Z/captures/lobby-375.png\n?? docs/evidence/20261030T080600Z/captures/lobby-768.png\n?? docs/evidence/20261030T080600Z/captures/menu-no-preference.png\n?? docs/evidence/20261030T080600Z/captures/menu-reduce-webgl.png\n?? docs/evidence/20261030T080600Z/captures/menu-reduce.png\n?? docs/evidence/20261030T080600Z/captures/play-no-preference.png\n?? docs/evidence/20261030T080600Z/captures/play-reduce-webgl.png\n?? docs/evidence/20261030T080600Z/captures/play-reduce.png\n?? docs/evidence/20261030T080600Z/captures/rendered-lobby-1440.png\n?? docs/evidence/20261030T080600Z/captures/rendered-lobby-375-bottom.png\n?? docs/evidence/20261030T080600Z/captures/rendered-lobby-375.png\n?? docs/evidence/20261030T080600Z/captures/rendered-lobby-768.png\n?? docs/evidence/20261030T080600Z/clean-audit.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-audit.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-build.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-build.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-camera.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-camera.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-clone.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-clone.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-compiler.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-compiler.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-install-runner.py\n?? docs/evidence/20261030T080600Z/clean-install.json\n?? docs/evidence/20261030T080600Z/clean-install.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-install.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-test.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-test.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-versions.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-versions.stdout.txt\n?? docs/evidence/20261030T080600Z/core.stderr.txt\n?? docs/evidence/20261030T080600Z/core.stdout.txt\n?? docs/evidence/20261030T080600Z/diff.stderr.txt\n?? docs/evidence/20261030T080600Z/diff.stdout.txt\n?? docs/evidence/20261030T080600Z/game.stderr.txt\n?? docs/evidence/20261030T080600Z/game.stdout.txt\n?? docs/evidence/20261030T080600Z/launcher.stderr.txt\n?? docs/evidence/20261030T080600Z/launcher.stdout.txt\n?? docs/evidence/20261030T080600Z/live.stderr.txt\n?? docs/evidence/20261030T080600Z/live.stdout.txt\n?? docs/evidence/20261030T080600Z/node.stderr.txt\n?? docs/evidence/20261030T080600Z/node.stdout.txt\n?? docs/evidence/20261030T080600Z/receipt.json\n",
+  "input_sha256": {
+    "include/arena.hpp": "b8a1719f57c8d14619c58839ebc2e9fb0fe26791f05a147d74fde41dc9de9207",
+    "core/game.cpp": "07928895104625962e87ac14f4cc4877851772990e9f49fd664f6b2e24dc69ef",
+    "web/app.mjs": "bb6f08be3cfce41e4accd4261303ad184c9a9e6aa5c8db1fc13a210061e30a7c",
+    "client/main.cpp": "6ba7c1133ffc17861e9b89c32afaf87aad57b51bc5e1611e6abd1fff2445f2f9",
+    "tests/core_tests.cpp": "9808b9c4dcd0e6e2f9832f26e38e19331f94f26850b422ba044a9f969a014945",
+    "tests/transport-server.test.mjs": "10a5f92f865f455fc5fa09af3fc63419b7719c41df12344b008be93eb28c7abe",
+    "tests/e2e/game.spec.mjs": "64d29c3af2454cdcd23348a581ad7cfa870ae4f457d8e98e69cafdd3c5e63340"
+  },
+  "checks": [
+    {
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py",
+        "--test"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:23:07.243570+00:00",
+      "finished_at": "2026-10-30T08:23:09.166861+00:00",
+      "exit_status": 1,
+      "stdout_sha256": "9d7482afdc744943b5fd0fafbf2bb6bc503d9c71d77c654ecadd2afb7a9c650b",
+      "stderr_sha256": "c5e00ba6eae536c17a2cb6c97151439cbb8e68fe1067386b34d670ed62f5edfd"
+    },
+    {
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "--test",
+        "--test-name-pattern=REAL C\\+\\+/Wasm default engine",
+        "tests/transport-server.test.mjs"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:23:09.166902+00:00",
+      "finished_at": "2026-10-30T08:23:09.308115+00:00",
+      "exit_status": 1,
+      "stdout_sha256": "2b129be84b2eb9ea2486b8636dfbc8d04cd1c06bdbaae24b1ab1973c4f864b05",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

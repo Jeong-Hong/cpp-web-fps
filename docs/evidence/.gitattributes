@@ -1,3 +1,8 @@
 *.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 *.txt -text whitespace=blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
 *.png -text
+*.zip -text
+*.log -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve observed nested Windows CRCRLF and Playwright failure-line spaces.
+20261030T084415Z/runner.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+review-fixes/hud-red-0.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol

@@ -1,0 +1,17 @@
+{
+  "kind": "observed_START_cmd_serving_branch",
+  "url": "http://127.0.0.1:54063",
+  "health": {
+    "ok": true,
+    "engine": "C++/Wasm",
+    "rooms": 0,
+    "clients": 0,
+    "tickRate": 60
+  },
+  "owned_process_tree_stopped": true,
+  "listener_absent_after_cleanup": true,
+  "launcher_output": [
+    "CROSSYARD - server address is printed below. Ctrl+C to stop.",
+    "CROSSYARD http://127.0.0.1:54063 (C++/Wasm)"
+  ]
+}

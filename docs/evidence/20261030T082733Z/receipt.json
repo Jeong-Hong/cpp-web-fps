@@ -1,0 +1,380 @@
+{
+  "schema": "crossyard_verification/v1",
+  "run_id": "20261030T082733Z",
+  "repository": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+  "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+  "tested_revision": "0987de5609f71d14a9b83641b715e231b8121fc0",
+  "initial_git_state": "?? docs/VERIFICATION.md\n?? docs/evidence/20261030T080600Z/browser.stderr.txt\n?? docs/evidence/20261030T080600Z/browser.stdout.txt\n?? docs/evidence/20261030T080600Z/build.stderr.txt\n?? docs/evidence/20261030T080600Z/build.stdout.txt\n?? docs/evidence/20261030T080600Z/camera.stderr.txt\n?? docs/evidence/20261030T080600Z/camera.stdout.txt\n?? docs/evidence/20261030T080600Z/captures/browser-damage.png\n?? docs/evidence/20261030T080600Z/captures/browser-hit.png\n?? docs/evidence/20261030T080600Z/captures/controlled-disconnect.png\n?? docs/evidence/20261030T080600Z/captures/disconnect-1440.png\n?? docs/evidence/20261030T080600Z/captures/disconnect-375.png\n?? docs/evidence/20261030T080600Z/captures/disconnect-768.png\n?? docs/evidence/20261030T080600Z/captures/firing-no-preference.png\n?? docs/evidence/20261030T080600Z/captures/firing-reduce-webgl.png\n?? docs/evidence/20261030T080600Z/captures/firing-reduce.png\n?? docs/evidence/20261030T080600Z/captures/gpu-auto.png\n?? docs/evidence/20261030T080600Z/captures/gpu-webgl.png\n?? docs/evidence/20261030T080600Z/captures/live-menu-1440.png\n?? docs/evidence/20261030T080600Z/captures/live-menu-375.png\n?? docs/evidence/20261030T080600Z/captures/live-menu-768.png\n?? docs/evidence/20261030T080600Z/captures/loading-1440.png\n?? docs/evidence/20261030T080600Z/captures/loading-375.png\n?? docs/evidence/20261030T080600Z/captures/loading-768.png\n?? docs/evidence/20261030T080600Z/captures/lobby-1440.png\n?? docs/evidence/20261030T080600Z/captures/lobby-375.png\n?? docs/evidence/20261030T080600Z/captures/lobby-768.png\n?? docs/evidence/20261030T080600Z/captures/menu-no-preference.png\n?? docs/evidence/20261030T080600Z/captures/menu-reduce-webgl.png\n?? docs/evidence/20261030T080600Z/captures/menu-reduce.png\n?? docs/evidence/20261030T080600Z/captures/play-no-preference.png\n?? docs/evidence/20261030T080600Z/captures/play-reduce-webgl.png\n?? docs/evidence/20261030T080600Z/captures/play-reduce.png\n?? docs/evidence/20261030T080600Z/captures/rendered-lobby-1440.png\n?? docs/evidence/20261030T080600Z/captures/rendered-lobby-375-bottom.png\n?? docs/evidence/20261030T080600Z/captures/rendered-lobby-375.png\n?? docs/evidence/20261030T080600Z/captures/rendered-lobby-768.png\n?? docs/evidence/20261030T080600Z/clean-audit.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-audit.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-build.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-build.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-camera.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-camera.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-clone.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-clone.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-compiler.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-compiler.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-install-runner.py\n?? docs/evidence/20261030T080600Z/clean-install.json\n?? docs/evidence/20261030T080600Z/clean-install.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-install.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-test.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-test.stdout.txt\n?? docs/evidence/20261030T080600Z/clean-versions.stderr.txt\n?? docs/evidence/20261030T080600Z/clean-versions.stdout.txt\n?? docs/evidence/20261030T080600Z/core.stderr.txt\n?? docs/evidence/20261030T080600Z/core.stdout.txt\n?? docs/evidence/20261030T080600Z/diff.stderr.txt\n?? docs/evidence/20261030T080600Z/diff.stdout.txt\n?? docs/evidence/20261030T080600Z/game.stderr.txt\n?? docs/evidence/20261030T080600Z/game.stdout.txt\n?? docs/evidence/20261030T080600Z/launcher.stderr.txt\n?? docs/evidence/20261030T080600Z/launcher.stdout.txt\n?? docs/evidence/20261030T080600Z/live.stderr.txt\n?? docs/evidence/20261030T080600Z/live.stdout.txt\n?? docs/evidence/20261030T080600Z/node.stderr.txt\n?? docs/evidence/20261030T080600Z/node.stdout.txt\n?? docs/evidence/20261030T080600Z/receipt.json\n?? docs/evidence/review-fixes/hud-green-0.stderr.txt\n?? docs/evidence/review-fixes/hud-green-0.stdout.txt\n?? docs/evidence/review-fixes/hud-green.json\n?? docs/evidence/review-fixes/hud-red-0.stderr.txt\n?? docs/evidence/review-fixes/hud-red-0.stdout.txt\n?? docs/evidence/review-fixes/hud-red.json\n?? docs/evidence/review-fixes/seq-green-0.stderr.txt\n?? docs/evidence/review-fixes/seq-green-0.stdout.txt\n?? docs/evidence/review-fixes/seq-green-1.stderr.txt\n?? docs/evidence/review-fixes/seq-green-1.stdout.txt\n?? docs/evidence/review-fixes/seq-green-2.stderr.txt\n?? docs/evidence/review-fixes/seq-green-2.stdout.txt\n?? docs/evidence/review-fixes/seq-green.json\n?? docs/evidence/review-fixes/seq-red-0.stderr.txt\n?? docs/evidence/review-fixes/seq-red-0.stdout.txt\n?? docs/evidence/review-fixes/seq-red-1.stderr.txt\n?? docs/evidence/review-fixes/seq-red-1.stdout.txt\n?? docs/evidence/review-fixes/seq-red.json\n",
+  "python": "3.14.7 (main, Sep  1 2026, 14:17:30) [MSC v.1944 64 bit (AMD64)]",
+  "source_sha256": {
+    ".gitattributes": "a27ec0af828b6749421ca24d1fd09b0515c3b0a79ff6ec7531bbf6d12b96e5dc",
+    ".gitignore": "138d4ce548f2f360bbb7d08ab6111b3062b40c1b076a66de40dfb62136b818c1",
+    "BUILD.cmd": "c1b93b850fd3051268c55302d127058d1ba3c8aec70f6c2e06eabc02c274b875",
+    "client/camera.hpp": "956a98462f99c24fe0e8ad50027c5a38f46c89f4c52f3ca80bd704e5e810f9b6",
+    "client/main.cpp": "6ba7c1133ffc17861e9b89c32afaf87aad57b51bc5e1611e6abd1fff2445f2f9",
+    "core/bridge.cpp": "8ca75f6d6f047f3b3cf1abec5b5d2a1ddb5e1fabc0c1a3b48ca10c852a86ddad",
+    "core/game.cpp": "500ba5d6e6329459e98647264165a2b20c46e6076ffa7043aee3556f8d55651b",
+    "DESIGN.md": "718d12ffa8c5d055ed36aa936647f276484304e9c6717e71889827fcfceec8ae",
+    "docs/PLAN.md": "473ff7bd1f7ad0e9a55366d55973c71e39406cd3686b133482207d6bbc62504c",
+    "docs/PROTOCOL.md": "6656937d22b574273d47656ccddcd4280c9e4b659b5c9d28c86af68c44d18eb9",
+    "include/arena.hpp": "9fb07a63d6b1b0f9774234712072a96ad424cb210becb68a432ab4f6e2f0bb9a",
+    "package-lock.json": "f4117f70cc4d17933532d7032148512676223379c2ca8de9e5ec56f8177c4e6b",
+    "package.json": "74fa06267efac8cc1b9a80481b4428aa0e08a3cfcac441cfdbd01a1a05e2d0c3",
+    "playwright.config.mjs": "11d78186ea7c8a3fb5f591c5a5bbe39769adc138153bc0fed70b76aa5a57c640",
+    "playwright.game.config.mjs": "49b85b3382b9ca9b6044b9e7813752e5713668b53aa82ee0d35919de8464a09c",
+    "README.md": "3c8bb4254283400d535171b42377db0855a7885bbafb2855fb394c694495ab12",
+    "scripts/build.py": "93205655217756d786b5c851cbb8e821411fbcdf1a490d2d8065a1cd79edf7e7",
+    "scripts/launcher-smoke.py": "57ab7f2c1cd4b551407a9e7666564f44e1d6d5006455df44e43add0c58e0c8d2",
+    "scripts/live-smoke.mjs": "0d20a8b312ae15e701a8aacd4b549021c2fce11fc1421ba714fe179d550302c5",
+    "scripts/verify.py": "3edc1872c8c55c4a2ee06be70e0d0a1fdc81f5abaa1a697a3b347d36ce20c292",
+    "server/app.mjs": "0901365d811654fe85d777c8a24addcf38ad34e94107482cb962b37abbc1ba4d",
+    "server/engine.mjs": "d163e9b6c6eeb4ec1b848ca6d988f78bc4f8489ed8b46e02f7319caa748e1cc5",
+    "server/main.mjs": "1587233e818d7a7c0a4f240a44579d42102d33c76fa1640363033ce3af3ad485",
+    "server/peer.mjs": "e55b49f6bbb26ae14e0245d731cf68cb2f229e10f85949dba6506fe90f2e2697",
+    "server/protocol.mjs": "c94141cdcb2a76bddf5939407f7b37ad602317af3f7b833e2898f99e57354027",
+    "START.cmd": "a834a91e2d01136664baabcfd92f4f1220c1dbdaffb206eb71ddcbff67697209",
+    "tests/cli-server.test.mjs": "14202a70114090f1db5a552d6e4d4f898ac69860460887c5357617c1e103402d",
+    "tests/client_math_tests.cpp": "2c9cca94cddd678a53ff5a6bfa4fa94870e9282851cb8ed2ac78b86b761aa37d",
+    "tests/core_tests.cpp": "9808b9c4dcd0e6e2f9832f26e38e19331f94f26850b422ba044a9f969a014945",
+    "tests/e2e/client-contract.spec.mjs": "ee208383c993e89c61d5f3058ce22728477f3c3e1ae08d6996abf833942d77d6",
+    "tests/e2e/game.spec.mjs": "b6ca856db6d0c629c85f9bbefe587f01820752106afd6daca09e987a939662b3",
+    "tests/e2e/gpu.spec.mjs": "9c61c30fec320a8b8b951c6d522a24a3146044efa883367bb54fed2057486b58",
+    "tests/e2e/lobby-render.spec.mjs": "0ebb7862244a8661299a5687b97aa6779867042e04c3b4b8bbe95c650d52df55",
+    "tests/e2e/shell.spec.mjs": "4982f5e4347370f24d691a1dbddeaea3a1dc72b2e064ebae4f504123333d4eea",
+    "tests/engine-server.test.mjs": "ae3c3cd4e9547f886d94213a1afb53795d746b4bda6cf3ce5608a6eb79658725",
+    "tests/gpu-geometry.test.mjs": "9978d2567563978b35b466cfe99934a9119aa5a7baf8fdd708ffe62f73b8743f",
+    "tests/transport-peer.test.mjs": "12dd946e94bc0fb44283fbaec7c0082ece455a3dbebf19db17531047dc581f51",
+    "tests/transport-server.test.mjs": "10a5f92f865f455fc5fa09af3fc63419b7719c41df12344b008be93eb28c7abe",
+    "web/app.mjs": "4f7edd1b4f1949c6dcf61b1f21b212903395eccd8b8b31f9a204f74ee51d8ec0",
+    "web/gpu.mjs": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+    "web/index.html": "d78510edeef3b5d0a0d8a458f7cd6ace7fefaa48420324ad2f6233d022e36719",
+    "web/style.css": "35daae19adcf4601e854799385c02f9a9845014944ee87184166bb8d1e7c5870"
+  },
+  "checks": [
+    {
+      "name": "build",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:27:33.314365+00:00",
+      "finished_at": "2026-10-30T08:27:36.900649+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "544fd12716a8d76854c23cf058ef2705d6c345408d62d627fd85cef92d838508",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "build"
+    },
+    {
+      "name": "core",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py",
+        "--test"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:27:36.900693+00:00",
+      "finished_at": "2026-10-30T08:27:38.777106+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "f0f550d48d98ea523584da3ab569b9be6c00a847596bdcf43730d6c7371f5d54",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "core"
+    },
+    {
+      "name": "camera",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py",
+        "--client-test"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:27:38.777146+00:00",
+      "finished_at": "2026-10-30T08:27:39.956349+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "a44754135d36f56551f7f7003fdde7ce61d8872e799381d3f4bb483b7a3a8c4b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "camera"
+    },
+    {
+      "name": "node",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "--test",
+        "tests/*.test.mjs"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:27:39.956387+00:00",
+      "finished_at": "2026-10-30T08:27:40.638625+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "cf0644f02944874cb98624faa56cd8fc66466592053d5d5378de56432a5f29f7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "node"
+    },
+    {
+      "name": "browser",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "node_modules/@playwright/test/cli.js",
+        "test"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:27:40.638695+00:00",
+      "finished_at": "2026-10-30T08:27:44.136044+00:00",
+      "exit_status": 0,
+      "timed_out": false,
+      "stdout_sha256": "f2e43f8e8a91754209b5efad640d5b811ef308bb0a5a24d44949f4f96de8df6d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "browser"
+    },
+    {
+      "name": "game",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "-c",
+        "playwright.game.config.mjs"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T08:27:44.136092+00:00",
+      "finished_at": "2026-10-30T08:28:10.572945+00:00",
+      "exit_status": 1,
+      "timed_out": false,
+      "stdout_sha256": "1415249d0a0631dc4a69c1835fd714a10abb717d244e136545c51537ef6b156d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope": "game"
+    }
+  ],
+  "inputs_unchanged": true,
+  "served_assets": {},
+  "outputs": {
+    "build/sim.mjs": "8e8d918d2fe30ca54eb03ed3a86437c97b2b937f1ee68de41bb64b52b63fb176",
+    "build/sim.wasm": "527577774fbfab1a0e55a3c727c5cc2c15b004f8c4d241ab4a48d6bf04234412",
+    "web/dist/client.mjs": "3ef01cbad0f8be7bffbacaf2303c38db48d47e6f16c9b9d957ae3315598195ee",
+    "web/dist/client.wasm": "8942aff0ca09a0d92ec6915394d7c433ec10bb49fbac45867613461f9f8f318d"
+  },
+  "captures": {
+    "work/browser-damage.png": {
+      "sha256": "498b863ebb6398a6727ec741a30e9c7119a70f970575b6f93357ce9c3eb13ecb",
+      "bytes": 501981,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/browser-damage.png"
+    },
+    "work/browser-hit.png": {
+      "sha256": "64d0c8a0d06c883a92c63550176cc2b9a5941b553e971fb0aad6bb42ba56398f",
+      "bytes": 47589,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/browser-hit.png"
+    },
+    "work/controlled-disconnect.png": {
+      "sha256": "1e3ef053a7a197dde5d1460c7ab6406ade1c35ee4cab7eb0b5a246f7e28702ea",
+      "bytes": 493871,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/controlled-disconnect.png"
+    },
+    "work/disconnect-1440.png": {
+      "sha256": "04dcf91a85c1e4f6c7c4b25e8269e842daee708708f4432f7c22682c12c0c8db",
+      "bytes": 494348,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/disconnect-1440.png"
+    },
+    "work/disconnect-375.png": {
+      "sha256": "710a115c0528b364101ed67b55f6ed660f002cb955df6d033996ebb67effd8b9",
+      "bytes": 124620,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/disconnect-375.png"
+    },
+    "work/disconnect-768.png": {
+      "sha256": "70092d11dbf354d3fa93795c17ceb177bc4659c0060031b4aaad9ac899404ea1",
+      "bytes": 236342,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/disconnect-768.png"
+    },
+    "work/firing-no-preference.png": {
+      "sha256": "312879d01cafe7990b623e8e1fa348742168c90c3c56102cfcb7f8ee4ec0a50c",
+      "bytes": 103466,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/firing-no-preference.png"
+    },
+    "work/firing-reduce-webgl.png": {
+      "sha256": "19141d682e1c056e23f0652ed33c18ed6435c922d4c09fbdeecf327fe425d4f5",
+      "bytes": 103284,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/firing-reduce-webgl.png"
+    },
+    "work/firing-reduce.png": {
+      "sha256": "c79f81593adf149539ea99ad1fbe486b335d4da8537e7d9b2450ea1af243d427",
+      "bytes": 103807,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/firing-reduce.png"
+    },
+    "work/gpu-auto.png": {
+      "sha256": "aaf8270446dfd2648f7496591980f646fd35c2e976d91c6facf3e5ae92c05ee2",
+      "bytes": 6003,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/gpu-auto.png"
+    },
+    "work/gpu-webgl.png": {
+      "sha256": "aaf8270446dfd2648f7496591980f646fd35c2e976d91c6facf3e5ae92c05ee2",
+      "bytes": 6003,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/gpu-webgl.png"
+    },
+    "work/kill-confirmation.png": {
+      "sha256": "1da305eaf0fac0bcb21557ed9932c30b23e25428904a9c864c0bc626cad583d0",
+      "bytes": 44917,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/kill-confirmation.png"
+    },
+    "work/live-menu-1440.png": {
+      "sha256": "c8dbf11f30983f5d5a7929d146d2d360d8e46d30bfd6f1ca85751956719d0733",
+      "bytes": 47865,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/live-menu-1440.png"
+    },
+    "work/live-menu-375.png": {
+      "sha256": "dff6fddb346a279b0a9ee493a962255f73e86b93c514c9c31d367ba946c60f87",
+      "bytes": 26621,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/live-menu-375.png"
+    },
+    "work/live-menu-768.png": {
+      "sha256": "b5448c0ca279df88bff512a22b845029b22273b592bf0a867d0e127e1fe29af8",
+      "bytes": 36749,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/live-menu-768.png"
+    },
+    "work/loading-1440.png": {
+      "sha256": "79afdef717a2e02f445f04bda25163425adba3728ed5005b20c22f6813ffbb38",
+      "bytes": 320690,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/loading-1440.png"
+    },
+    "work/loading-375.png": {
+      "sha256": "38343037910578b79eb7b9a165db4c63553f4c7afbd489073087a29ae5294357",
+      "bytes": 79652,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/loading-375.png"
+    },
+    "work/loading-768.png": {
+      "sha256": "8fd3cbc7dc3e2c2978d4933b7c9c4d675918f21af89773af9bf3efbbde5d0fde",
+      "bytes": 148218,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/loading-768.png"
+    },
+    "work/lobby-1440.png": {
+      "sha256": "51a0a29d1d13e69972443f90207eef6198813f413a4d58fecbae65ae851afe14",
+      "bytes": 493673,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/lobby-1440.png"
+    },
+    "work/lobby-375.png": {
+      "sha256": "72438ff4e236e5e18c004d0479f989492a27940c2f81cd8a060b233d5b937df0",
+      "bytes": 124153,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/lobby-375.png"
+    },
+    "work/lobby-768.png": {
+      "sha256": "e7e9c3bfb39825170102870e01659d9dcc493d2e71cabb7ead2b624f57fa4b75",
+      "bytes": 234312,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/lobby-768.png"
+    },
+    "work/menu-no-preference.png": {
+      "sha256": "010e30c9a1cd9e8b1be5ae04d8376a911e6ddd7a5354570c55d7c68877ad4277",
+      "bytes": 54316,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/menu-no-preference.png"
+    },
+    "work/menu-reduce-webgl.png": {
+      "sha256": "00776e6aaaec1f45afb8f5931817c8af006dc102f049a7a020e5e4951fdf334c",
+      "bytes": 54591,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/menu-reduce-webgl.png"
+    },
+    "work/play-no-preference.png": {
+      "sha256": "0f21e8950c9cea0c346f390a2b5a5fdf0db98ef7d0d26ae9aaf8a5e4cc78b7dc",
+      "bytes": 58613,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/play-no-preference.png"
+    },
+    "work/play-reduce-webgl.png": {
+      "sha256": "ab475fe20ba81727060e89689edab8cba9e4ada6ac7826842d5b48d8ab156d15",
+      "bytes": 57776,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/play-reduce-webgl.png"
+    },
+    "work/rendered-lobby-1440.png": {
+      "sha256": "67e56da64587498ca8703901f87cb2d258ba7e44207ba79c2abd1ef08a6da5e2",
+      "bytes": 493441,
+      "width": 1440,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/rendered-lobby-1440.png"
+    },
+    "work/rendered-lobby-375-bottom.png": {
+      "sha256": "f671f2d4b6fd81cc57ab09aa49eb73b2da26425b3fc0dc1979c3b6a14f994b46",
+      "bytes": 84163,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/rendered-lobby-375-bottom.png"
+    },
+    "work/rendered-lobby-375.png": {
+      "sha256": "7b5637a9303cb744131c2bf510cea2d4b34a1682ea7c96ec116876f63c0ea977",
+      "bytes": 124204,
+      "width": 375,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/rendered-lobby-375.png"
+    },
+    "work/rendered-lobby-768.png": {
+      "sha256": "402f2ee205c34af4bccd8c50a9d5e2e833fa1825c7f51dc9d731b51319f5b726",
+      "bytes": 234450,
+      "width": 768,
+      "height": 900,
+      "archived_path": "docs/evidence/20261030T082733Z/captures/rendered-lobby-768.png"
+    }
+  },
+  "counts": {
+    "core_checks": 944,
+    "camera_checks": 6,
+    "node_tests": 84,
+    "browser_tests": 8,
+    "game_tests": 8,
+    "browser_total": 16
+  },
+  "passed": false
+}

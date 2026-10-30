@@ -1,0 +1,47 @@
+
+Running 1 test using 1 worker
+
+  x  1 tests\e2e\game.spec.mjs:136:1 › real browser hit, kill and incoming-damage feedback through an ordinary socket peer (3.4s)
+
+
+  1) tests\e2e\game.spec.mjs:136:1 › real browser hit, kill and incoming-damage feedback through an ordinary socket peer 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  locator('#action-state')
+    Expected: "처치 확인"
+    Received: ""
+    Timeout:  200ms
+
+    Call log:
+      - Expect "toHaveText" locator('#action-state') with timeout 200ms
+      - waiting for locator('#action-state')
+        8 × locator resolved to <div role="status" id="action-state" class="action-state"></div>
+          - unexpected value ""
+
+
+      154 |   await expect(page.locator('#players li.me .score-values')).toHaveText('1 / 0');
+      155 |   await page.waitForTimeout(350);
+    > 156 |   await expect(page.locator('#action-state')).toHaveText('처치 확인',{timeout:200});
+          |                                               ^
+      157 |   await page.screenshot({path:'work/kill-confirmation.png'});
+      158 |   await page.waitForTimeout(900);
+      159 |   await expect(page.locator('#action-state')).toHaveText('');
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:156:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\game-tests\game-real-browser-hit-kill-227d8-ugh-an-ordinary-socket-peer\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\game-tests\game-real-browser-hit-kill-227d8-ugh-an-ordinary-socket-peer\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\game-tests\game-real-browser-hit-kill-227d8-ugh-an-ordinary-socket-peer\trace.zip
+    Usage:
+
+        npx playwright show-trace work\game-tests\game-real-browser-hit-kill-227d8-ugh-an-ordinary-socket-peer\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\game.spec.mjs:136:1 › real browser hit, kill and incoming-damage feedback through an ordinary socket peer 

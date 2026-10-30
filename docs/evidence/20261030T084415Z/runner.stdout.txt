@@ -1,0 +1,199 @@
+CHECK build D:\Tools\Hermes\installs\85e954bd52912826\environments\9381b9ce0cd947368603931f57d410ba\venv\Scripts\python.exe scripts/build.py
+BUILD D:\Tools\Hermes\installs\85e954bd52912826\environments\9381b9ce0cd947368603931f57d410ba\venv\Scripts\python.exe D:\Tools\emsdk\upstream\emscripten\em++.py -std=c++20 -Wall -Wextra -Werror -I D:\Projects\Vibe_Coding\cpp-web-fps\include -O2 core/game.cpp core/bridge.cpp --no-entry -sMODULARIZE=1 -sEXPORT_ES6=1 -sENVIRONMENT=node -sALLOW_MEMORY_GROWTH=1 -sFILESYSTEM=0 -sEXPORTED_RUNTIME_METHODS=[\"UTF8ToString\"] -o D:\Projects\Vibe_Coding\cpp-web-fps\build\sim.mjs
+BUILD D:\Tools\Hermes\installs\85e954bd52912826\environments\9381b9ce0cd947368603931f57d410ba\venv\Scripts\python.exe D:\Tools\emsdk\upstream\emscripten\em++.py -std=c++20 -Wall -Wextra -Werror -I D:\Projects\Vibe_Coding\cpp-web-fps\include -O2 core/game.cpp client/main.cpp -sMODULARIZE=1 -sEXPORT_ES6=1 -sENVIRONMENT=web -sALLOW_MEMORY_GROWTH=1 -sMAXIMUM_MEMORY=268435456 -sFILESYSTEM=0 -sEXPORTED_RUNTIME_METHODS=[\"UTF8ToString\"] -o D:\Projects\Vibe_Coding\cpp-web-fps\web\dist\client.mjs
+CHECK core D:\Tools\Hermes\installs\85e954bd52912826\environments\9381b9ce0cd947368603931f57d410ba\venv\Scripts\python.exe scripts/build.py --test
+BUILD D:\Tools\Hermes\installs\85e954bd52912826\environments\9381b9ce0cd947368603931f57d410ba\venv\Scripts\python.exe D:\Tools\emsdk\upstream\emscripten\em++.py -std=c++20 -Wall -Wextra -Werror -I D:\Projects\Vibe_Coding\cpp-web-fps\include -O1 -g core/game.cpp tests/core_tests.cpp -sENVIRONMENT=node -sEXIT_RUNTIME=1 -sASSERTIONS=2 -o D:\Projects\Vibe_Coding\cpp-web-fps\build\core-tests.cjs
+PASS 948 C++ checks
+CHECK camera D:\Tools\Hermes\installs\85e954bd52912826\environments\9381b9ce0cd947368603931f57d410ba\venv\Scripts\python.exe scripts/build.py --client-test
+BUILD D:\Tools\Hermes\installs\85e954bd52912826\environments\9381b9ce0cd947368603931f57d410ba\venv\Scripts\python.exe D:\Tools\emsdk\upstream\emscripten\em++.py -std=c++20 -Wall -Wextra -Werror -I D:\Projects\Vibe_Coding\cpp-web-fps\include -O1 -g -I D:\Projects\Vibe_Coding\cpp-web-fps\client tests/client_math_tests.cpp -sENVIRONMENT=node -sEXIT_RUNTIME=1 -sASSERTIONS=2 -o D:\Projects\Vibe_Coding\cpp-web-fps\build\camera-tests.cjs
+PASS 6 C++ camera projection checks
+CHECK node "C:\Program Files\nodejs\node.EXE" --test tests/*.test.mjs
+✔ CLI help documents loopback defaults, explicit host/port and interface discovery (65.7523ms)
+✔ CLI starts real Wasm server on owned ephemeral loopback port and exits on teardown (98.292ms)
+✔ CLI host selection requires a specific discovered local address and strict numeric port (13.0598ms)
+✔ engine awaits Emscripten factory then forwards exact room ABI with no JS gameplay (2.5204ms)
+✔ engine destroys exactly once and prevents calls through a freed pointer (0.3452ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":2147483648,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true} (0.1545ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":-1,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true} (0.0998ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":null,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true} (0.0959ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":1.00001,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true} (0.1565ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":1e+100,"pitch":0.5,"fire":true,"reload":false,"sprint":true} (0.1142ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":"0","fire":true,"reload":false,"sprint":true} (0.0907ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":1,"reload":false,"sprint":true} (0.1773ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":null,"sprint":true} (0.128ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":"false"} (0.4003ms)
+✔ bridge rejects invalid input before numeric ABI conversion: {"type":"input","seq":5,"forward":1,"strafe":-1,"yaw":0.25,"pitch":0.5,"fire":true,"reload":false,"sprint":true,"id":0} (0.1385ms)
+✔ engine rejects zero allocation pointer and missing ABI exports (0.1837ms)
+✔ unit cube supplies 36 face vertices with unit normals (0.514ms)
+✔ peer serializes reliable controls and coalesces only the latest full snapshot (2.3651ms)
+✔ peer bounds reliable control count including in-flight write at 32 (0.2396ms)
+✔ peer bounds retained UTF-8 bytes including in-flight frames and mailbox (2.9509ms)
+✔ peer closes only itself when native buffered bytes exceed inclusive limit (0.2083ms)
+✔ leave clears pending state without losing reliable controls (0.2043ms)
+✔ terminal error drains reliable controls before close and discards state (0.2973ms)
+✔ blocked write is reaped at 10 seconds even if no new output arrives (0.1903ms)
+✔ peer reports callback send failure as fixed diagnostic and closes 1011 (0.2408ms)
+✔ peer reports throw send failure as fixed diagnostic and closes 1011 (0.1169ms)
+✔ strict protocol rejects unknown field / spoofed id without entering engine (25.7286ms)
+✔ strict protocol rejects array without entering engine (3.062ms)
+✔ strict protocol rejects array message type without entering engine (2.2038ms)
+✔ strict protocol rejects object message type without entering engine (2.0455ms)
+✔ strict protocol rejects null without entering engine (2.1078ms)
+✔ strict protocol rejects invalid JSON without entering engine (2.0717ms)
+✔ strict protocol rejects unknown type without entering engine (1.7819ms)
+✔ strict protocol rejects missing field without entering engine (1.7664ms)
+✔ strict protocol rejects empty name without entering engine (1.8653ms)
+✔ strict protocol rejects long scalar name without entering engine (2.101ms)
+✔ strict protocol rejects non-string name without entering engine (1.7903ms)
+✔ strict protocol rejects unpaired high surrogate without entering engine (1.6109ms)
+✔ strict protocol rejects unpaired low surrogate without entering engine (1.6493ms)
+✔ strict protocol rejects C0 newline name without entering engine (2.2033ms)
+✔ strict protocol rejects C1 name without entering engine (1.5971ms)
+✔ strict protocol rejects DEL name without entering engine (1.5058ms)
+✔ strict protocol rejects lowercase code without entering engine (1.5462ms)
+✔ strict protocol rejects whitespace code without entering engine (1.4836ms)
+✔ strict protocol rejects non-string code without entering engine (1.5681ms)
+✔ strict protocol rejects huge finite magnitude without entering engine (1.5436ms)
+✔ strict protocol rejects nonfinite JSON magnitude without entering engine (1.5835ms)
+✔ strict protocol rejects numeric string without entering engine (1.4711ms)
+✔ strict protocol rejects flag not boolean without entering engine (1.4509ms)
+✔ strict protocol rejects fractional sequence without entering engine (1.4351ms)
+✔ strict protocol rejects large sequence without entering engine (1.479ms)
+✔ strict protocol rejects negative sequence without entering engine (1.5094ms)
+✔ strict protocol rejects yaw outside bounds without entering engine (1.3987ms)
+✔ strict protocol rejects pitch outside bounds without entering engine (1.3896ms)
+✔ strict protocol rejects strafe outside bounds without entering engine (1.5432ms)
+✔ strict protocol rejects unsafe ping without entering engine (1.4556ms)
+✔ ping echoes only the allowed safe integer in idle and active states (2.9499ms)
+✔ validated inputs reach only the socket slot; duplicate and old sequence are ignored (2.2365ms)
+✔ leave clears identity and sequence; valid idle input is ignored; empty room is destroyed (2.0074ms)
+✔ active socket cannot create a second identity or leak its previous room (1.6263ms)
+✔ room limit is 16 and SERVER_FULL leaves socket idle for join retry (13.2748ms)
+✔ upgrades require exact same Origin and locally bound Host; route is exact (9.3079ms)
+✔ 64 sockets is a hard transport limit and excess upgrade gets HTTP 503 (36.0073ms)
+✔ static root serves only exact web assets with correct Wasm MIME and rejects traversal/methods (15.8186ms)
+✔ server clock advances injected engine at 60 Hz and publishes full states at 20 Hz (2.062ms)
+✔ idle handshake expires at 10 seconds, including renewed idle after leave (2.5512ms)
+✔ transport heartbeat pings at 30 seconds and removes non-pong peers without hurting healthy sockets (3.3775ms)
+✔ message token bucket allows 120 burst, refills by server time, then closes RATE_LIMIT (11.4852ms)
+✔ input bucket limits 60 burst before Wasm including correctly shaped stale input (3.052ms)
+✔ UTF-8 payload byte limit accepts 1024 and rejects 1025 with close 1009 (2.037ms)
+✔ blocked sender never stalls shared ticks or a healthy peer and holds one latest state (2.4829ms)
+✔ shared tick reaps an expired blocked sender and cleans its room (9.4572ms)
+✔ engine creation failure becomes fixed 1011 response and observable sanitized diagnostic (4.843ms)
+✔ engine input failure isolates the affected room and does not leak exceptions (4.8928ms)
+✔ engine tick failure isolates the affected room and does not leak exceptions (3.1001ms)
+✔ engine snapshot failure isolates the affected room and does not leak exceptions (2.7993ms)
+✔ engine leave failure isolates the affected room and does not leak exceptions (2.9162ms)
+✔ engine destroy failure isolates the affected room and does not leak exceptions (2.4654ms)
+✔ REAL C++/Wasm default engine loads, joins and acknowledges input through actual socket (8.6744ms)
+✔ app close owns live socket teardown, destroys rooms and is idempotent (1.6139ms)
+✔ unexpected static delivery error returns empty 500 and a sanitized observable diagnostic (1.5151ms)
+✔ health reports actual transport counts without claiming injected engine is Wasm (1.7995ms)
+✔ create assigns socket identity and sends welcome before authoritative snapshot (2.9025ms)
+✔ four socket memberships share a room; fifth can recover from ROOM_FULL and ROOM_NOT_FOUND (4.1775ms)
+ℹ tests 84
+ℹ suites 0
+ℹ pass 84
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 646.8837
+CHECK browser "C:\Program Files\nodejs\node.EXE" node_modules/@playwright/test/cli.js test
+
+Running 8 tests using 1 worker
+
+  ok 1 tests\e2e\client-contract.spec.mjs:15:1 › compiled C++ exports actual game, snapshot and input entry points (236ms)
+GPU smoke {"api":"WebGPU","reason":"","width":640}
+  ok 2 tests\e2e\gpu.spec.mjs:13:39 › real GPU adapter draws an instanced cube (fallback=false) (250ms)
+GPU smoke {"api":"WebGL2","reason":"WebGL2 selected","width":640}
+  ok 3 tests\e2e\gpu.spec.mjs:13:39 › real GPU adapter draws an instanced cube (fallback=true) (181ms)
+Observed local lobby {"api":"WebGPU / C++ WASM","lcp":[{"time":60,"tag":"H1"}],"reduced":false}
+  ok 4 tests\e2e\lobby-render.spec.mjs:14:1 › real C++ Wasm renders the lobby and fits three widths (651ms)
+  ok 5 tests\e2e\lobby-render.spec.mjs:31:1 › real Wasm loading disables competing actions and then recovers (529ms)
+  ok 6 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 1440px (270ms)
+  ok 7 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 768px (230ms)
+  ok 8 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 375px (220ms)
+
+  8 passed (3.3s)
+CHECK game "C:\Program Files\nodejs\node.EXE" node_modules/@playwright/test/cli.js test -c playwright.game.config.mjs
+
+Running 9 tests using 1 worker
+
+Escape diagnostic {"received":true}
+  ok 1 tests\e2e\game.spec.mjs:30:101 › actual C++ controls, server ammo, reload and Esc (reduce) (3.1s)
+Escape diagnostic {"received":true}
+  ok 2 tests\e2e\game.spec.mjs:30:101 › actual C++ controls, server ammo, reload and Esc (no-preference) (3.0s)
+Escape diagnostic {"received":true}
+  ok 3 tests\e2e\game.spec.mjs:30:101 › actual C++ controls, server ammo, reload and Esc (reduce/WebGL2) (2.9s)
+Observed independent browser ids [0,1,2,3]
+  ok 4 tests\e2e\game.spec.mjs:69:1 › four independent browser contexts agree on membership; fifth gets room full (1.8s)
+  ok 5 tests\e2e\game.spec.mjs:87:1 › served C++ lobby and live menu retain layout at desktop, tablet and phone widths (883ms)
+Pitch boundary diagnostic {"response":{"id":0,"x":-18,"y":0,"z":-18,"yaw":2.356194496154785,"pitch":-1.4500000476837158,"hp":100,"ammo":24,"kills":0,"deaths":0,"reload":0,"respawn":0,"shield":1400.0000953674316,"shot":0,"hit":0,"damage":0,"ack":3,"trace":[-18,1.600000023841858,-18]},"sent":{"type":"input","seq":3,"forward":0,"strafe":0,"yaw":2.356194496154785,"pitch":-1.45,"fire":false,"reload":false,"sprint":false}}
+  ok 6 tests\e2e\game.spec.mjs:102:38 › extreme mouse pitch down remains in the strict wire range without disconnecting (467ms)
+Pitch boundary diagnostic {"response":{"id":0,"x":-18,"y":0,"z":-18,"yaw":2.356194496154785,"pitch":1.4500000476837158,"hp":100,"ammo":24,"kills":0,"deaths":0,"reload":0,"respawn":0,"shield":1333.3334922790527,"shot":0,"hit":0,"damage":0,"ack":4,"trace":[-18,1.600000023841858,-18]},"sent":{"type":"input","seq":4,"forward":0,"strafe":0,"yaw":2.356194496154785,"pitch":1.45,"fire":false,"reload":false,"sprint":false}}
+  ok 7 tests\e2e\game.spec.mjs:102:38 › extreme mouse pitch up remains in the strict wire range without disconnecting (498ms)
+  ok 8 tests\e2e\game.spec.mjs:121:1 › missing-room retry and owned server disconnect recover the real UI (1.1s)
+Observed browser combat {"mine":0,"target":1,"health":75,"kills":1}
+  ok 9 tests\e2e\game.spec.mjs:136:1 › real browser hit, kill and incoming-damage feedback through an ordinary socket peer (5.3s)
+
+  9 passed (19.9s)
+CHECK live "C:\Program Files\nodejs\node.EXE" scripts/live-smoke.mjs --url http://127.0.0.1:8088
+{
+  "kind": "observed_public_protocol",
+  "automatedParticipants": 4,
+  "base": "http://127.0.0.1:8088",
+  "joinedIds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "fifthRejected": "ROOM_FULL",
+  "combat": {
+    "kills": 1,
+    "hits": 4,
+    "ammoAfterFire": 18,
+    "allFourSawDeath": true
+  },
+  "respawn": true,
+  "reload": true,
+  "movement": {
+    "distanceMeters": 2.916677474975586
+  },
+  "disconnectRemoved": true,
+  "emptyRoomCleaned": true
+}
+CHECK launcher D:\Tools\Hermes\installs\85e954bd52912826\environments\9381b9ce0cd947368603931f57d410ba\venv\Scripts\python.exe scripts/launcher-smoke.py
+{
+  "kind": "observed_START_cmd_serving_branch",
+  "url": "http://127.0.0.1:52266",
+  "health": {
+    "ok": true,
+    "engine": "C++/Wasm",
+    "rooms": 0,
+    "clients": 0,
+    "tickRate": 60
+  },
+  "owned_process_tree_stopped": true,
+  "listener_absent_after_cleanup": true,
+  "launcher_output": [
+    "CROSSYARD - server address is printed below. Ctrl+C to stop.",
+    "CROSSYARD http://127.0.0.1:52266 (C++/Wasm)"
+  ]
+}
+CHECK diff D:\Tools\Hermes\tools\git-2.53.0+3-win32-x64\mingw64\bin\git.EXE diff --check
+{
+  "receipt": "D:\\Projects\\Vibe_Coding\\cpp-web-fps\\docs\\evidence\\20261030T084415Z\\receipt.json",
+  "passed": true,
+  "counts": {
+    "core_checks": 948,
+    "camera_checks": 6,
+    "node_tests": 84,
+    "browser_tests": 8,
+    "game_tests": 9,
+    "browser_total": 17
+  },
+  "captures": 31
+}

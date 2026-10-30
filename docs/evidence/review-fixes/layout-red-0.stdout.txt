@@ -1,0 +1,40 @@
+
+Running 1 test using 1 worker
+
+  x  1 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 768px (307ms)
+
+
+  1) tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 768px ───────────────────────────
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 665.375
+    Received:    164.25
+
+      22 |  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+      23 |  const layout=await page.evaluate(()=>{const a=document.querySelector('.intro').getBoundingClientRect(),b=document.querySelector('.join-panel').getBoundingClientRect();return {introBottom:a.bottom,introRight:a.right,joinTop:b.top,joinLeft:b.left};});
+    > 24 |  if(width<=768)expect(layout.joinTop).toBeGreaterThanOrEqual(layout.introBottom);
+         |                                       ^
+      25 |  else expect(layout.joinLeft).toBeGreaterThan(layout.introRight);
+      26 |  expect(await page.locator('#code-help').evaluate(e=>parseFloat(getComputedStyle(e).fontSize))).toBeGreaterThanOrEqual(14);
+      27 | });
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\shell.spec.mjs:24:39
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\browser\shell-Korean-lobby-controls-fit-at-768px\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\browser\shell-Korean-lobby-controls-fit-at-768px\error-context.md
+
+    Error Context: work\browser\shell-Korean-lobby-controls-fit-at-768px\error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\browser\shell-Korean-lobby-controls-fit-at-768px\trace.zip
+    Usage:
+
+        npx playwright show-trace work\browser\shell-Korean-lobby-controls-fit-at-768px\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 768px ────────────────────────────
