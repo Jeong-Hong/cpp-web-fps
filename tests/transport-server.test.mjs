@@ -492,6 +492,8 @@ test('REAL C++/Wasm default engine loads, joins and acknowledges input through a
     assert.equal(state.room, welcome.room);
     assert.equal(state.players.length, 1);
     assert.equal(state.players[0].ack, 0);
+    assert.ok(Math.abs(state.players[0].z + 18.25) < 0.0001, 'seq zero drives authoritative movement');
+    assert.equal(state.players[0].yaw, 0);
     assert.ok(Number.isFinite(state.players[0].x));
     assert.ok(state.time > 0);
   } finally { await f.close(); }

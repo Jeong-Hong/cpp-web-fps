@@ -25,6 +25,23 @@ struct CommaDecimal:std::numpunct<char> {
     char do_decimal_point() const override { return ','; }
 };
 int main() {
+    {
+        arena::Room room;
+        const int id=room.join();
+        arena::Input input{};
+        input.seq=0; input.forward=1; input.yaw=0;
+        room.set_input(id,input); room.tick(0.05f);
+        check(near(room.players()[id].position.z,-18.25f),"first valid sequence zero drives movement");
+        input.forward=-1;
+        room.set_input(id,input); room.tick(0.05f);
+        check(near(room.players()[id].position.z,-18.5f),"duplicate sequence zero cannot replace held input");
+        input.seq=1;
+        room.set_input(id,input); room.tick(0.05f);
+        check(near(room.players()[id].position.z,-18.25f),"strictly newer sequence replaces held input");
+        room.leave(id); room.join(); input.seq=0; input.forward=1;
+        room.set_input(id,input); room.tick(0.05f);
+        check(near(room.players()[id].position.z,-18.25f),"rejoin resets receipt state and accepts first sequence zero");
+    }
     const auto p=arena::move_position({0,0,-18},1,0,0,0.05f,false);
     check(near(p.z,-18.25f),"forward moves in camera direction at 5m/s");
     check(near(p.x,0),"forward preserves perpendicular position");

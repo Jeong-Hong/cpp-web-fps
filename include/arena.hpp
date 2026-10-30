@@ -18,7 +18,7 @@ struct Input {
     std::uint32_t seq=0;
 };
 struct Player {
-    bool active=false;
+    bool active=false, received_input=false;
     Vec3 position{};
     float yaw=0, pitch=0;
     int hp=100, ammo=24, kills=0, deaths=0;

@@ -86,7 +86,8 @@ bool valid_input(const Input& input) {
 bool Room::set_input(int slot,const Input& input) {
     if(slot<0 || slot>=kCapacity || !players_[slot].active || !valid_input(input)) return false;
     auto& player=players_[slot];
-    if(input.seq<=player.ack) return true;
+    if(player.received_input && input.seq<=player.ack) return true;
+    player.received_input=true;
     player.ack=input.seq;
     if(player.hp<=0) return true;
     player.input=input;
