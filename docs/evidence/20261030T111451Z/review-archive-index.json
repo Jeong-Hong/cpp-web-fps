@@ -1,0 +1,55 @@
+{
+  "schema": "crossyard_review_archive/v1",
+  "tested_revision": "7a1cc3a6f76dcb6a7afa4a10624b917dc272369c",
+  "files": [
+    {
+      "source": ".omh/artifacts/actions-review/visual/round-2/review.json",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-2.json",
+      "sha256": "4308d7f7454507c17f4c63afc4c0d1ec1985558c56fc8597ae189e9994212d45"
+    },
+    {
+      "source": ".omh/artifacts/actions-review/visual/round-2/contact-01.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-2/contact-01.png",
+      "sha256": "b56410cad6d372680922d343fd71f156b0c2d654ad8d05b99dd32cb58bf6a7f5"
+    },
+    {
+      "source": ".omh/artifacts/actions-review/visual/round-2/contact-02.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-2/contact-02.png",
+      "sha256": "ca3755bd0184d96d2881a17134985ac34b3bbfdab00df5c9456756de3d1b8142"
+    },
+    {
+      "source": ".omh/artifacts/actions-review/visual/round-2/contact-03.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-2/contact-03.png",
+      "sha256": "b04278c36edc6c6e7d9fcd92cedc621e9ad8811ed68dd833890de16618674cdf"
+    },
+    {
+      "source": ".omh/artifacts/actions-review/visual/round-2/contact-04.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-2/contact-04.png",
+      "sha256": "d9e33df746186933f79566362142c7fb435962518e39859a4364d3e96284d120"
+    },
+    {
+      "source": ".omh/artifacts/actions-review/visual/round-2/contact-05.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-2/contact-05.png",
+      "sha256": "e480af9f69213ef7be597c4957dc7114423a02b9d7d84f1b2f2878cf2d706183"
+    },
+    {
+      "source": ".omh/artifacts/actions-review/visual/round-2/contact-06.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-2/contact-06.png",
+      "sha256": "d09f1584def10c926b245614068f408e0a9e3d5929f02f1a9ff63b9964132de7"
+    },
+    {
+      "source": ".omh/artifacts/actions-review/visual/round-2/contact-07.png",
+      "archive": "docs/evidence/20261030T111451Z/reviews/visual-round-2/contact-07.png",
+      "sha256": "3d07eb14fe5d700b8ee579c3af505a524130f4f80d4d801b2f7d51bfc5b6d56c"
+    },
+    {
+      "source": ".omh/artifacts/actions-review/fixes.json",
+      "archive": "docs/evidence/20261030T111451Z/reviews/fixes.json",
+      "sha256": "bf42692e0e6adca7c5af0e50edc2fe42afe1ecb62207c73530c7f3e3fa9f36cc"
+    }
+  ],
+  "current_findings": [],
+  "code_review_scope": "CLIENT-001/002 six-file source review; no reviewer rebuild",
+  "visual_scope": "single independent still-frame review, 56 current captures; no fresh reviewer interaction run",
+  "reconciliation": "The visual review's separate-P2 status is its historical context. The independent fixes report closes both; the parent's newer full-run receipt binds all 45 inputs and four outputs. Neither review is an all-products correctness guarantee."
+}

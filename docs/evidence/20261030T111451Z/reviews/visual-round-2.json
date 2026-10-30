@@ -1,0 +1,2400 @@
+{
+  "schema": "visual_qa_verdict/v1",
+  "language": "ko-KR",
+  "round": 2,
+  "target_lineage": {
+    "repository": "D:/Projects/Vibe_Coding/cpp-web-fps",
+    "source_revision": "7a1cc3a6f76dcb6a7afa4a10624b917dc272369c",
+    "capture_run_id": "20261030T111451Z",
+    "receipt_tested_revision_matches": true,
+    "current_head_matches": true,
+    "source_hashes_match_working_files_and_target_commit": true,
+    "capture_hashes_match_receipt": true,
+    "provenance_boundary": "호스트의 현재 실행 영수증과 로컬 파일/목표 git blob의 일치 검증이다. 재캡처나 신규 실행을 수행했다는 뜻이 아니다."
+  },
+  "score": 100,
+  "verdict": "PASS",
+  "pass_threshold": 90,
+  "differences": [],
+  "summary": "현재 영수증의 56개 PNG 전부를 새 접촉지 7장으로 검사했다. D1 준비 중 CTA, D2 Esc/메뉴 묶음, D3 네 로딩/연결해제 하단 셀을 새 원본·좌표 증거로 닫는다. 기존 산업용 방향을 유지하며 요청한 정지 시각 범위에서 새 차단 결함을 관찰하지 않았다.",
+  "score_interpretation": "각 축 10점의 감점형 정지 캡처 평가를 도구로 합산했다. 새 관찰에서 남은 결함 감점이 없어 100이다. 제품 완전성·실제 모션·접근성·성능의 100점 또는 전체 제품 correctness PASS를 뜻하지 않는다. 미검증 채널은 아래에 별도 유지한다.",
+  "confidence": "중간. 한 명의 읽기 전용 리뷰이며 독립적 이중 시각 리뷰·높은 신뢰도를 주장하지 않는다.",
+  "review_completed_at": "2026-10-30T11:20:24.149937+00:00",
+  "time_budget_minutes": 5,
+  "contracts_used": [
+    "omh-visual-qa/references/visual-verdict-contract.md",
+    "omh-design-quality-gate/references/design-critique-rubric.md",
+    "D:/AGENTS.md",
+    "DESIGN.md",
+    "docs/ACTIONS.md:47,55-57"
+  ],
+  "review_scope": {
+    "mode": "local archived PNG/read-only inspection",
+    "browser_launched": false,
+    "server_launched": false,
+    "external_network": false,
+    "builds_or_tests_executed": false,
+    "source_modified": false,
+    "original_captures_modified": false,
+    "previous_review_modified": false,
+    "tracked_task_closed": false,
+    "allowed_output_directory": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/round-2"
+  },
+  "product_correctness_verdict": "not_assessed; 별도 소스 리뷰의 P2 재검토를 이 시각 PASS로 닫지 않는다.",
+  "direction_verdict": {
+    "maintained": true,
+    "direction": "Bold / expressive 산업 현장 사격장",
+    "evidence": [
+      "R2C01",
+      "R2C35",
+      "R2C49",
+      "R2C52"
+    ],
+    "assessment": "로우폴리 항만·황토색 크레인·먹색 실면 HUD·산성 노랑 안전표식·압축 워드마크 유지. 새 미술 방향이나 자산 변경 요구 없음."
+  },
+  "closed_findings": [
+    {
+      "id": "D1",
+      "status": "closed_by_current_evidence",
+      "evidence": [
+        "R2C38",
+        "R2C39",
+        "R2C40",
+        "R2C41",
+        "R2C42"
+      ],
+      "observation": "1440 원본/CTA 확대, 375/768 하단 원본 및 상단 접촉지에서 준비 중...을 확인. 준비 정상 상태 R2C53/55는 새 방 만들기이며 로딩 문구가 잔류하지 않음. 동작 전이 자체는 재실행하지 않았다."
+    },
+    {
+      "id": "D2",
+      "status": "closed_by_current_evidence",
+      "evidence": [
+        "R2C53",
+        "R2C22",
+        "R2C39"
+      ],
+      "observation": "375 정상/연결해제/로딩 하단에서 Esc와 메뉴가 같은 둘째 줄에 놓인다. R2C53 좌표 [16,750,359,887]로 직접 판독."
+    },
+    {
+      "id": "D3",
+      "status": "closed_by_current_evidence",
+      "evidence": [
+        "R2C39",
+        "R2C41",
+        "R2C22",
+        "R2C24"
+      ],
+      "observation": "네 필수 셀 모두 이번 영수증에 해시 일치하고 원본/좌표 확대에서 상태 원인·복구 문장이 끝까지 보인다. browser/game stdout의 폭·높이·visibility·scrollTop·본문과 대조했다. 이전 정상 로비/이전 51장을 대신 쓰지 않음. 구현 결함 확정이 아니라 증거 차단을 해소한 것."
+    }
+  ],
+  "rubric_axes": [
+    {
+      "axis": "Hierarchy",
+      "score": 10,
+      "max_score": 10,
+      "evidence": [
+        "R2C52",
+        "R2C35",
+        "R2C32"
+      ],
+      "assessment": "워드마크→참가 CTA→설명의 우선순위와 HUD 숫자 구획이 명확하다."
+    },
+    {
+      "axis": "Type discipline",
+      "score": 10,
+      "max_score": 10,
+      "evidence": [
+        "R2C36",
+        "R2C37",
+        "R2C39",
+        "R2C41",
+        "R2C53"
+      ],
+      "assessment": "압축 영문 표시와 한국어 본문 역할이 나뉘며 검사한 원본에서 글리프 잘림이 없다. CSS 크기·실제 폰트 로딩은 미측정."
+    },
+    {
+      "axis": "Spacing rhythm",
+      "score": 10,
+      "max_score": 10,
+      "evidence": [
+        "R2C36",
+        "R2C37",
+        "R2C53",
+        "R2C55"
+      ],
+      "assessment": "패널 내부 여백·구분선·버튼 리듬 유지. D2의 Esc/메뉴 묶음 분리가 해소됐다. 375 팁의 빈 패널 가장자리 접촉은 필수 문자 겹침이 아니다."
+    },
+    {
+      "axis": "Color system",
+      "score": 10,
+      "max_score": 10,
+      "evidence": [
+        "R2C18",
+        "R2C22",
+        "R2C24",
+        "R2C38",
+        "R2C52"
+      ],
+      "assessment": "어두운 실면·산성 노랑 주요 행동·주황 오류가 역할을 유지. 대비비율의 수치 검증은 별도다."
+    },
+    {
+      "axis": "State coverage",
+      "score": 10,
+      "max_score": 10,
+      "evidence": [
+        "R2C22",
+        "R2C24",
+        "R2C38",
+        "R2C39",
+        "R2C41",
+        "R2C46",
+        "R2C47",
+        "R2C53",
+        "R2C55"
+      ],
+      "assessment": "요청한 정상/로딩/연결해제·입장/복귀 메뉴·활성 HUD의 새 캡처가 존재한다. 로딩 CTA 교체 및 네 하단 셀 보충으로 D1/D3 해소. hover/pressed/모든 focus 이동의 동작 통과를 뜻하지 않는다."
+    },
+    {
+      "axis": "Signature",
+      "score": 10,
+      "max_score": 10,
+      "evidence": [
+        "R2C01",
+        "R2C12",
+        "R2C52"
+      ],
+      "assessment": "CROSSYARD 압축 워드마크·로우폴리 항만 야드·안전표식 노랑이 유지된다."
+    },
+    {
+      "axis": "Motion restraint",
+      "score": 10,
+      "max_score": 10,
+      "evidence": [
+        "R2C05",
+        "R2C06",
+        "R2C07",
+        "R2C08",
+        "R2C09",
+        "R2C10",
+        "R2C15",
+        "R2C16",
+        "R2C17",
+        "R2C26",
+        "R2C27",
+        "R2C28"
+      ],
+      "assessment": "제공된 세 명명 조건의 정지 활성 프레임에서 핵심 발사 빛·수류탄 비행·폭발 유지. 시간 토큰·진동·궤적에 대해서는 점수로 통과를 주장하지 않는다."
+    },
+    {
+      "axis": "CJK and localization fit",
+      "score": 10,
+      "max_score": 10,
+      "evidence": [
+        "R2C22",
+        "R2C24",
+        "R2C33",
+        "R2C36",
+        "R2C39",
+        "R2C41",
+        "R2C53"
+      ],
+      "assessment": "새 키 및 한국어 상태·복구 문구를 원본/좌표 확대 검사. D2 Esc 메뉴는 같은 줄에 묶이고 D3 끝 문장까지 읽힌다."
+    },
+    {
+      "axis": "Default-prior fit",
+      "score": 10,
+      "max_score": 10,
+      "evidence": [
+        "R2C35",
+        "R2C49",
+        "R2C52"
+      ],
+      "assessment": "DESIGN.md Bold/expressive 산업 현장 사격장에 맞는다. 크림 편집체·유리 카드 등 다른 방향으로 바뀌지 않았다."
+    },
+    {
+      "axis": "Chosen, not inherited",
+      "score": 10,
+      "max_score": 10,
+      "evidence": [
+        "R2C38",
+        "R2C47",
+        "R2C52"
+      ],
+      "assessment": "먹색 실면·얇은 경계·산성 노랑·압축 표시체가 일관된다. 프레임워크 기본 파랑·장식 그라데이션을 관찰하지 않았다."
+    }
+  ],
+  "score_calculation": {
+    "method": "sum(axis.score)",
+    "operands": [
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10,
+      10
+    ],
+    "result": 100
+  },
+  "coverage_matrix": [
+    {
+      "surface": "로비",
+      "viewport": [
+        1440,
+        900
+      ],
+      "evidence": [
+        "R2C52"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "로비",
+      "viewport": [
+        768,
+        900
+      ],
+      "evidence": [
+        "R2C55",
+        "R2C56"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "로비",
+      "viewport": [
+        375,
+        900
+      ],
+      "evidence": [
+        "R2C53",
+        "R2C54"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "입장 메뉴",
+      "viewport": [
+        1440,
+        900
+      ],
+      "evidence": [
+        "R2C35"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "입장 메뉴",
+      "viewport": [
+        768,
+        900
+      ],
+      "evidence": [
+        "R2C37"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "입장 메뉴",
+      "viewport": [
+        375,
+        900
+      ],
+      "evidence": [
+        "R2C36"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "활성 HUD",
+      "viewport": [
+        1440,
+        900
+      ],
+      "evidence": [
+        "R2C32"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "활성 HUD",
+      "viewport": [
+        768,
+        900
+      ],
+      "evidence": [
+        "R2C34"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "활성 HUD",
+      "viewport": [
+        375,
+        900
+      ],
+      "evidence": [
+        "R2C33"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "loading",
+      "viewport": [
+        1440,
+        900
+      ],
+      "evidence": [
+        "R2C38"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "loading",
+      "viewport": [
+        768,
+        900
+      ],
+      "evidence": [
+        "R2C41",
+        "R2C42"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "loading",
+      "viewport": [
+        375,
+        900
+      ],
+      "evidence": [
+        "R2C39",
+        "R2C40"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "disconnect",
+      "viewport": [
+        1440,
+        900
+      ],
+      "evidence": [
+        "R2C21"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "disconnect",
+      "viewport": [
+        768,
+        900
+      ],
+      "evidence": [
+        "R2C24",
+        "R2C25"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    },
+    {
+      "surface": "disconnect",
+      "viewport": [
+        375,
+        900
+      ],
+      "evidence": [
+        "R2C22",
+        "R2C23"
+      ],
+      "result": "제공된 상단/필요 하단 정지 프레임 확인"
+    }
+  ],
+  "effect_conditions": [
+    {
+      "condition": "no-preference/auto GPU",
+      "viewport": [
+        1440,
+        900
+      ],
+      "pistol": "R2C12",
+      "pistol_shot": "R2C15",
+      "rifle_shot": "R2C26",
+      "grenade_flight": "R2C08",
+      "grenade_blast": "R2C05",
+      "grenade_after": "R2C02",
+      "result": "명명된 현재 파일의 실루엣·핵심 효과 정지 프레임 확인; 조건 API/matchMedia는 픽셀 단독 증거가 아니라 테스트/로그 계보"
+    },
+    {
+      "condition": "reduce/auto GPU",
+      "viewport": [
+        1440,
+        900
+      ],
+      "pistol": "R2C14",
+      "pistol_shot": "R2C17",
+      "rifle_shot": "R2C28",
+      "grenade_flight": "R2C10",
+      "grenade_blast": "R2C07",
+      "grenade_after": "R2C04",
+      "result": "명명된 현재 파일의 실루엣·핵심 효과 정지 프레임 확인; 조건 API/matchMedia는 픽셀 단독 증거가 아니라 테스트/로그 계보"
+    },
+    {
+      "condition": "reduce/forced WebGL2",
+      "viewport": [
+        1440,
+        900
+      ],
+      "pistol": "R2C13",
+      "pistol_shot": "R2C16",
+      "rifle_shot": "R2C27",
+      "grenade_flight": "R2C09",
+      "grenade_blast": "R2C06",
+      "grenade_after": "R2C03",
+      "result": "명명된 현재 파일의 실루엣·핵심 효과 정지 프레임 확인; 조건 API/matchMedia는 픽셀 단독 증거가 아니라 테스트/로그 계보"
+    }
+  ],
+  "checked": [
+    "56개 현재 파일/7개 접촉지 모든 칸 시각 검사",
+    "13개 원본 전체·그중 8개 원본 좌표 확대",
+    "로비/입장 메뉴/HUD/loading/disconnect × 1440/768/375의 15셀과 필수 하단",
+    "네 하단 상태 및 정상하단 2개의 원시 로그/치수/본문 일치",
+    "45개 receipt 소스 SHA-256을 작업 파일 및 목표 git blob 양쪽과 대조",
+    "56개 capture의 파일 SHA-256/bytes/PNG 치수 영수증 일치",
+    "18개 stdout/stderr 파일의 receipt SHA-256 일치",
+    "기존 발사·폭발·비행·피격·명중·처치·선택/포커스 정지 상태"
+  ],
+  "unverified": [
+    "실제 물리 LAN·터치·OS 커서 confinement/포인터 잠금·실물 키보드/마우스 조작",
+    "프레임시간·60fps·실사용 p75/LCP 성능",
+    "효과 지속시간·퓨즈·연속 궤적/가림/충돌·반동/카메라 흔들림의 시간 품질",
+    "모든 폭×상태×모션×GPU 완전 교차; 특히 no-preference+forced WebGL2 조합 없음",
+    "375 권총 3D 실루엣: 해당 HUD 프레임은 무기 장착 중이며 모델이 보이지 않음",
+    "Tab순서·스크린리더·포커스 복귀 동작·hover/pressed 전수·대비비율·실제 폰트 로딩",
+    "복구 버튼 성공·음소거 소리·중복실행 방지·전체 게임/서버 correctness: 이 리뷰에서 실행하지 않음",
+    "console/network의 독립 관찰·객관 픽셀 diff·독립적인 두 번째 시각 리뷰 없음"
+  ],
+  "channels": {
+    "rendered_pixels": "observed",
+    "cjk_hotspots": "observed originals and coordinate crops",
+    "objective_pixel_diff": "not_run",
+    "interaction_trace": "archived parent test logs only; not independently rerun",
+    "console_network": "not_independently_observed",
+    "keyboard_accessibility": "focus ring appearance only",
+    "motion": "still active/post frames only",
+    "dual_independent_review": "not_available"
+  },
+  "capture_semantics": {
+    "canvas_only_ids": [
+      "R2C05",
+      "R2C06",
+      "R2C07",
+      "R2C08",
+      "R2C09",
+      "R2C10",
+      "R2C15",
+      "R2C16",
+      "R2C17",
+      "R2C26",
+      "R2C27",
+      "R2C28"
+    ],
+    "basis": "tests/e2e/game.spec.mjs:42,237,261 canvas.toDataURL read-only source inspection",
+    "rule": "canvas-only에는 DOM HUD/OS 커서가 없다. 이것을 HUD 결함이나 정상 커서 증거로 해석하지 않는다. GPU smoke 2장은 최소 큐브 페이지이며 동일 해시는 API 독립 증명 아님."
+  },
+  "captured_count": 56,
+  "visually_inspected_count": 56,
+  "contact_sheet_count": 7,
+  "original_full_inspected_count": 13,
+  "original_zoom_inspected_count": 8,
+  "captures": [
+    {
+      "id": "R2C01",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-crouch-remote.png",
+      "name": "actions-crouch-remote.png",
+      "sha256": "713cb05ff9c30663d44931c0861f74b0c1179512fd02d33ffbed3546559e353a",
+      "bytes": 45687,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-01.png",
+      "cell": 1,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "청록 원격 캐릭터·HP100·앉음이 보임. 히트박스 판정은 아님.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C02",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-grenade-after-no-preference.png",
+      "name": "actions-grenade-after-no-preference.png",
+      "sha256": "1279ef53ae61cfd9a49200077d17e39529be997da8ff2b56f23ca397e19adad1",
+      "bytes": 54126,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-01.png",
+      "cell": 2,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "폭발 사후 프레임, HP39와 수류탄1 표시.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C03",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-grenade-after-reduce-webgl.png",
+      "name": "actions-grenade-after-reduce-webgl.png",
+      "sha256": "9422a0eced3c998393aadbcf8ef049a4b0a9652477221e394367b94cd6e19e35",
+      "bytes": 53843,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-01.png",
+      "cell": 3,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "폭발 사후 프레임, HP39와 수류탄1 표시.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C04",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-grenade-after-reduce.png",
+      "name": "actions-grenade-after-reduce.png",
+      "sha256": "96ae947284fe9aa38b19208aee474f910202c95ebfb6953f525ea2cba29e0335",
+      "bytes": 54079,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-01.png",
+      "cell": 4,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "폭발 사후 프레임, HP39와 수류탄1 표시.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C05",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-grenade-blast-no-preference.png",
+      "name": "actions-grenade-blast-no-preference.png",
+      "sha256": "107663714d2e1ab5262883b6a8485fb11c1d32b4790ada0d0d52dcd6989db553",
+      "bytes": 97884,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-01.png",
+      "cell": 5,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "노랑 폭발 중심과 주변 큐브 입자가 실제로 보임.",
+      "capture_kind": "canvas-only active frame",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C06",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-grenade-blast-reduce-webgl.png",
+      "name": "actions-grenade-blast-reduce-webgl.png",
+      "sha256": "234973f5d09416f421ab5b5304ef8e4dc48e50f844d7e6a8118daa6da70c92dc",
+      "bytes": 98465,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": true,
+      "sheet": "contact-01.png",
+      "cell": 6,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image"
+      ],
+      "zoom_regions": [],
+      "observation": "원본에서도 노랑 폭발 중심·큐브 입자·소총 형태 확인.",
+      "capture_kind": "canvas-only active frame",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C07",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-grenade-blast-reduce.png",
+      "name": "actions-grenade-blast-reduce.png",
+      "sha256": "3d09f37d6a4b754711b8518d539cfff48ec40bc9e2a631b7ba5b087ec69f8ff1",
+      "bytes": 97928,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": true,
+      "sheet": "contact-01.png",
+      "cell": 7,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "reduce 명명 프레임에도 노랑 폭발 중심과 입자 유지.",
+      "capture_kind": "canvas-only active frame",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C08",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-grenade-flight-no-preference.png",
+      "name": "actions-grenade-flight-no-preference.png",
+      "sha256": "f4475011b7c8f97bdde5461f85ad1ec4591ec3b94551c28fb05caf50c1410d83",
+      "bytes": 44611,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-01.png",
+      "cell": 8,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "올리브 몸체와 노랑 상단의 수류탄 비행 정지 프레임.",
+      "capture_kind": "canvas-only active frame",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C09",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-grenade-flight-reduce-webgl.png",
+      "name": "actions-grenade-flight-reduce-webgl.png",
+      "sha256": "d16b4fc50c56042353e3577fe46b5fb05b63ecbf2771a521ff88727817446f1f",
+      "bytes": 45043,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-02.png",
+      "cell": 1,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "올리브 몸체·노랑 상단 수류탄이 프레임 내 보임.",
+      "capture_kind": "canvas-only active frame",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C10",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-grenade-flight-reduce.png",
+      "name": "actions-grenade-flight-reduce.png",
+      "sha256": "16d0c4923101403d23ff31b9397a82409db786765bd89d6e960cb374922b6bc4",
+      "bytes": 46460,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-02.png",
+      "cell": 2,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "올리브 몸체·노랑 상단 수류탄이 프레임 내 보임.",
+      "capture_kind": "canvas-only active frame",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C11",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-jump.png",
+      "name": "actions-jump.png",
+      "sha256": "bf9faeada184fc22457701494ed8c2ec194a205a5b88a6fbd457947bfcd119a9",
+      "bytes": 54068,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-02.png",
+      "cell": 3,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "점프 명명 프레임의 야드·총·HUD. 시간적 물리 판정 안 함.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C12",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-pistol-no-preference.png",
+      "name": "actions-pistol-no-preference.png",
+      "sha256": "0f5e3b12a1b30f2bef00ad18598b6eedbb2e7928d47a779cd7c2d1cb040a74d0",
+      "bytes": 64211,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-02.png",
+      "cell": 4,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "짧은 권총 실루엣과 권총12·활성2·수류탄2.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C13",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-pistol-reduce-webgl.png",
+      "name": "actions-pistol-reduce-webgl.png",
+      "sha256": "c4ea4fefdbb74c96006edfe6bb96ad1be79c8a4ffdb7d2ed3686509fa643d46f",
+      "bytes": 64046,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-02.png",
+      "cell": 5,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "짧은 권총 실루엣과 권총12·활성2·수류탄2.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C14",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-pistol-reduce.png",
+      "name": "actions-pistol-reduce.png",
+      "sha256": "6937671b44e3505900195c1a6c818b5bfcc70a4cda341af787e690103becfb3c",
+      "bytes": 64207,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-02.png",
+      "cell": 6,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "짧은 권총 실루엣과 권총12·활성2·수류탄2.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C15",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-pistol-shot-no-preference.png",
+      "name": "actions-pistol-shot-no-preference.png",
+      "sha256": "7407a4553f2ea7ad0d0ec1a0a24d00824945bf04f2bfd869275d1a90de916298",
+      "bytes": 88403,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": true,
+      "sheet": "contact-02.png",
+      "cell": 7,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "권총 총구의 노란 빛과 선이 모델 바깥으로 보임.",
+      "capture_kind": "canvas-only active frame",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C16",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-pistol-shot-reduce-webgl.png",
+      "name": "actions-pistol-shot-reduce-webgl.png",
+      "sha256": "86208c8ab54718a6ea095bead06d3ea8e35f37fb35d16141c7e206679e25a043",
+      "bytes": 90048,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": true,
+      "sheet": "contact-02.png",
+      "cell": 8,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "권총 총구의 노란 빛과 선이 모델 바깥으로 보임.",
+      "capture_kind": "canvas-only active frame",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C17",
+      "path": "docs/evidence/20261030T111451Z/captures/actions-pistol-shot-reduce.png",
+      "name": "actions-pistol-shot-reduce.png",
+      "sha256": "9fb7bc647e0979985e841b7525c866d1faba9105f48e3039626e34c842d55ba0",
+      "bytes": 88810,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": true,
+      "sheet": "contact-03.png",
+      "cell": 1,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "권총 총구의 노란 빛과 선이 모델 바깥으로 보임.",
+      "capture_kind": "canvas-only active frame",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C18",
+      "path": "docs/evidence/20261030T111451Z/captures/browser-damage.png",
+      "name": "browser-damage.png",
+      "sha256": "8c9abf6b1e9e33bb47a412ca0c5ea403a85249ae5c4d5c7bb4f0f9f159bf76c9",
+      "bytes": 496314,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-03.png",
+      "cell": 2,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "주황/붉은 피격 가장자리와 HP75. 주요 HUD가 남음.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C19",
+      "path": "docs/evidence/20261030T111451Z/captures/browser-hit.png",
+      "name": "browser-hit.png",
+      "sha256": "75177b46ec9288a25ba39df0c3dffa2bea7e3a574adddfc044f073060e614fdf",
+      "bytes": 49997,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-03.png",
+      "cell": 3,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "중앙 노랑 X와 발사 빛, 탄약23.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C20",
+      "path": "docs/evidence/20261030T111451Z/captures/controlled-disconnect.png",
+      "name": "controlled-disconnect.png",
+      "sha256": "f78746497ceba04831ce1e0812b12fd9f588dccab4e8a7969a597cc48d3aa403",
+      "bytes": 493868,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-03.png",
+      "cell": 4,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "연결 끊김 원인·복구 문구가 있는 로비 복귀 화면.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C21",
+      "path": "docs/evidence/20261030T111451Z/captures/disconnect-1440.png",
+      "name": "disconnect-1440.png",
+      "sha256": "21cec1dc9dc99f802beb7011bc89184089f4143eacaa1f3957347e5e6c1a634e",
+      "bytes": 494244,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-03.png",
+      "cell": 5,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "1440 연결 끊김 오류 문구와 참가 패널.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C22",
+      "path": "docs/evidence/20261030T111451Z/captures/disconnect-375-bottom.png",
+      "name": "disconnect-375-bottom.png",
+      "sha256": "a941ffd6a40668d61fea58fbfd471c512d07b248a32894cfa784844fbf304721",
+      "bytes": 85705,
+      "width": 375,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-03.png",
+      "cell": 6,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image",
+        "original coordinate crop"
+      ],
+      "zoom_regions": [
+        [
+          24,
+          560,
+          351,
+          729
+        ]
+      ],
+      "observation": "오류 원인 및 서버 실행 확인·재입장 문장을 원본/좌표로 판독. Esc 메뉴 묶음 정상.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C23",
+      "path": "docs/evidence/20261030T111451Z/captures/disconnect-375.png",
+      "name": "disconnect-375.png",
+      "sha256": "f3aedbf52541ae5dd9c4dae811d9ce6d430d5ff8af0d6e56a77de11e91dad715",
+      "bytes": 124698,
+      "width": 375,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-03.png",
+      "cell": 7,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "375 연결 해제 상단; 오류 본문은 R2C22 하단과 함께 검증.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C24",
+      "path": "docs/evidence/20261030T111451Z/captures/disconnect-768-bottom.png",
+      "name": "disconnect-768-bottom.png",
+      "sha256": "f5c3bc3230ef524d6d2788b8689afd5d4ca16fbf98ae910c8537f339997cdad7",
+      "bytes": 173239,
+      "width": 768,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-03.png",
+      "cell": 8,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image",
+        "original coordinate crop"
+      ],
+      "zoom_regions": [
+        [
+          40,
+          650,
+          601,
+          764
+        ]
+      ],
+      "observation": "768 오류 원인·복구 문장 전체를 원본/좌표로 판독.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C25",
+      "path": "docs/evidence/20261030T111451Z/captures/disconnect-768.png",
+      "name": "disconnect-768.png",
+      "sha256": "34cd44002d7b599039b1f4b85a21dc1c9a54ff74d19468a7fe68d7cb8e9ea3d2",
+      "bytes": 211591,
+      "width": 768,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-04.png",
+      "cell": 1,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "768 연결 해제 상단; 하단 R2C24와 함께 검증.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C26",
+      "path": "docs/evidence/20261030T111451Z/captures/firing-no-preference.png",
+      "name": "firing-no-preference.png",
+      "sha256": "823d257af2385d32cab668a43dcee91d5a5af1dccc81411e14383d4fa14114e7",
+      "bytes": 105538,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-04.png",
+      "cell": 2,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image"
+      ],
+      "zoom_regions": [],
+      "observation": "원본에서 총구 노랑 빛·선이 소총에 전부 가려지지 않음.",
+      "capture_kind": "canvas-only active frame",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C27",
+      "path": "docs/evidence/20261030T111451Z/captures/firing-reduce-webgl.png",
+      "name": "firing-reduce-webgl.png",
+      "sha256": "ed982f5804991575bc166627e5da2fc77fd13b39b3adb46b1f14ce422ec2efbd",
+      "bytes": 104238,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-04.png",
+      "cell": 3,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "reduce/WebGL 명명 프레임에도 소총 발사 빛이 보임.",
+      "capture_kind": "canvas-only active frame",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C28",
+      "path": "docs/evidence/20261030T111451Z/captures/firing-reduce.png",
+      "name": "firing-reduce.png",
+      "sha256": "62d9108e1622223dd8a7737b770ce21128bd28e6303ba8c9c46e9a1ffd738cc7",
+      "bytes": 102508,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-04.png",
+      "cell": 4,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "reduce 명명 프레임에도 소총 발사 빛이 보임.",
+      "capture_kind": "canvas-only active frame",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C29",
+      "path": "docs/evidence/20261030T111451Z/captures/gpu-auto.png",
+      "name": "gpu-auto.png",
+      "sha256": "aaf8270446dfd2648f7496591980f646fd35c2e976d91c6facf3e5ae92c05ee2",
+      "bytes": 6003,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": true,
+      "sheet": "contact-04.png",
+      "cell": 5,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "GPU 최소 smoke의 작은 청회색 캔버스·붉은 큐브. 앱 화면 아님.",
+      "capture_kind": "GPU minimal smoke page",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C30",
+      "path": "docs/evidence/20261030T111451Z/captures/gpu-webgl.png",
+      "name": "gpu-webgl.png",
+      "sha256": "aaf8270446dfd2648f7496591980f646fd35c2e976d91c6facf3e5ae92c05ee2",
+      "bytes": 6003,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": true,
+      "sheet": "contact-04.png",
+      "cell": 6,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "GPU 최소 smoke의 작은 청회색 캔버스·붉은 큐브. 앱 화면 아님.",
+      "capture_kind": "GPU minimal smoke page",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C31",
+      "path": "docs/evidence/20261030T111451Z/captures/kill-confirmation.png",
+      "name": "kill-confirmation.png",
+      "sha256": "11d62f3dcce52a6465d4827c7595d3bb1a8f5669c6851922c2ae294997959514",
+      "bytes": 47609,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-04.png",
+      "cell": 7,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "처치 확인 문구와 점수1/0이 보임.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C32",
+      "path": "docs/evidence/20261030T111451Z/captures/live-hud-1440.png",
+      "name": "live-hud-1440.png",
+      "sha256": "d09a5128754e93ea733a77f10483d118dfa175c520e6d403a61d3aefb420985f",
+      "bytes": 50909,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-04.png",
+      "cell": 8,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "1440 방/참가자/HP/자세/권총12/선택슬롯/수류탄2 구획 유지.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C33",
+      "path": "docs/evidence/20261030T111451Z/captures/live-hud-375.png",
+      "name": "live-hud-375.png",
+      "sha256": "6c4f2db2da07aa77829a921a5cb1409810c9acb2c0b169b9d0e1faabdca2266d",
+      "bytes": 20547,
+      "width": 375,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-05.png",
+      "cell": 1,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image",
+        "original coordinate crop"
+      ],
+      "zoom_regions": [
+        [
+          8,
+          650,
+          368,
+          899
+        ]
+      ],
+      "observation": "375 원본/확대에서 필수 HUD 문자는 겹치지 않음. 하단 팁은 패널 빈 가장자리와 접함. 무기 장착 중이며 3D 권총 실루엣은 이 프레임에 없음.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C34",
+      "path": "docs/evidence/20261030T111451Z/captures/live-hud-768.png",
+      "name": "live-hud-768.png",
+      "sha256": "e4aa023783e12b2743d31e85ef0d321508c29142733b6a7a2617010e33eb131d",
+      "bytes": 34594,
+      "width": 768,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-05.png",
+      "cell": 2,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image"
+      ],
+      "zoom_regions": [],
+      "observation": "768 원본 HUD의 새 무장/잔량/자세가 읽힘.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C35",
+      "path": "docs/evidence/20261030T111451Z/captures/live-menu-1440.png",
+      "name": "live-menu-1440.png",
+      "sha256": "4bef44d679346406d1b556221ab3ea0ea895cfda418af30d63ad56b295e1d7b3",
+      "bytes": 52396,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-05.png",
+      "cell": 3,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "1440 입장 메뉴의 새 키·감도·체크박스·나가기 표시.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C36",
+      "path": "docs/evidence/20261030T111451Z/captures/live-menu-375.png",
+      "name": "live-menu-375.png",
+      "sha256": "59beb1d0d0bd5bbc61ff90e2e6e9201454c567455e0330dc5a49d0ba28bed8f9",
+      "bytes": 27062,
+      "width": 375,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-05.png",
+      "cell": 4,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image",
+        "original coordinate crop"
+      ],
+      "zoom_regions": [
+        [
+          30,
+          365,
+          347,
+          765
+        ]
+      ],
+      "observation": "375 원본/좌표 확대에서 Space/C/1/2/G·감도·체크박스·나가기 잘림 없음.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C37",
+      "path": "docs/evidence/20261030T111451Z/captures/live-menu-768.png",
+      "name": "live-menu-768.png",
+      "sha256": "50e988c83cc7834e2998e70ff313df4e92f5ab94a940ff1ddbad0b8e5c44f5a8",
+      "bytes": 40955,
+      "width": 768,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-05.png",
+      "cell": 5,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image"
+      ],
+      "zoom_regions": [],
+      "observation": "768 원본 메뉴의 핵심 제어·한글 본문 모두 프레임 안.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C38",
+      "path": "docs/evidence/20261030T111451Z/captures/loading-1440.png",
+      "name": "loading-1440.png",
+      "sha256": "717d3dce71ffe68134fa90fe6228e5988d79b2bcb13dfe860c1d4c018e6598ae",
+      "bytes": 320501,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-05.png",
+      "cell": 6,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image",
+        "original coordinate crop"
+      ],
+      "zoom_regions": [
+        [
+          1014,
+          345,
+          1355,
+          413
+        ]
+      ],
+      "observation": "1440 원본/좌표 CTA는 준비 중...이며 모듈 로딩 본문 확인.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C39",
+      "path": "docs/evidence/20261030T111451Z/captures/loading-375-bottom.png",
+      "name": "loading-375-bottom.png",
+      "sha256": "b898dfa9fe44f160ae38d8e9c0a97b855ee33f2e24aab8be6d53e1402ac1212f",
+      "bytes": 60424,
+      "width": 375,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-05.png",
+      "cell": 7,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image",
+        "original coordinate crop"
+      ],
+      "zoom_regions": [
+        [
+          24,
+          560,
+          351,
+          729
+        ]
+      ],
+      "observation": "375 원본/확대에 준비 중... 및 그래픽 준비 완료 · C++ 게임 모듈을 불러오고 있습니다. 문장 전체가 보임.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C40",
+      "path": "docs/evidence/20261030T111451Z/captures/loading-375.png",
+      "name": "loading-375.png",
+      "sha256": "50e697a6ec92b67d811dcaa9cd28c3e4b294f7b98bf24820af0c1f805f4cb4f0",
+      "bytes": 79565,
+      "width": 375,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-05.png",
+      "cell": 8,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "375 로딩 상단의 CTA가 준비 중...으로 바뀜. 본문은 R2C39.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C41",
+      "path": "docs/evidence/20261030T111451Z/captures/loading-768-bottom.png",
+      "name": "loading-768-bottom.png",
+      "sha256": "63d70747dc489af9ecb460f773446d083aa586915f26de79859e4f28f08d76f9",
+      "bytes": 106903,
+      "width": 768,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-06.png",
+      "cell": 1,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image",
+        "original coordinate crop"
+      ],
+      "zoom_regions": [
+        [
+          40,
+          650,
+          601,
+          764
+        ]
+      ],
+      "observation": "768 원본/확대에 준비 중...과 C++ 모듈 로딩 문장 전체가 보임.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C42",
+      "path": "docs/evidence/20261030T111451Z/captures/loading-768.png",
+      "name": "loading-768.png",
+      "sha256": "692f790bec3e9ef9f3df56e9c60dbebcd448e927195d7be7b23cfac307f90c52",
+      "bytes": 122377,
+      "width": 768,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-06.png",
+      "cell": 2,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "768 로딩 상단 CTA가 준비 중...으로 바뀜. 본문은 R2C41.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C43",
+      "path": "docs/evidence/20261030T111451Z/captures/lobby-1440.png",
+      "name": "lobby-1440.png",
+      "sha256": "c98b2360a9e2779adc3e1e3ac443bad0b5c66bfb38e381501870fb126ee98d10",
+      "bytes": 493452,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-06.png",
+      "cell": 3,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "산업용 야드·압축 워드마크·노랑 강조·어두운 실면 참가 패널.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C44",
+      "path": "docs/evidence/20261030T111451Z/captures/lobby-375.png",
+      "name": "lobby-375.png",
+      "sha256": "86175588fff576b67f1b8dd5a95592a91f07c2a10a5ee21661f6a0d34acce037",
+      "bytes": 124172,
+      "width": 375,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-06.png",
+      "cell": 4,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "375 정상 로비 상단의 한열 구조 유지.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C45",
+      "path": "docs/evidence/20261030T111451Z/captures/lobby-768.png",
+      "name": "lobby-768.png",
+      "sha256": "b107eb4ae8b738ee57cdbad38cc389607be94fff1a96b8fd1df89a0fcf6302bc",
+      "bytes": 211279,
+      "width": 768,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-06.png",
+      "cell": 5,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "768 정상 로비 한열 구조 유지.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C46",
+      "path": "docs/evidence/20261030T111451Z/captures/menu-no-preference.png",
+      "name": "menu-no-preference.png",
+      "sha256": "e788422e21c588c77d52c6d1e5ca551366ee035e9ec018a356f8d7b3ee27c347",
+      "bytes": 60187,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-06.png",
+      "cell": 6,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "복귀 메뉴의 밝은 포커스 링과 새키 안내.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C47",
+      "path": "docs/evidence/20261030T111451Z/captures/menu-reduce-webgl.png",
+      "name": "menu-reduce-webgl.png",
+      "sha256": "9d328e85f1848825637bdde6aa3d08888037562fbf611fd06f86386c94701cf1",
+      "bytes": 60184,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-06.png",
+      "cell": 7,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "복귀 포커스 링·효과 줄이기 체크·새키 안내.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C48",
+      "path": "docs/evidence/20261030T111451Z/captures/menu-reduce.png",
+      "name": "menu-reduce.png",
+      "sha256": "29b59a84bb29d0b700f31b3e870121fc49929f995014432adea565ad2ab2caac",
+      "bytes": 60232,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-06.png",
+      "cell": 8,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "복귀 포커스 링·효과 줄이기 체크·새키 안내.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C49",
+      "path": "docs/evidence/20261030T111451Z/captures/play-no-preference.png",
+      "name": "play-no-preference.png",
+      "sha256": "3c4b99e44875faeaa3b0086ece0d6c336050981e7bf64f383aabc639f901de86",
+      "bytes": 59871,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-07.png",
+      "cell": 1,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "플레이 HUD·각진 야드·소총, 기존 방향 유지.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C50",
+      "path": "docs/evidence/20261030T111451Z/captures/play-reduce-webgl.png",
+      "name": "play-reduce-webgl.png",
+      "sha256": "811122d42187b68c9be91e2bd45427ec5a4cb42f3b136ed54657b5b52e5eacab",
+      "bytes": 59684,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-07.png",
+      "cell": 2,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "플레이 HUD·각진 야드·소총, 기존 방향 유지.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C51",
+      "path": "docs/evidence/20261030T111451Z/captures/play-reduce.png",
+      "name": "play-reduce.png",
+      "sha256": "0a938acd63d7341634cc8fe76debfa2eeb86ce0f965f1a6ab11c4e6f268b7ab9",
+      "bytes": 59781,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-07.png",
+      "cell": 3,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "플레이 HUD·각진 야드·소총, 기존 방향 유지.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C52",
+      "path": "docs/evidence/20261030T111451Z/captures/rendered-lobby-1440.png",
+      "name": "rendered-lobby-1440.png",
+      "sha256": "e948ae4dc8048d1b5bf4728c0c952b526543b1fa1cd6698921fa966224775dbf",
+      "bytes": 493463,
+      "width": 1440,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-07.png",
+      "cell": 4,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "큰 압축 워드마크와 비대칭 데스크톱 로비·야드 유지.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C53",
+      "path": "docs/evidence/20261030T111451Z/captures/rendered-lobby-375-bottom.png",
+      "name": "rendered-lobby-375-bottom.png",
+      "sha256": "b95059639ccb10c7ac45af4926dbf59d6e6bce237b8f6d0f5e387f73f39d0775",
+      "bytes": 84470,
+      "width": 375,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-07.png",
+      "cell": 5,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image",
+        "original coordinate crop"
+      ],
+      "zoom_regions": [
+        [
+          16,
+          750,
+          359,
+          887
+        ]
+      ],
+      "observation": "375 정상 상태 원본/확대에서 Esc와 메뉴가 둘째 줄에 함께 있음. PC 안내·준비 상태 문구 읽힘.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C54",
+      "path": "docs/evidence/20261030T111451Z/captures/rendered-lobby-375.png",
+      "name": "rendered-lobby-375.png",
+      "sha256": "103d961cb0b62a3384108835a799153098954e25438e62a3975f31799026041b",
+      "bytes": 124204,
+      "width": 375,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-07.png",
+      "cell": 6,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "375 렌더 정상 로비 상단, 하단은 R2C53.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C55",
+      "path": "docs/evidence/20261030T111451Z/captures/rendered-lobby-768-bottom.png",
+      "name": "rendered-lobby-768-bottom.png",
+      "sha256": "d753a6af95707cd1e4d6507f2520ecb132d6a57b979a3673bc9b71d106c8163c",
+      "bytes": 172181,
+      "width": 768,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-07.png",
+      "cell": 7,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell",
+        "original full image"
+      ],
+      "zoom_regions": [],
+      "observation": "새 768 정상 로비 하단 원본에서 준비 안내·조작·PC 안내 읽힘.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    },
+    {
+      "id": "R2C56",
+      "path": "docs/evidence/20261030T111451Z/captures/rendered-lobby-768.png",
+      "name": "rendered-lobby-768.png",
+      "sha256": "ebedadb43f235b0f7b6606ca0a513bfcd71d852d8550635a697329f53f857064",
+      "bytes": 211202,
+      "width": 768,
+      "height": 900,
+      "manifest_match": true,
+      "identical_pixels_to_round1": false,
+      "sheet": "contact-07.png",
+      "cell": 8,
+      "visually_inspected": true,
+      "inspection": [
+        "current-run contact sheet cell"
+      ],
+      "zoom_regions": [],
+      "observation": "768 렌더 정상 로비 상단, 하단은 R2C55.",
+      "capture_kind": "page viewport",
+      "source_lineage_ref": "target_lineage"
+    }
+  ],
+  "contact_sheets": [
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/round-2/contact-01.png",
+      "sha256": "b56410cad6d372680922d343fd71f156b0c2d654ad8d05b99dd32cb58bf6a7f5",
+      "ids": [
+        "R2C01",
+        "R2C02",
+        "R2C03",
+        "R2C04",
+        "R2C05",
+        "R2C06",
+        "R2C07",
+        "R2C08"
+      ],
+      "visually_inspected": true
+    },
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/round-2/contact-02.png",
+      "sha256": "ca3755bd0184d96d2881a17134985ac34b3bbfdab00df5c9456756de3d1b8142",
+      "ids": [
+        "R2C09",
+        "R2C10",
+        "R2C11",
+        "R2C12",
+        "R2C13",
+        "R2C14",
+        "R2C15",
+        "R2C16"
+      ],
+      "visually_inspected": true
+    },
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/round-2/contact-03.png",
+      "sha256": "b04278c36edc6c6e7d9fcd92cedc621e9ad8811ed68dd833890de16618674cdf",
+      "ids": [
+        "R2C17",
+        "R2C18",
+        "R2C19",
+        "R2C20",
+        "R2C21",
+        "R2C22",
+        "R2C23",
+        "R2C24"
+      ],
+      "visually_inspected": true
+    },
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/round-2/contact-04.png",
+      "sha256": "d9e33df746186933f79566362142c7fb435962518e39859a4364d3e96284d120",
+      "ids": [
+        "R2C25",
+        "R2C26",
+        "R2C27",
+        "R2C28",
+        "R2C29",
+        "R2C30",
+        "R2C31",
+        "R2C32"
+      ],
+      "visually_inspected": true
+    },
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/round-2/contact-05.png",
+      "sha256": "e480af9f69213ef7be597c4957dc7114423a02b9d7d84f1b2f2878cf2d706183",
+      "ids": [
+        "R2C33",
+        "R2C34",
+        "R2C35",
+        "R2C36",
+        "R2C37",
+        "R2C38",
+        "R2C39",
+        "R2C40"
+      ],
+      "visually_inspected": true
+    },
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/round-2/contact-06.png",
+      "sha256": "d09f1584def10c926b245614068f408e0a9e3d5929f02f1a9ff63b9964132de7",
+      "ids": [
+        "R2C41",
+        "R2C42",
+        "R2C43",
+        "R2C44",
+        "R2C45",
+        "R2C46",
+        "R2C47",
+        "R2C48"
+      ],
+      "visually_inspected": true
+    },
+    {
+      "path": "D:/Projects/Vibe_Coding/cpp-web-fps/.omh/artifacts/actions-review/visual/round-2/contact-07.png",
+      "sha256": "3d07eb14fe5d700b8ee579c3af505a524130f4f80d4d801b2f7d51bfc5b6d56c",
+      "ids": [
+        "R2C49",
+        "R2C50",
+        "R2C51",
+        "R2C52",
+        "R2C53",
+        "R2C54",
+        "R2C55",
+        "R2C56"
+      ],
+      "visually_inspected": true
+    }
+  ],
+  "bottom_state_log_crosscheck": [
+    {
+      "state": "ready",
+      "origin": "http://127.0.0.1:64108",
+      "width": 768,
+      "height": 900,
+      "visibility": "visible",
+      "scrollTop": 281,
+      "text": "준비됐어요. 새 방을 만들거나 친구의 코드로 참가하세요.",
+      "log": "browser.stdout.txt",
+      "line": 12,
+      "capture_id": "R2C55",
+      "capture_dimensions_match": true,
+      "text_visually_matches": true,
+      "scrollTop_provenance": "해시 일치 원시 stdout의 호스트 기록. 픽셀로 수치를 역산하거나 재실행하지 않음."
+    },
+    {
+      "state": "ready",
+      "origin": "http://127.0.0.1:64108",
+      "width": 375,
+      "height": 900,
+      "visibility": "visible",
+      "scrollTop": 393,
+      "text": "준비됐어요. 새 방을 만들거나 친구의 코드로 참가하세요.",
+      "log": "browser.stdout.txt",
+      "line": 13,
+      "capture_id": "R2C53",
+      "capture_dimensions_match": true,
+      "text_visually_matches": true,
+      "scrollTop_provenance": "해시 일치 원시 stdout의 호스트 기록. 픽셀로 수치를 역산하거나 재실행하지 않음."
+    },
+    {
+      "state": "controlled-loading",
+      "origin": "http://127.0.0.1:64108",
+      "width": 768,
+      "height": 900,
+      "visibility": "visible",
+      "scrollTop": 281,
+      "text": "그래픽 준비 완료 · C++ 게임 모듈을 불러오고 있습니다.",
+      "log": "browser.stdout.txt",
+      "line": 15,
+      "capture_id": "R2C41",
+      "capture_dimensions_match": true,
+      "text_visually_matches": true,
+      "scrollTop_provenance": "해시 일치 원시 stdout의 호스트 기록. 픽셀로 수치를 역산하거나 재실행하지 않음."
+    },
+    {
+      "state": "controlled-loading",
+      "origin": "http://127.0.0.1:64108",
+      "width": 375,
+      "height": 900,
+      "visibility": "visible",
+      "scrollTop": 393,
+      "text": "그래픽 준비 완료 · C++ 게임 모듈을 불러오고 있습니다.",
+      "log": "browser.stdout.txt",
+      "line": 16,
+      "capture_id": "R2C39",
+      "capture_dimensions_match": true,
+      "text_visually_matches": true,
+      "scrollTop_provenance": "해시 일치 원시 stdout의 호스트 기록. 픽셀로 수치를 역산하거나 재실행하지 않음."
+    },
+    {
+      "state": "controlled-disconnect",
+      "origin": "http://127.0.0.1:54179",
+      "width": 768,
+      "height": 900,
+      "visibility": "visible",
+      "scrollTop": 281,
+      "text": "서버와 연결이 끊겼어요. 서버 실행 상태를 확인하고 다시 입장해 주세요.",
+      "log": "game.stdout.txt",
+      "line": 17,
+      "capture_id": "R2C24",
+      "capture_dimensions_match": true,
+      "text_visually_matches": true,
+      "scrollTop_provenance": "해시 일치 원시 stdout의 호스트 기록. 픽셀로 수치를 역산하거나 재실행하지 않음."
+    },
+    {
+      "state": "controlled-disconnect",
+      "origin": "http://127.0.0.1:54179",
+      "width": 375,
+      "height": 900,
+      "visibility": "visible",
+      "scrollTop": 393,
+      "text": "서버와 연결이 끊겼어요. 서버 실행 상태를 확인하고 다시 입장해 주세요.",
+      "log": "game.stdout.txt",
+      "line": 18,
+      "capture_id": "R2C22",
+      "capture_dimensions_match": true,
+      "text_visually_matches": true,
+      "scrollTop_provenance": "해시 일치 원시 stdout의 호스트 기록. 픽셀로 수치를 역산하거나 재실행하지 않음."
+    }
+  ],
+  "receipt": {
+    "path": "docs/evidence/20261030T111451Z/receipt.json",
+    "sha256": "cf161ac340df023c5e3b30ac5cae26bb5b71eac046a013262c8da9dfbbb2d1a3",
+    "archival_status": "untracked evidence folder at initial git read; no commit made",
+    "reported_passed": true,
+    "reported_counts": {
+      "core_checks": 2516,
+      "camera_checks": 6,
+      "node_tests": 115,
+      "browser_tests": 12,
+      "game_tests": 17,
+      "browser_total": 29
+    },
+    "attribution": "기존 호스트 실행 영수증/로그를 읽고 지문만 검증. 이 리뷰의 신규 테스트 실행 결과 아님."
+  },
+  "raw_log_verification": [
+    {
+      "path": "docs/evidence/20261030T111451Z/build.stdout.txt",
+      "sha256": "544fd12716a8d76854c23cf058ef2705d6c345408d62d627fd85cef92d838508",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/build.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/core.stdout.txt",
+      "sha256": "d3b43719234ae947eaaa7db060d3f84beec4ccdc0d486490d9734bf0b4633ae3",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/core.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/camera.stdout.txt",
+      "sha256": "a44754135d36f56551f7f7003fdde7ce61d8872e799381d3f4bb483b7a3a8c4b",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/camera.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/node.stdout.txt",
+      "sha256": "c2eeb4c780e7b4bdc86b2e06c4e0003310eeff68e43af76a9beb76889358cff6",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/node.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/browser.stdout.txt",
+      "sha256": "c4fa47a06876129ade53c7635d3bb067fbe2dbac27c6cec8de0cea9e851aa610",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/browser.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/game.stdout.txt",
+      "sha256": "39fc102253bcbd0f89eebdf15309060963331c2a1162178f3c0e0bb416835c44",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/game.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/live.stdout.txt",
+      "sha256": "709948d035d4d2fa3c035cef00918a51f6e8d5497fd15e692bc3d95656ccea98",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/live.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/launcher.stdout.txt",
+      "sha256": "8b8b46c1114e2af67b71e16263f1bb9f5c12065fd18a211ffc9f175f595cf150",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/launcher.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/diff.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "path": "docs/evidence/20261030T111451Z/diff.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    }
+  ],
+  "source_verification": [
+    {
+      "path": ".gitattributes",
+      "receipt_sha256": "a27ec0af828b6749421ca24d1fd09b0515c3b0a79ff6ec7531bbf6d12b96e5dc",
+      "working_sha256": "a27ec0af828b6749421ca24d1fd09b0515c3b0a79ff6ec7531bbf6d12b96e5dc",
+      "commit_sha256": "a27ec0af828b6749421ca24d1fd09b0515c3b0a79ff6ec7531bbf6d12b96e5dc",
+      "match": true
+    },
+    {
+      "path": ".gitignore",
+      "receipt_sha256": "138d4ce548f2f360bbb7d08ab6111b3062b40c1b076a66de40dfb62136b818c1",
+      "working_sha256": "138d4ce548f2f360bbb7d08ab6111b3062b40c1b076a66de40dfb62136b818c1",
+      "commit_sha256": "138d4ce548f2f360bbb7d08ab6111b3062b40c1b076a66de40dfb62136b818c1",
+      "match": true
+    },
+    {
+      "path": "BUILD.cmd",
+      "receipt_sha256": "c1b93b850fd3051268c55302d127058d1ba3c8aec70f6c2e06eabc02c274b875",
+      "working_sha256": "c1b93b850fd3051268c55302d127058d1ba3c8aec70f6c2e06eabc02c274b875",
+      "commit_sha256": "c1b93b850fd3051268c55302d127058d1ba3c8aec70f6c2e06eabc02c274b875",
+      "match": true
+    },
+    {
+      "path": "client/camera.hpp",
+      "receipt_sha256": "956a98462f99c24fe0e8ad50027c5a38f46c89f4c52f3ca80bd704e5e810f9b6",
+      "working_sha256": "956a98462f99c24fe0e8ad50027c5a38f46c89f4c52f3ca80bd704e5e810f9b6",
+      "commit_sha256": "956a98462f99c24fe0e8ad50027c5a38f46c89f4c52f3ca80bd704e5e810f9b6",
+      "match": true
+    },
+    {
+      "path": "client/main.cpp",
+      "receipt_sha256": "8b130af5dfb1e1d3c1135bea90eaebf5d974542e257cd683b89fd1ad266b7dcd",
+      "working_sha256": "8b130af5dfb1e1d3c1135bea90eaebf5d974542e257cd683b89fd1ad266b7dcd",
+      "commit_sha256": "8b130af5dfb1e1d3c1135bea90eaebf5d974542e257cd683b89fd1ad266b7dcd",
+      "match": true
+    },
+    {
+      "path": "core/bridge.cpp",
+      "receipt_sha256": "1c84eb4e6242aa971dc1d15c493b455777b42f9030a6fefb1550b47ed3645111",
+      "working_sha256": "1c84eb4e6242aa971dc1d15c493b455777b42f9030a6fefb1550b47ed3645111",
+      "commit_sha256": "1c84eb4e6242aa971dc1d15c493b455777b42f9030a6fefb1550b47ed3645111",
+      "match": true
+    },
+    {
+      "path": "core/game.cpp",
+      "receipt_sha256": "bbf455ba50e5e1ccff234e0f3d075994a7676330cebd54cd7cdcf46c34b8f033",
+      "working_sha256": "bbf455ba50e5e1ccff234e0f3d075994a7676330cebd54cd7cdcf46c34b8f033",
+      "commit_sha256": "bbf455ba50e5e1ccff234e0f3d075994a7676330cebd54cd7cdcf46c34b8f033",
+      "match": true
+    },
+    {
+      "path": "DESIGN.md",
+      "receipt_sha256": "6394b709507a4d4d6d431d5e183cf46fab90f626c20c58a6fb7339c32380eed6",
+      "working_sha256": "6394b709507a4d4d6d431d5e183cf46fab90f626c20c58a6fb7339c32380eed6",
+      "commit_sha256": "6394b709507a4d4d6d431d5e183cf46fab90f626c20c58a6fb7339c32380eed6",
+      "match": true
+    },
+    {
+      "path": "docs/ACTIONS.md",
+      "receipt_sha256": "291561cf9753bd55733b2eb9bed31f87df3f9bfa9655e5db78c609c3cafc8b9a",
+      "working_sha256": "291561cf9753bd55733b2eb9bed31f87df3f9bfa9655e5db78c609c3cafc8b9a",
+      "commit_sha256": "291561cf9753bd55733b2eb9bed31f87df3f9bfa9655e5db78c609c3cafc8b9a",
+      "match": true
+    },
+    {
+      "path": "docs/PLAN.md",
+      "receipt_sha256": "58840bb6272ec82e79d678873cad6c3bca7576f73ad2b9820aeb56650f52ed46",
+      "working_sha256": "58840bb6272ec82e79d678873cad6c3bca7576f73ad2b9820aeb56650f52ed46",
+      "commit_sha256": "58840bb6272ec82e79d678873cad6c3bca7576f73ad2b9820aeb56650f52ed46",
+      "match": true
+    },
+    {
+      "path": "docs/PROTOCOL.md",
+      "receipt_sha256": "a1a926bdc1adb1371fcea366c8d49801252b414763de7baf60b51dfb1e0a4bb8",
+      "working_sha256": "a1a926bdc1adb1371fcea366c8d49801252b414763de7baf60b51dfb1e0a4bb8",
+      "commit_sha256": "a1a926bdc1adb1371fcea366c8d49801252b414763de7baf60b51dfb1e0a4bb8",
+      "match": true
+    },
+    {
+      "path": "include/arena.hpp",
+      "receipt_sha256": "694dcedeb074f692befe7c329dccf7ca34f451b4c7a86d539d6aa9a606a861c1",
+      "working_sha256": "694dcedeb074f692befe7c329dccf7ca34f451b4c7a86d539d6aa9a606a861c1",
+      "commit_sha256": "694dcedeb074f692befe7c329dccf7ca34f451b4c7a86d539d6aa9a606a861c1",
+      "match": true
+    },
+    {
+      "path": "package-lock.json",
+      "receipt_sha256": "f4117f70cc4d17933532d7032148512676223379c2ca8de9e5ec56f8177c4e6b",
+      "working_sha256": "f4117f70cc4d17933532d7032148512676223379c2ca8de9e5ec56f8177c4e6b",
+      "commit_sha256": "f4117f70cc4d17933532d7032148512676223379c2ca8de9e5ec56f8177c4e6b",
+      "match": true
+    },
+    {
+      "path": "package.json",
+      "receipt_sha256": "74fa06267efac8cc1b9a80481b4428aa0e08a3cfcac441cfdbd01a1a05e2d0c3",
+      "working_sha256": "74fa06267efac8cc1b9a80481b4428aa0e08a3cfcac441cfdbd01a1a05e2d0c3",
+      "commit_sha256": "74fa06267efac8cc1b9a80481b4428aa0e08a3cfcac441cfdbd01a1a05e2d0c3",
+      "match": true
+    },
+    {
+      "path": "playwright.config.mjs",
+      "receipt_sha256": "11d78186ea7c8a3fb5f591c5a5bbe39769adc138153bc0fed70b76aa5a57c640",
+      "working_sha256": "11d78186ea7c8a3fb5f591c5a5bbe39769adc138153bc0fed70b76aa5a57c640",
+      "commit_sha256": "11d78186ea7c8a3fb5f591c5a5bbe39769adc138153bc0fed70b76aa5a57c640",
+      "match": true
+    },
+    {
+      "path": "playwright.game.config.mjs",
+      "receipt_sha256": "49b85b3382b9ca9b6044b9e7813752e5713668b53aa82ee0d35919de8464a09c",
+      "working_sha256": "49b85b3382b9ca9b6044b9e7813752e5713668b53aa82ee0d35919de8464a09c",
+      "commit_sha256": "49b85b3382b9ca9b6044b9e7813752e5713668b53aa82ee0d35919de8464a09c",
+      "match": true
+    },
+    {
+      "path": "README.md",
+      "receipt_sha256": "13f49f4ae6a8375ca93813184d0e7d3504c57bba7de48b1048d73a3f78440119",
+      "working_sha256": "13f49f4ae6a8375ca93813184d0e7d3504c57bba7de48b1048d73a3f78440119",
+      "commit_sha256": "13f49f4ae6a8375ca93813184d0e7d3504c57bba7de48b1048d73a3f78440119",
+      "match": true
+    },
+    {
+      "path": "scripts/build.py",
+      "receipt_sha256": "93205655217756d786b5c851cbb8e821411fbcdf1a490d2d8065a1cd79edf7e7",
+      "working_sha256": "93205655217756d786b5c851cbb8e821411fbcdf1a490d2d8065a1cd79edf7e7",
+      "commit_sha256": "93205655217756d786b5c851cbb8e821411fbcdf1a490d2d8065a1cd79edf7e7",
+      "match": true
+    },
+    {
+      "path": "scripts/launcher-smoke.py",
+      "receipt_sha256": "57ab7f2c1cd4b551407a9e7666564f44e1d6d5006455df44e43add0c58e0c8d2",
+      "working_sha256": "57ab7f2c1cd4b551407a9e7666564f44e1d6d5006455df44e43add0c58e0c8d2",
+      "commit_sha256": "57ab7f2c1cd4b551407a9e7666564f44e1d6d5006455df44e43add0c58e0c8d2",
+      "match": true
+    },
+    {
+      "path": "scripts/live-smoke.mjs",
+      "receipt_sha256": "a852d8d894a38f9dcdb3b4fa263043df7af258a8c506c567da8cb60d817641cc",
+      "working_sha256": "a852d8d894a38f9dcdb3b4fa263043df7af258a8c506c567da8cb60d817641cc",
+      "commit_sha256": "a852d8d894a38f9dcdb3b4fa263043df7af258a8c506c567da8cb60d817641cc",
+      "match": true
+    },
+    {
+      "path": "scripts/verify.py",
+      "receipt_sha256": "7cfa6de23997ea210f87900286db1b7d5add60ed591b6d301c0f2767aa4b5562",
+      "working_sha256": "7cfa6de23997ea210f87900286db1b7d5add60ed591b6d301c0f2767aa4b5562",
+      "commit_sha256": "7cfa6de23997ea210f87900286db1b7d5add60ed591b6d301c0f2767aa4b5562",
+      "match": true
+    },
+    {
+      "path": "server/app.mjs",
+      "receipt_sha256": "0901365d811654fe85d777c8a24addcf38ad34e94107482cb962b37abbc1ba4d",
+      "working_sha256": "0901365d811654fe85d777c8a24addcf38ad34e94107482cb962b37abbc1ba4d",
+      "commit_sha256": "0901365d811654fe85d777c8a24addcf38ad34e94107482cb962b37abbc1ba4d",
+      "match": true
+    },
+    {
+      "path": "server/engine.mjs",
+      "receipt_sha256": "4c9accc3862574b4927f369d8dc0f9fffc3c2123bf07c39a20806362426faaea",
+      "working_sha256": "4c9accc3862574b4927f369d8dc0f9fffc3c2123bf07c39a20806362426faaea",
+      "commit_sha256": "4c9accc3862574b4927f369d8dc0f9fffc3c2123bf07c39a20806362426faaea",
+      "match": true
+    },
+    {
+      "path": "server/main.mjs",
+      "receipt_sha256": "1587233e818d7a7c0a4f240a44579d42102d33c76fa1640363033ce3af3ad485",
+      "working_sha256": "1587233e818d7a7c0a4f240a44579d42102d33c76fa1640363033ce3af3ad485",
+      "commit_sha256": "1587233e818d7a7c0a4f240a44579d42102d33c76fa1640363033ce3af3ad485",
+      "match": true
+    },
+    {
+      "path": "server/peer.mjs",
+      "receipt_sha256": "e55b49f6bbb26ae14e0245d731cf68cb2f229e10f85949dba6506fe90f2e2697",
+      "working_sha256": "e55b49f6bbb26ae14e0245d731cf68cb2f229e10f85949dba6506fe90f2e2697",
+      "commit_sha256": "e55b49f6bbb26ae14e0245d731cf68cb2f229e10f85949dba6506fe90f2e2697",
+      "match": true
+    },
+    {
+      "path": "server/protocol.mjs",
+      "receipt_sha256": "5b336558fb1768dd1d20ac18edf491290cee1acc8f813810400f7dbbd1645985",
+      "working_sha256": "5b336558fb1768dd1d20ac18edf491290cee1acc8f813810400f7dbbd1645985",
+      "commit_sha256": "5b336558fb1768dd1d20ac18edf491290cee1acc8f813810400f7dbbd1645985",
+      "match": true
+    },
+    {
+      "path": "START.cmd",
+      "receipt_sha256": "a834a91e2d01136664baabcfd92f4f1220c1dbdaffb206eb71ddcbff67697209",
+      "working_sha256": "a834a91e2d01136664baabcfd92f4f1220c1dbdaffb206eb71ddcbff67697209",
+      "commit_sha256": "a834a91e2d01136664baabcfd92f4f1220c1dbdaffb206eb71ddcbff67697209",
+      "match": true
+    },
+    {
+      "path": "tests/actions-integration.test.mjs",
+      "receipt_sha256": "5c7547c6121535fd27772b55b053c8d7b04a041453cc260367a876504235286d",
+      "working_sha256": "5c7547c6121535fd27772b55b053c8d7b04a041453cc260367a876504235286d",
+      "commit_sha256": "5c7547c6121535fd27772b55b053c8d7b04a041453cc260367a876504235286d",
+      "match": true
+    },
+    {
+      "path": "tests/cli-server.test.mjs",
+      "receipt_sha256": "14202a70114090f1db5a552d6e4d4f898ac69860460887c5357617c1e103402d",
+      "working_sha256": "14202a70114090f1db5a552d6e4d4f898ac69860460887c5357617c1e103402d",
+      "commit_sha256": "14202a70114090f1db5a552d6e4d4f898ac69860460887c5357617c1e103402d",
+      "match": true
+    },
+    {
+      "path": "tests/client_math_tests.cpp",
+      "receipt_sha256": "2c9cca94cddd678a53ff5a6bfa4fa94870e9282851cb8ed2ac78b86b761aa37d",
+      "working_sha256": "2c9cca94cddd678a53ff5a6bfa4fa94870e9282851cb8ed2ac78b86b761aa37d",
+      "commit_sha256": "2c9cca94cddd678a53ff5a6bfa4fa94870e9282851cb8ed2ac78b86b761aa37d",
+      "match": true
+    },
+    {
+      "path": "tests/core_tests.cpp",
+      "receipt_sha256": "ad47adeedacf8c0dcb771ce9e4b17c9ede15fdf21b026d0414e98287eba731fa",
+      "working_sha256": "ad47adeedacf8c0dcb771ce9e4b17c9ede15fdf21b026d0414e98287eba731fa",
+      "commit_sha256": "ad47adeedacf8c0dcb771ce9e4b17c9ede15fdf21b026d0414e98287eba731fa",
+      "match": true
+    },
+    {
+      "path": "tests/e2e/client-contract.spec.mjs",
+      "receipt_sha256": "235331f1a0a44e412fa0a12ff2b90afd0965d9e2bc4e1435e1434f08bf5ffc92",
+      "working_sha256": "235331f1a0a44e412fa0a12ff2b90afd0965d9e2bc4e1435e1434f08bf5ffc92",
+      "commit_sha256": "235331f1a0a44e412fa0a12ff2b90afd0965d9e2bc4e1435e1434f08bf5ffc92",
+      "match": true
+    },
+    {
+      "path": "tests/e2e/game.spec.mjs",
+      "receipt_sha256": "97d49fd824cbd97fbb120bb8824bc3566f83ed7aa1482c053738315b7fc1e005",
+      "working_sha256": "97d49fd824cbd97fbb120bb8824bc3566f83ed7aa1482c053738315b7fc1e005",
+      "commit_sha256": "97d49fd824cbd97fbb120bb8824bc3566f83ed7aa1482c053738315b7fc1e005",
+      "match": true
+    },
+    {
+      "path": "tests/e2e/gpu.spec.mjs",
+      "receipt_sha256": "9c61c30fec320a8b8b951c6d522a24a3146044efa883367bb54fed2057486b58",
+      "working_sha256": "9c61c30fec320a8b8b951c6d522a24a3146044efa883367bb54fed2057486b58",
+      "commit_sha256": "9c61c30fec320a8b8b951c6d522a24a3146044efa883367bb54fed2057486b58",
+      "match": true
+    },
+    {
+      "path": "tests/e2e/lobby-render.spec.mjs",
+      "receipt_sha256": "8d7da6c0341d9d208c7cb97dd89d2b647c3dce3d1ff0e33bb7941ca92f3c4ec9",
+      "working_sha256": "8d7da6c0341d9d208c7cb97dd89d2b647c3dce3d1ff0e33bb7941ca92f3c4ec9",
+      "commit_sha256": "8d7da6c0341d9d208c7cb97dd89d2b647c3dce3d1ff0e33bb7941ca92f3c4ec9",
+      "match": true
+    },
+    {
+      "path": "tests/e2e/shell.spec.mjs",
+      "receipt_sha256": "de0922c04f2ae31043ea604ac4bc8d77cc9260086de6a99f11187a3a937c0e9b",
+      "working_sha256": "de0922c04f2ae31043ea604ac4bc8d77cc9260086de6a99f11187a3a937c0e9b",
+      "commit_sha256": "de0922c04f2ae31043ea604ac4bc8d77cc9260086de6a99f11187a3a937c0e9b",
+      "match": true
+    },
+    {
+      "path": "tests/engine-server.test.mjs",
+      "receipt_sha256": "2c3f5e3af1e67fa7be517c762b796ec36979116cfac86b77dc47eec403256a29",
+      "working_sha256": "2c3f5e3af1e67fa7be517c762b796ec36979116cfac86b77dc47eec403256a29",
+      "commit_sha256": "2c3f5e3af1e67fa7be517c762b796ec36979116cfac86b77dc47eec403256a29",
+      "match": true
+    },
+    {
+      "path": "tests/gpu-geometry.test.mjs",
+      "receipt_sha256": "9978d2567563978b35b466cfe99934a9119aa5a7baf8fdd708ffe62f73b8743f",
+      "working_sha256": "9978d2567563978b35b466cfe99934a9119aa5a7baf8fdd708ffe62f73b8743f",
+      "commit_sha256": "9978d2567563978b35b466cfe99934a9119aa5a7baf8fdd708ffe62f73b8743f",
+      "match": true
+    },
+    {
+      "path": "tests/protocol-server.test.mjs",
+      "receipt_sha256": "9f9cbcc5fa61fdf3ed6b0cae379d8c4d1ed19a9830fa634ec20fefb77ff20614",
+      "working_sha256": "9f9cbcc5fa61fdf3ed6b0cae379d8c4d1ed19a9830fa634ec20fefb77ff20614",
+      "commit_sha256": "9f9cbcc5fa61fdf3ed6b0cae379d8c4d1ed19a9830fa634ec20fefb77ff20614",
+      "match": true
+    },
+    {
+      "path": "tests/transport-peer.test.mjs",
+      "receipt_sha256": "12dd946e94bc0fb44283fbaec7c0082ece455a3dbebf19db17531047dc581f51",
+      "working_sha256": "12dd946e94bc0fb44283fbaec7c0082ece455a3dbebf19db17531047dc581f51",
+      "commit_sha256": "12dd946e94bc0fb44283fbaec7c0082ece455a3dbebf19db17531047dc581f51",
+      "match": true
+    },
+    {
+      "path": "tests/transport-server.test.mjs",
+      "receipt_sha256": "ff42599220f46f45e63c5584ecfc5f26f7c67450f549d51fbd9fa9b3eaaaf191",
+      "working_sha256": "ff42599220f46f45e63c5584ecfc5f26f7c67450f549d51fbd9fa9b3eaaaf191",
+      "commit_sha256": "ff42599220f46f45e63c5584ecfc5f26f7c67450f549d51fbd9fa9b3eaaaf191",
+      "match": true
+    },
+    {
+      "path": "web/app.mjs",
+      "receipt_sha256": "dfc5c8d2b2e15eff17026a3790783968f1c10e21ab879853fb2a3bebe941685d",
+      "working_sha256": "dfc5c8d2b2e15eff17026a3790783968f1c10e21ab879853fb2a3bebe941685d",
+      "commit_sha256": "dfc5c8d2b2e15eff17026a3790783968f1c10e21ab879853fb2a3bebe941685d",
+      "match": true
+    },
+    {
+      "path": "web/gpu.mjs",
+      "receipt_sha256": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+      "working_sha256": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+      "commit_sha256": "9b1089a0b6e085a4f590363b4744d3b409fcbc80ba906ba532d9a09327d4fc82",
+      "match": true
+    },
+    {
+      "path": "web/index.html",
+      "receipt_sha256": "3eba463936fc489c0cd46cbd4b4ec5b033ff0403af89e4f286b90486164094dd",
+      "working_sha256": "3eba463936fc489c0cd46cbd4b4ec5b033ff0403af89e4f286b90486164094dd",
+      "commit_sha256": "3eba463936fc489c0cd46cbd4b4ec5b033ff0403af89e4f286b90486164094dd",
+      "match": true
+    },
+    {
+      "path": "web/style.css",
+      "receipt_sha256": "f2d7b598f5b2e6020911fb4a5bf6b91b3ac7c465d1cd75ab512c9ace2f4a64c8",
+      "working_sha256": "f2d7b598f5b2e6020911fb4a5bf6b91b3ac7c465d1cd75ab512c9ace2f4a64c8",
+      "commit_sha256": "f2d7b598f5b2e6020911fb4a5bf6b91b3ac7c465d1cd75ab512c9ace2f4a64c8",
+      "match": true
+    }
+  ],
+  "previous_round": {
+    "path": ".omh/artifacts/actions-review/visual/review.json",
+    "sha256": "92b774a49e30a85f44590363c9d2d475f16557ed24549a417d84ea558a32ce88",
+    "score": 94,
+    "verdict": "BLOCK",
+    "captures": 51,
+    "rule": "이전 보고서는 비교/이슈 정의만 사용. 이전 PNG를 이번 리비전 관찰로 재표기하지 않았다. 일부 현재 파일의 동일 픽셀 해시는 captures.identical_pixels_to_round1로 공개하며 현재 영수증 계보를 별도 검증했다."
+  },
+  "blocking_violations": [],
+  "next_gate": "요청한 정지 시각 범위 PASS. 부모의 별도 P2 소스 리뷰·전체 제품 correctness 판정과 추적 task는 열린 상태로 유지한다."
+}
