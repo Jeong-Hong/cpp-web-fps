@@ -14,7 +14,7 @@ class Participant extends EventEmitter {
  }
  async opened(){if(this.ws.readyState===WebSocket.OPEN)return;await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('open deadline')),4000);this.ws.once('open',()=>{clearTimeout(timer);resolve();});this.ws.once('error',()=>{clearTimeout(timer);reject(Error('socket open failed'));});});}
  send(data){assert.equal(this.ws.readyState,WebSocket.OPEN);this.ws.send(JSON.stringify(data));}
- input(patch={}){this.send({type:'input',seq:++this.seq,forward:0,strafe:0,yaw:0,pitch:0,fire:false,reload:false,sprint:false,...patch});}
+ input(patch={}){this.send({type:'input',seq:++this.seq,forward:0,strafe:0,yaw:0,pitch:0,fire:false,reload:false,sprint:false,jump:false,crouch:false,weapon:0,grenade:false,...patch});}
  wait(predicate,timeout=7000){
   for(const data of [this.latest,this.welcome,this.failure])if(data&&predicate(data))return Promise.resolve(data);
   return new Promise((resolve,reject)=>{const listener=data=>{if(predicate(data)){cleanup();resolve(data);}};const cleanup=()=>{clearTimeout(timer);this.off('data',listener);};const timer=setTimeout(()=>{cleanup();reject(Error(`public state deadline: ${this.name}`));},timeout);this.on('data',listener);});

@@ -4,7 +4,7 @@ import { parseMessage } from './protocol.mjs';
 export async function loadEngine(moduleFactory) {
   const factory = moduleFactory ?? (await import('../build/sim.mjs')).default;
   const module = await factory();
-  const required = ['_room_create', '_room_destroy', '_room_join', '_room_leave', '_room_input', '_room_tick', '_room_snapshot', 'UTF8ToString'];
+  const required = ['_room_create', '_room_destroy', '_room_join', '_room_leave', '_room_input_v2', '_room_tick', '_room_snapshot', 'UTF8ToString'];
   if (!module || required.some(name => typeof module[name] !== 'function')) throw new Error('Invalid engine ABI');
   return function createRoom() {
     const pointer = module._room_create();
@@ -18,8 +18,9 @@ export async function loadEngine(moduleFactory) {
         alive();
         const input = parseMessage(JSON.stringify(value));
         if (input.type !== 'input') throw new Error('Invalid input');
-        return module._room_input(pointer, id, input.forward, input.strafe, input.yaw, input.pitch,
-          Number(input.fire), Number(input.reload), Number(input.sprint), input.seq) === 1;
+        return module._room_input_v2(pointer, id, input.forward, input.strafe, input.yaw, input.pitch,
+          Number(input.fire), Number(input.reload), Number(input.sprint), input.seq,
+          Number(input.jump), Number(input.crouch), input.weapon, Number(input.grenade)) === 1;
       },
       tick(dt) { alive(); module._room_tick(pointer, dt); },
       snapshot() { alive(); return JSON.parse(module.UTF8ToString(module._room_snapshot(pointer))); },

@@ -33,7 +33,7 @@ function fakeFactory() {
       leave(id) { ids.delete(id); },
       input(id, input) { room.inputs.push({ id, ...input }); return true; },
       tick(dt) { room.ticks.push(dt); },
-      snapshot() { return { time: room.ticks.length * 1000 / 60, players: [...ids].map(id => ({ id, hp: 100, ack: -1 })) }; },
+      snapshot() { return { time: room.ticks.length * 1000 / 60, players: [...ids].map(id => ({ id, hp: 100, ack: -1, vy: 0, grounded: true, crouch: false, weapon: 0, rifleAmmo: 24, pistolAmmo: 12, grenadeCount: 2, equip: 0 })), grenades: [] }; },
       destroy() { room.destroyed = true; ids.clear(); },
     };
     rooms.push(room);
@@ -83,7 +83,8 @@ async function create(client, name = 'tester') {
   return welcome;
 }
 
-const input = (seq = 0, extra = {}) => ({ type: 'input', seq, forward: 1, strafe: 0, yaw: 0, pitch: 0, fire: false, reload: false, sprint: false, ...extra });
+const input = (seq = 0, extra = {}) => ({ type: 'input', seq, forward: 1, strafe: 0, yaw: 0, pitch: 0, fire: false, reload: false, sprint: false, jump: false, crouch: false, weapon: 0, grenade: false, ...extra });
+const withoutInputFields = (...fields) => Object.fromEntries(Object.entries(input()).filter(([key]) => !fields.includes(key)));
 
 const invalidMessages = [
   ['unknown field / spoofed id', { type: 'create', name: 'a', id: 0 }, 'INVALID_MESSAGE'],
@@ -109,6 +110,21 @@ const invalidMessages = [
   ['nonfinite JSON magnitude', JSON.stringify(input()).replace('"yaw":0', '"yaw":1e400'), 'INVALID_MESSAGE'],
   ['numeric string', input(0, { forward: '1' }), 'INVALID_MESSAGE'],
   ['flag not boolean', input(0, { fire: 1 }), 'INVALID_MESSAGE'],
+  ['jump not boolean', input(0, { jump: 1 }), 'INVALID_MESSAGE'],
+  ['crouch not boolean', input(0, { crouch: 'false' }), 'INVALID_MESSAGE'],
+  ['grenade not boolean', input(0, { grenade: null }), 'INVALID_MESSAGE'],
+  ['negative weapon', input(0, { weapon: -1 }), 'INVALID_MESSAGE'],
+  ['fractional weapon', input(0, { weapon: 0.5 }), 'INVALID_MESSAGE'],
+  ['weapon above maximum', input(0, { weapon: 2 }), 'INVALID_MESSAGE'],
+  ['huge weapon before i32 wrap', input(0, { weapon: 4294967296 }), 'INVALID_MESSAGE'],
+  ['string weapon', input(0, { weapon: '1' }), 'INVALID_MESSAGE'],
+  ['boolean weapon', input(0, { weapon: true }), 'INVALID_MESSAGE'],
+  ...['jump', 'crouch', 'weapon', 'grenade'].map(field => [`omitted ${field}`, withoutInputFields(field), 'INVALID_MESSAGE']),
+  ['old network input shape', withoutInputFields('jump', 'crouch', 'weapon', 'grenade'), 'INVALID_MESSAGE'],
+  ['spoofed input id', input(0, { id: 0 }), 'INVALID_MESSAGE'],
+  ['client position', input(0, { x: 0 }), 'INVALID_MESSAGE'],
+  ['client health', input(0, { hp: 100 }), 'INVALID_MESSAGE'],
+  ['client projectile', input(0, { grenades: [] }), 'INVALID_MESSAGE'],
   ['fractional sequence', input(1.5), 'INVALID_MESSAGE'],
   ['large sequence', input(2147483648), 'INVALID_MESSAGE'],
   ['negative sequence', input(-1), 'INVALID_MESSAGE'],
@@ -151,7 +167,7 @@ test('validated inputs reach only the socket slot; duplicate and old sequence ar
   try {
     const client = await f.connect();
     await create(client);
-    const first = input(0, { forward: -1, strafe: 1, yaw: -Math.PI, pitch: -1.45, fire: true, reload: true, sprint: true });
+    const first = input(0, { forward: -1, strafe: 1, yaw: -Math.PI, pitch: -1.45, fire: true, reload: true, sprint: true, jump: true, crouch: true, weapon: 1, grenade: true });
     const last = input(2147483647, { yaw: Math.PI, pitch: 1.45 });
     client.send(first); client.send(input(0)); client.send(last); client.send(input(1));
     client.send({ type: 'ping', stamp: 1 });
@@ -187,6 +203,28 @@ test('leave clears identity and sequence; valid idle input is ignored; empty roo
     assert.equal(f.engineFactory.rooms[1].destroyed, true);
   } finally { await f.close(); }
 });
+
+for (const phase of ['stale active', 'late idle after leave']) {
+  test(`invalid v2 input is validated before ${phase} ignore`, async () => {
+    const f = await fixture();
+    try {
+      const client = await f.connect();
+      await create(client);
+      client.send(input(5));
+      client.send({ type: 'ping', stamp: 1 });
+      assert.deepEqual(await client.next(), { type: 'pong', stamp: 1 });
+      if (phase === 'late idle after leave') {
+        client.send({ type: 'leave' });
+        assert.deepEqual(await client.next(), { type: 'left' });
+        assert.equal(f.engineFactory.rooms[0].destroyed, true);
+      }
+      client.send(input(0, { jump: 1 }));
+      assert.deepEqual(await client.next(), { type: 'error', code: 'INVALID_MESSAGE', message: 'Invalid message.' });
+      assert.deepEqual(await client.closed, { code: 1008, reason: 'Invalid message.' });
+      assert.deepEqual(f.engineFactory.rooms[0].inputs, [{ id: 0, ...input(5) }]);
+    } finally { await f.close(); }
+  });
+}
 
 test('active socket cannot create a second identity or leak its previous room', async () => {
   const f = await fixture();

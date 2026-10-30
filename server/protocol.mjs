@@ -1,7 +1,7 @@
 const fields = {
   create: ['type', 'name'],
   join: ['type', 'name', 'code'],
-  input: ['type', 'seq', 'forward', 'strafe', 'yaw', 'pitch', 'fire', 'reload', 'sprint'],
+  input: ['type', 'seq', 'forward', 'strafe', 'yaw', 'pitch', 'fire', 'reload', 'sprint', 'jump', 'crouch', 'weapon', 'grenade'],
   leave: ['type'],
   ping: ['type', 'stamp'],
 };
@@ -39,7 +39,8 @@ export function parseMessage(data, isBinary = false) {
     if (!Number.isInteger(message.seq) || !finiteRange(message.seq, 0, 2147483647) ||
         !finiteRange(message.forward, -1, 1) || !finiteRange(message.strafe, -1, 1) ||
         !finiteRange(message.yaw, -Math.PI, Math.PI) || !finiteRange(message.pitch, -1.45, 1.45) ||
-        ['fire', 'reload', 'sprint'].some(key => typeof message[key] !== 'boolean')) invalid();
+        !Number.isInteger(message.weapon) || !finiteRange(message.weapon, 0, 1) ||
+        ['fire', 'reload', 'sprint', 'jump', 'crouch', 'grenade'].some(key => typeof message[key] !== 'boolean')) invalid();
   }
   if (message.type === 'ping' && !Number.isSafeInteger(message.stamp)) invalid();
   return message;
