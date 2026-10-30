@@ -37,8 +37,8 @@
   <div class="heading" id="heading">000°</div>
   <div class="scoreboard"><div class="score-head"><span>야드 참가자</span><span>K / D</span></div><ol id="players"></ol></div>
   <div id="crosshair" class="crosshair" aria-hidden="true"><i></i><b></b></div><div id="hitmarker" class="hitmarker" aria-hidden="true">×</div>
-  <div class="life"><span class="hud-label">HEALTH</span><div><strong id="hp">100</strong><span class="hp-unit">HP</span></div><div class="health-track"><i id="health-fill"></i></div><span id="shield" class="shield" hidden>부활 보호</span></div>
-  <div class="ammo"><span class="hud-label">AR / 24</span><div><strong id="ammo">24</strong><span>/ ∞</span></div><span id="reload-label">R 재장전</span></div>
+  <div class="life"><span class="hud-label">HEALTH</span><div><strong id="hp">100</strong><span class="hp-unit">HP</span></div><div class="health-track"><i id="health-fill"></i></div><span id="shield" class="shield" hidden>부활 보호</span><span id="stance-state" class="stance-state">서 있음</span></div>
+  <div class="ammo"><span class="hud-label" id="weapon-name">소총 / 24</span><div><strong id="ammo">24</strong><span>/ ∞</span></div><span id="reload-label">R 재장전</span><div id="inventory" aria-label="무기 및 수류탄"><div class="weapon-slots"><span id="weapon-slot-0" class="active" aria-current="true"><kbd>1</kbd> 소총</span><span id="weapon-slot-1"><kbd>2</kbd> 권총</span></div><div id="grenade-label"><kbd>G</kbd> 수류탄 <b id="grenade-count">2</b></div></div></div>
   <div class="action-state" id="action-state" role="status"></div>
   <div class="bottom-tip"><kbd>Shift</kbd> 달리기 <i>·</i> 우클릭 정밀 조준 <i>·</i> <kbd>Esc</kbd> 마우스 해제</div>
   <div id="damage-vignette" class="damage-vignette" aria-hidden="true"></div>
@@ -49,6 +49,7 @@
    <p id="pause-description">아래 버튼을 누르면 마우스가 게임에 고정됩니다.</p>
    <button id="resume" class="primary">클릭하고 플레이 <span aria-hidden="true">↗</span></button>
    <p id="lock-status" class="help" role="status">Esc를 누르면 마우스를 해제하고 이 메뉴로 돌아옵니다.</p>
+   <p class="controls-help"><kbd>Space</kbd> 점프 · <kbd>C</kbd> 앉기/서기<br><kbd>1</kbd> 소총 · <kbd>2</kbd> 권총 · <kbd>G</kbd> 수류탄</p>
    <div class="settings"><label class="range-label" for="sensitivity">마우스 감도 <output id="sensitivity-value">1.0</output></label><input id="sensitivity" type="range" min="0.25" max="3" step="0.05" value="1"><label class="check"><input id="reduce" type="checkbox"> 반동·장식 움직임 줄이기</label><label class="check"><input id="mute" type="checkbox"> 효과음 끄기</label></div>
    <div class="pause-foot"><span>메뉴를 열어도 전투는 계속됩니다.</span><button id="leave" class="text-button">방 나가기 →</button></div>
   </div>

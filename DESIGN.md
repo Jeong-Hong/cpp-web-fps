@@ -34,6 +34,7 @@
 - primary button: accent pair, 최소44px 높이, hover 밝기/테두리, focus-visible 3px ring, active 1px 이동, disabled 불투명도0.45, loading 중 문구 교체·중복 실행 금지.
 - secondary button: raised pair, border. 입력은 surface pair, label 필수, 오류는 고정된 한국어 안내·role=status. 방 없음·만석·연결 끊김은 별도 문구.
 - participants: 실제 이름·킬·사망만 표시. 더미 접속자나 가짜 ping 없음.
+- 이동·무장 확장: 기존 탄약 패널 안에 1 소총/2 권총 선택 표시와 G 수류탄 잔량을 배치한다. 별도 중앙 카드/새 색상은 만들지 않는다. 실제 자세는 HP 패널의 14px 문구, 무기명/활성 탄창은 탄약 패널에서 표시한다. 메뉴에는 Space/C/1/2/G 안내를 추가하고 모든 폭에서 핵심 조작을 유지한다. 무기·자세·잔량은 C++ 상태로 갱신하며 DOM 표시만으로 게임 판정을 만들지 않는다.
 - menu: 입장 후 클릭 활성화, Esc 후 복귀, 마우스 감도·효과 줄이기·음소거·나가기. 닫기 뒤 canvas로 포커스.
 
 ## 6. Motion & Interaction

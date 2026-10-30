@@ -25,3 +25,15 @@ for(const width of [1440,768,375])test(`Korean lobby controls fit at ${width}px`
  else expect(layout.joinLeft).toBeGreaterThan(layout.introRight);
  expect(await page.locator('#code-help').evaluate(e=>parseFloat(getComputedStyle(e).fontSize))).toBeGreaterThanOrEqual(14);
 });
+test('new inventory hints fit the narrow HUD without replacing gameplay proof',async({page})=>{
+ await page.route('**/app.mjs',r=>r.fulfill({contentType:'text/javascript',body:''}));
+ await page.setViewportSize({width:375,height:900});await page.goto(url);
+ // Static layout fixture only: the compiled-game action tests separately exercise real input.
+ await page.evaluate(()=>{document.querySelector('#lobby').hidden=true;document.querySelector('#hud').hidden=false;});
+ await expect(page.locator('#inventory')).toBeVisible({timeout:1000});
+ await expect(page.locator('#inventory')).toContainText('소총');
+ await expect(page.locator('#inventory')).toContainText('권총');
+ await expect(page.locator('#inventory')).toContainText('수류탄');
+ expect(await page.locator('#inventory').evaluate(e=>{const r=e.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth;})).toBe(true);
+ expect(await page.locator('#grenade-label').evaluate(e=>parseFloat(getComputedStyle(e).fontSize))).toBeGreaterThanOrEqual(14);
+});
