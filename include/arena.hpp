@@ -47,7 +47,8 @@ struct Player {
     Vec3 trace{};
     Input input{};
     float vertical_velocity=0, equip=0, grenade_cooldown=0;
-    bool grounded=true, crouching=false, semi_pending=false;
+    // Remember the accepted button level even when executable controls time out.
+    bool grounded=true, crouching=false, semi_pending=false, last_fire_down=false;
     int weapon=0, pistol_ammo=12, grenades=2;
 };
 const WeaponDefinition& weapon_definition(int weapon);

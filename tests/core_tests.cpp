@@ -390,6 +390,23 @@ int main() {
     {
         arena::Room room; const int id=room.join();
         arena::Input input{}; input.weapon=1; send(room,id,input); room.tick(0.01f); ticks(room,4);
+        input.fire=true; send(room,id,input); room.tick(1.f/60);
+        check(room.players()[id].shot==1 && room.players()[id].pistol_ammo==11,"stale-resume fixture fires the first pistol press");
+        ticks(room,24,1.f/60);
+        check(!room.players()[id].input.fire,"timeout still clears the executable held fire");
+        send(room,id,input); room.tick(1.f/60);
+        check(room.players()[id].shot==1 && room.players()[id].pistol_ammo==11,"stale held true cannot synthesize a pistol press");
+        const auto ack=room.players()[id].ack; input.fire=false; input.seq=ack-1;
+        check(room.set_input(id,input),"old release is valid but ignored");
+        input.fire=true; send(room,id,input); room.tick(1.f/60);
+        check(room.players()[id].shot==1,"old release cannot rearm a stale pistol edge");
+        input.fire=false; send(room,id,input); input.fire=true; send(room,id,input); input.fire=false; send(room,id,input); room.tick(1.f/60);
+        check(room.players()[id].shot==2 && room.players()[id].pistol_ammo==10,"fresh release and brief press rearm after timeout");
+    }
+
+    {
+        arena::Room room; const int id=room.join();
+        arena::Input input{}; input.weapon=1; send(room,id,input); room.tick(0.01f); ticks(room,4);
         input.fire=true;
         for(int i=0;i<20;++i) {send(room,id,input);room.tick(0.05f);}
         check(room.players()[id].shot==1 && room.players()[id].pistol_ammo==11,"pistol held fire never repeats without a new rising edge");

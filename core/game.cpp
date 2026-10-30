@@ -101,7 +101,8 @@ bool Room::set_input(int slot,const Input& input) {
     player.received_input=true;
     player.ack=input.seq;
     if(player.hp<=0) return true;
-    player.semi_pending=player.semi_pending || (input.fire && !player.input.fire);
+    player.semi_pending=player.semi_pending || (input.fire && !player.last_fire_down);
+    player.last_fire_down=input.fire;
     const bool reload_requested=player.input.reload || input.reload;
     const bool jump_requested=player.input.jump || input.jump;
     const bool grenade_requested=player.input.grenade || input.grenade;
@@ -124,7 +125,7 @@ void begin_respawn(Player& victim) {
     ++victim.deaths;
     victim.respawn=2.5f;
     victim.reload=victim.cooldown=victim.shield=victim.equip=victim.grenade_cooldown=0;
-    victim.semi_pending=false;
+    victim.semi_pending=victim.last_fire_down=false;
     victim.input={};
     victim.stale=0.25f;
 }
@@ -206,7 +207,7 @@ void Room::tick(float dt) {
                 player.weapon=0;
                 player.vertical_velocity=player.equip=player.grenade_cooldown=0;
                 player.grounded=true;
-                player.crouching=player.semi_pending=false;
+                player.crouching=player.semi_pending=player.last_fire_down=false;
                 player.reload=player.cooldown=0;
                 player.shield=1.5f;
                 player.input={};
