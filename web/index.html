@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta name="theme-color" content="#111919"><meta name="description" content="C++와 WebAssembly로 구동하는 소규모 멀티플레이 웹 FPS">
+ <title>CROSSYARD — C++ Web FPS</title><link rel="icon" href="data:,">
+ <link rel="stylesheet" href="/style.css"><script type="module" src="/app.mjs"></script>
+</head>
+<body>
+ <canvas id="game" tabindex="-1" aria-label="로우폴리 FPS 게임 화면"></canvas>
+ <section id="lobby" class="lobby">
+  <header class="topbar"><a class="brand" href="/" aria-label="CROSSYARD 홈"><span class="brand-mark" aria-hidden="true">✕</span> CY<span class="brand-divider">/</span>FIELD TEST</a><span class="engine" id="engine">C++ 엔진 준비 중</span></header>
+  <main class="lobby-main">
+   <div class="intro">
+    <p class="eyebrow"><span class="signal" aria-hidden="true"></span> SMALL MAP. REAL PLAY.</p>
+    <h1 aria-label="CROSSYARD">CROSS<span>YARD</span><span class="title-dot" aria-hidden="true">.</span></h1>
+    <p class="lead">설치 없이 들어오는, 작은 전장.</p>
+    <p class="description">엄폐물을 사이에 두고 움직이고, 조준하고, 쏘세요.<br class="desktop-break">친구에게 방 코드를 건네면 같은 야드에서 만납니다.</p>
+    <div class="specs"><span><strong>01</strong>로우폴리 야드</span><span><strong>04</strong>최대 참가자</span><span><strong>C++</strong>Wasm 게임 로직</span></div>
+   </div>
+   <section class="join-panel" aria-labelledby="join-title">
+    <div class="panel-heading"><span class="section-number">/ 01</span><h2 id="join-title">야드에 입장</h2><span class="corner" aria-hidden="true">↗</span></div>
+    <label for="nickname">닉네임</label><input id="nickname" name="nickname" maxlength="32" autocomplete="off" value="플레이어" spellcheck="false">
+    <button id="create" class="primary" disabled>새 방 만들기 <span aria-hidden="true">→</span></button>
+    <div class="or"><span>초대받았다면</span></div>
+    <label for="code">방 코드</label><div class="join-row"><input id="code" name="code" maxlength="6" placeholder="A1B2C3" autocomplete="off" spellcheck="false" inputmode="text" aria-describedby="code-help"><button id="join" class="secondary" disabled>참가</button></div>
+    <p id="code-help" class="help">방을 만든 친구에게 6자리 코드를 받아 주세요.</p>
+    <p id="lobby-status" class="status" role="status">그래픽 장치와 C++ 모듈을 준비하고 있습니다.</p>
+    <p class="solo-note">혼자 입장해 맵과 조작을 확인할 수도 있어요.<br>봇은 없으며, 참가자는 최대 4명입니다.</p>
+   </section>
+  </main>
+  <footer class="lobby-footer"><span><kbd>WASD</kbd> 이동 <i>·</i> 마우스 조준 <i>·</i> <kbd>R</kbd> 재장전 <i>·</i> <kbd>Esc</kbd> 메뉴</span><span class="map-label">YARD 01 <b>—</b> INDUSTRIAL GROUND</span></footer>
+  <p class="mobile-note">실제 플레이에는 PC의 키보드와 마우스가 필요합니다.</p>
+ </section>
+ <div id="hud" class="hud" hidden>
+  <div class="session-strip"><span class="small-brand">CY /</span><button id="copy-code" title="방 코드 복사" aria-label="방 코드 복사">------</button><span id="count">1 / 4</span><span id="ping">RTT —</span><button id="menu" class="menu-button">Esc 메뉴</button></div>
+  <div class="heading" id="heading">000°</div>
+  <div class="scoreboard"><div class="score-head"><span>야드 참가자</span><span>K / D</span></div><ol id="players"></ol></div>
+  <div id="crosshair" class="crosshair" aria-hidden="true"><i></i><b></b></div><div id="hitmarker" class="hitmarker" aria-hidden="true">×</div>
+  <div class="life"><span class="hud-label">HEALTH</span><div><strong id="hp">100</strong><span class="hp-unit">HP</span></div><div class="health-track"><i id="health-fill"></i></div><span id="shield" class="shield" hidden>부활 보호</span></div>
+  <div class="ammo"><span class="hud-label">AR / 24</span><div><strong id="ammo">24</strong><span>/ ∞</span></div><span id="reload-label">R 재장전</span></div>
+  <div class="action-state" id="action-state" role="status"></div>
+  <div class="bottom-tip"><kbd>Shift</kbd> 달리기 <i>·</i> 우클릭 정밀 조준 <i>·</i> <kbd>Esc</kbd> 마우스 해제</div>
+  <div id="damage-vignette" class="damage-vignette" aria-hidden="true"></div>
+ </div>
+ <section id="pause" class="pause" role="dialog" aria-modal="true" aria-labelledby="pause-title" hidden>
+  <div class="pause-panel">
+   <span class="eyebrow">CROSSYARD / FIELD CONTROL</span><h2 id="pause-title">입장 완료</h2>
+   <p id="pause-description">아래 버튼을 누르면 마우스가 게임에 고정됩니다.</p>
+   <button id="resume" class="primary">클릭하고 플레이 <span aria-hidden="true">↗</span></button>
+   <p id="lock-status" class="help" role="status">Esc를 누르면 마우스를 해제하고 이 메뉴로 돌아옵니다.</p>
+   <div class="settings"><label class="range-label" for="sensitivity">마우스 감도 <output id="sensitivity-value">1.0</output></label><input id="sensitivity" type="range" min="0.25" max="3" step="0.05" value="1"><label class="check"><input id="reduce" type="checkbox"> 반동·장식 움직임 줄이기</label><label class="check"><input id="mute" type="checkbox"> 효과음 끄기</label></div>
+   <div class="pause-foot"><span>메뉴를 열어도 전투는 계속됩니다.</span><button id="leave" class="text-button">방 나가기 →</button></div>
+  </div>
+ </section>
+ <div id="fatal" class="fatal" hidden><h2>게임을 준비하지 못했어요.</h2><p id="fatal-message">서버와 브라우저를 확인한 뒤 다시 시도해 주세요.</p><button class="primary" id="retry">새로고침</button></div>
+ <noscript>이 게임에는 JavaScript와 WebAssembly 지원이 필요합니다.</noscript>
+</body></html>
