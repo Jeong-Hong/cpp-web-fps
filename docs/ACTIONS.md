@@ -12,7 +12,7 @@ The following are implementation defaults, not claims the person individually ch
 - Gravity18m/s², initial jump velocity8m/s. A fresh Space edge is one jump request; only grounded players jump. Holding the key or sending duplicate packets cannot cause an extra/mid-air jump. Unsupported airborne requests are consumed, not buffered until landing.
 - Shared `step_motion` handles vertical and horizontal movement, landing on solid tops, underside collision and falling off edges. Grounding is a physical support state; non-solid skyline/decorations remain non-colliding. A standing expansion under a low ceiling is refused; moving into clear space permits the outstanding stand request.
 - Authoritative motion advances on server dt. Browser uses the same function for prediction. Snapshots contain vertical velocity, actual grounded/crouch state; both local camera and remote model use the actual body/eye heights.
-- Death/respawn resets feet to the existing spawn, vertical velocity0, grounded/standing, no pending action. No new fall damage, climbing, double jump or changed map.
+- Death clears pending actions and freezes the corpse at its last position, preserving existing behavior. Respawn resets feet to the existing spawn, vertical velocity0, grounded/standing and resources. No new fall damage, climbing, double jump or changed map.
 
 ## Weapon contract
 
@@ -48,7 +48,7 @@ Preserve DESIGN.md's industrial direction, tokens and existing layout. Add an un
 
 Files consumed by the change: include/arena.hpp; core/game.cpp/bridge.cpp; server/protocol.mjs/engine.mjs; client/main.cpp; web/app.mjs/index.html/style.css; existing Node and E2E input fixtures; scripts/live-smoke.mjs. Shared declarations freeze before split implementation ownership. Core lane owns core/*.cpp and tests/core_tests.cpp only; server lane owns named Node adapter/validator/tests/probe only; parent owns header, browser, UI, documents, integration, commits and closure.
 
-## Acceptance and evidence (planned)
+## Acceptance and required evidence
 
 1. Real Wasm RED→GREEN for each motion/stance/weapon/grenade behavior, inclusive timer/range boundaries, duplicate/coalesced/dead input, shield/cover, no resource refill/negative inventory and leave/respawn cleanup; preserve existing rules.
 2. Exact v2 validation and ABI argument tests, then real compiled-module socket proof. Fakes are only adapter/isolation evidence.

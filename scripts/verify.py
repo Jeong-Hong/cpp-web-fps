@@ -25,7 +25,7 @@ def inputs():
             relative = path.relative_to(ROOT).as_posix()
             if path.is_file() and path.suffix in {".cpp", ".hpp", ".mjs", ".css", ".html", ".py", ".json"} and not relative.startswith("web/dist/") and "__pycache__" not in path.parts:
                 files.add(path)
-    for name in [".gitignore", ".gitattributes", "package.json", "package-lock.json", "playwright.config.mjs", "playwright.game.config.mjs", "START.cmd", "BUILD.cmd", "DESIGN.md", "README.md", "docs/PLAN.md", "docs/PROTOCOL.md"]:
+    for name in [".gitignore", ".gitattributes", "package.json", "package-lock.json", "playwright.config.mjs", "playwright.game.config.mjs", "START.cmd", "BUILD.cmd", "DESIGN.md", "README.md", "docs/PLAN.md", "docs/ACTIONS.md", "docs/PROTOCOL.md"]:
         files.add(ROOT / name)
     return {str(p.relative_to(ROOT).as_posix()): digest(p) for p in sorted(files)}
 
