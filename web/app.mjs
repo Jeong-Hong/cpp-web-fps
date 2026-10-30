@@ -84,6 +84,7 @@ globalThis.CY={
  feedback(kind){sound(kind);},
  hud(state){
   if(!session)return;
+  text('stance-state',state.hp<=0?'사망':!state.grounded?'공중':state.crouch?'앉음':'서 있음');
   text('hp',state.hp);text('ammo',state.ammo);text('heading',`${Math.round(state.heading).toString().padStart(3,'0')}°`);
   $('health-fill').style.width=`${Math.max(0,state.hp)}%`;$('shield').hidden=state.shield<=0;
   $('hitmarker').classList.toggle('active',state.hit>0);$('damage-vignette').classList.toggle('active',state.damage>0);$('crosshair').classList.toggle('ads',state.ads);

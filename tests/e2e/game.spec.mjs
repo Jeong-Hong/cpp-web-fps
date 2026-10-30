@@ -182,3 +182,35 @@ test('Space edge jumps, lands and does not repeat while held through real C++ in
  await page.waitForTimeout(200);expect(c.state.players.find(p=>p.id===id)).toMatchObject({y:0,grounded:true});expect(jumps).toHaveLength(1);
  await page.keyboard.up('Space');await page.keyboard.press('Escape');await page.locator('#leave').click();expect(c.errors).toEqual([]);
 });
+
+async function publicPeer(baseURL,room,name){
+ const ws=new WebSocket(baseURL.replace('http:','ws:')+'/ws',{origin:baseURL}),events=new EventEmitter();let latest,welcome,seq=0;
+ ws.on('message',raw=>{const m=JSON.parse(String(raw));if(m.type==='state')latest=m;if(m.type==='welcome')welcome=m;events.emit('data',m);});
+ const wait=(predicate,timeout=6000)=>{for(const m of [latest,welcome])if(m&&predicate(m))return Promise.resolve(m);return new Promise((resolve,reject)=>{const handler=m=>{if(predicate(m)){clearTimeout(timer);events.off('data',handler);resolve(m);}};const timer=setTimeout(()=>{events.off('data',handler);reject(Error('public peer state deadline'));},timeout);events.on('data',handler);});};
+ await new Promise((resolve,reject)=>{ws.once('open',resolve);ws.once('error',reject);});
+ ws.send(JSON.stringify({type:'join',name,code:room}));const joined=await wait(m=>m.type==='welcome');
+ return {id:joined.id,wait,input(fields={}){ws.send(JSON.stringify({type:'input',seq:++seq,forward:0,strafe:0,yaw:0,pitch:0,fire:false,reload:false,sprint:false,jump:false,crouch:false,weapon:0,grenade:false,...fields}));},close(){ws.close();}};
+}
+
+test('C toggle synchronizes actual stance, eye height and remote model through public sockets',async({page,baseURL})=>{
+ const c=observe(page);await enter(page,'QA_CROUCH');await c.wait(m=>m.type==='state');const id=c.welcome.id;
+ const peer=await publicPeer(baseURL,c.welcome.room,'QA_STANCE_PEER');let timer;
+ try{
+  timer=setInterval(()=>peer.input({forward:1,yaw:-Math.PI/2,sprint:true}),50);
+  await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===peer.id&&p.x<-6));clearInterval(timer);timer=null;peer.input({yaw:-Math.PI/2});
+  const other=c.state.players.find(p=>p.id===peer.id);
+  await page.evaluate(p=>{window.__stanceEye=0;window.__remoteTop=0;const draw=CY.renderer.draw.bind(CY.renderer);CY.renderer.draw=(...args)=>{draw(...args);window.__stanceEye=args[2][1];let top=0;const d=args[1];for(let i=0;i<d.length;i+=11)if(Math.abs(d[i]-p.x)<.8&&Math.abs(d[i+2]-p.z)<.8)top=Math.max(top,d[i+1]+d[i+4]/2);window.__remoteTop=top;};},other);
+  const button=await page.locator('#resume').boundingBox();await page.bringToFront();await page.locator('#resume').click();await expect.poll(()=>page.evaluate(()=>document.pointerLockElement?.id)).toBe('game');
+  const me=c.state.players.find(p=>p.id===id),wanted=Math.atan2(other.x-me.x,-(other.z-me.z));await page.mouse.move(button.x+button.width/2+(wanted-me.yaw)/.0022,button.y+button.height/2);
+  await page.keyboard.down('KeyC');
+  await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.crouch),1200).catch(()=>{throw Error('missing authoritative crouch action');});
+  await expect(page.locator('#stance-state')).toHaveText('앉음');await expect.poll(()=>page.evaluate(()=>window.__stanceEye)).toBeLessThan(1.05);
+  await page.keyboard.down('KeyC');await page.waitForTimeout(100);expect(c.state.players.find(p=>p.id===id).crouch).toBe(true);await page.keyboard.up('KeyC');
+  await expect.poll(()=>page.evaluate(()=>window.__remoteTop)).toBeGreaterThan(1.7);peer.input({yaw:-Math.PI/2,crouch:true});
+  await peer.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&p.crouch)&&m.players.some(p=>p.id===peer.id&&p.crouch));
+  await expect.poll(()=>page.evaluate(()=>window.__remoteTop)).toBeLessThan(1.12);expect(await page.evaluate(()=>window.__remoteTop)).toBeGreaterThan(.9);
+  await page.screenshot({path:'work/actions-crouch-remote.png'});
+  await page.keyboard.press('KeyC');await c.wait(m=>m.type==='state'&&m.players.some(p=>p.id===id&&!p.crouch));await expect(page.locator('#stance-state')).toHaveText('서 있음');await expect.poll(()=>page.evaluate(()=>window.__stanceEye)).toBeGreaterThan(1.5);
+  await page.keyboard.press('Escape');await page.locator('#leave').click();expect(c.errors).toEqual([]);
+ }finally{clearInterval(timer);peer.close();}
+});
