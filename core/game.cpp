@@ -90,7 +90,9 @@ bool Room::set_input(int slot,const Input& input) {
     player.received_input=true;
     player.ack=input.seq;
     if(player.hp<=0) return true;
+    const bool reload_requested=player.input.reload || input.reload;
     player.input=input;
+    player.input.reload=reload_requested;
     player.stale=0;
     player.yaw=input.yaw;
     player.pitch=input.pitch;
@@ -144,6 +146,7 @@ void Room::tick(float dt) {
         auto& player=players_[slot];
         if(!player.active || player.hp<=0) continue;
         if(player.input.reload && player.reload==0 && player.ammo<24) player.reload=1.5f;
+        player.input.reload=false;
         if(!player.input.fire || player.ammo<=0 || player.cooldown>0 || player.reload>0) continue;
         --player.ammo;
         ++player.shot;

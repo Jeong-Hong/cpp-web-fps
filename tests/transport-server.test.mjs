@@ -496,6 +496,17 @@ test('REAL C++/Wasm default engine loads, joins and acknowledges input through a
     assert.equal(state.players[0].yaw, 0);
     assert.ok(Number.isFinite(state.players[0].x));
     assert.ok(state.time > 0);
+    client.send(input(1, { fire: true }));
+    client.send({ type: 'ping', stamp: 1 });
+    assert.equal((await client.next()).type, 'pong');
+    clock = 100; f.app.tick();
+    assert.equal((await client.next()).players[0].ammo, 23);
+    client.send(input(2, { reload: true }));
+    client.send(input(3));
+    client.send({ type: 'ping', stamp: 2 });
+    assert.equal((await client.next()).type, 'pong');
+    clock = 150; f.app.tick();
+    assert.ok((await client.next()).players[0].reload > 1400, 'queued reload survives coalesced socket inputs');
   } finally { await f.close(); }
 });
 

@@ -42,6 +42,21 @@ int main() {
         room.set_input(id,input); room.tick(0.05f);
         check(near(room.players()[id].position.z,-18.25f),"rejoin resets receipt state and accepts first sequence zero");
     }
+    {
+        arena::Room room; const int id=room.join();
+        arena::Input input{}; input.seq=0; input.fire=true;
+        room.set_input(id,input); room.tick(0.05f);
+        check(room.players()[id].ammo==23,"queued reload fixture fires a real round");
+        input.seq=1; input.fire=false; input.reload=true; room.set_input(id,input);
+        input.seq=2; input.reload=false; room.set_input(id,input); room.tick(0.05f);
+        check(room.players()[id].reload>1.4f,"queued reload survives newer held-state input before tick");
+        check(!room.players()[id].input.reload,"reload pulse is consumed once at the simulation tick");
+        ticks(room,30);
+        input.seq=3; input.fire=true; room.set_input(id,input); room.tick(0.05f);
+        input.seq=1; input.fire=false; input.reload=true; room.set_input(id,input);
+        input.seq=4; input.reload=false; room.set_input(id,input); room.tick(0.05f);
+        check(room.players()[id].reload==0,"replayed old reload pulse cannot start another reload");
+    }
     const auto p=arena::move_position({0,0,-18},1,0,0,0.05f,false);
     check(near(p.z,-18.25f),"forward moves in camera direction at 5m/s");
     check(near(p.x,0),"forward preserves perpendicular position");
