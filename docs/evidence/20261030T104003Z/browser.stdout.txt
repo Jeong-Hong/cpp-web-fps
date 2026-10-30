@@ -1,0 +1,18 @@
+
+Running 10 tests using 1 worker
+
+  ok  1 tests\e2e\client-contract.spec.mjs:15:1 › compiled C++ exports actual game, snapshot and input entry points (230ms)
+  ok  2 tests\e2e\client-contract.spec.mjs:23:1 › compiled C++ sends complete v2 action fields even in a neutral input snapshot (158ms)
+GPU smoke {"api":"WebGPU","reason":"","width":640}
+  ok  3 tests\e2e\gpu.spec.mjs:13:39 › real GPU adapter draws an instanced cube (fallback=false) (223ms)
+GPU smoke {"api":"WebGL2","reason":"WebGL2 selected","width":640}
+  ok  4 tests\e2e\gpu.spec.mjs:13:39 › real GPU adapter draws an instanced cube (fallback=true) (181ms)
+Observed local lobby {"api":"WebGPU / C++ WASM","lcp":[{"time":72,"tag":"H1"}],"reduced":false}
+  ok  5 tests\e2e\lobby-render.spec.mjs:14:1 › real C++ Wasm renders the lobby and fits three widths (657ms)
+  ok  6 tests\e2e\lobby-render.spec.mjs:31:1 › real Wasm loading disables competing actions and then recovers (511ms)
+  ok  7 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 1440px (265ms)
+  ok  8 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 768px (218ms)
+  ok  9 tests\e2e\shell.spec.mjs:14:35 › Korean lobby controls fit at 375px (217ms)
+  ok 10 tests\e2e\shell.spec.mjs:28:1 › new inventory hints fit the narrow HUD without replacing gameplay proof (203ms)
+
+  10 passed (3.6s)

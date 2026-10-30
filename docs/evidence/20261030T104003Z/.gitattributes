@@ -1,0 +1,14 @@
+tdd/*/journal.jsonl -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tdd/core/export-smoke.mjs -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tdd/actions-step.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Only these original failing-run transcripts contain observed line-end spaces.
+tdd/client/crouch-browser-red-20261030T101558614525Z.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+tdd/client/grenade-browser-red-20261030T102929709786Z.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+tdd/client/grenade-near-camera-red-20261030T103826738804Z.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+tdd/client/inventory-layout-red-real-20261030T094047672667Z.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+tdd/client/jump-browser-red-20261030T101219080385Z.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+tdd/client/neutral-input-red-20261030T093902407601Z.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+tdd/client/pistol-brief-click-red-20261030T102339200353Z.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+tdd/client/pistol-browser-green-20261030T102129624045Z.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+tdd/client/pistol-browser-red-20261030T101954839166Z.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+tdd/server/abi-order-v2-red-20261030T094341795343Z.stdout.txt -text whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol

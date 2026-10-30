@@ -1,0 +1,8 @@
+
+Running 3 tests using 1 worker
+
+  ok 1 tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce) (3.3s)
+  ok 2 tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (no-preference) (3.2s)
+  ok 3 tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce/WebGL2) (3.1s)
+
+  3 passed (10.5s)

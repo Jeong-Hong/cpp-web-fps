@@ -1,0 +1,6 @@
+
+Running 1 test using 1 worker
+
+  ok 1 tests\e2e\game.spec.mjs:87:1 › served C++ lobby and live menu retain layout at desktop, tablet and phone widths (1.3s)
+
+  1 passed (2.2s)

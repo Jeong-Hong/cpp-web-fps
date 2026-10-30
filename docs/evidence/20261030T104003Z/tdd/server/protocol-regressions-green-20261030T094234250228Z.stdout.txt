@@ -1,0 +1,23 @@
+✔ strict v2 input accepts the complete action shape unchanged (0.9733ms)
+✔ strict v2 weapon accepts only integer zero or one (0.8487ms)
+✔ strict v2 input refuses every omitted field and the old network shape (0.2855ms)
+✔ strict v2 input refuses unknown and client-owned state fields (0.17ms)
+✔ strict v2 preserves inclusive movement and sequence bounds before conversion (0.2962ms)
+✔ strict v2 action flags require exact booleans (0.2302ms)
+✔ peer serializes reliable controls and coalesces only the latest full snapshot (2.2133ms)
+✔ peer bounds reliable control count including in-flight write at 32 (0.207ms)
+✔ peer bounds retained UTF-8 bytes including in-flight frames and mailbox (2.9778ms)
+✔ peer closes only itself when native buffered bytes exceed inclusive limit (0.2381ms)
+✔ leave clears pending state without losing reliable controls (0.2037ms)
+✔ terminal error drains reliable controls before close and discards state (0.1505ms)
+✔ blocked write is reaped at 10 seconds even if no new output arrives (0.1529ms)
+✔ peer reports callback send failure as fixed diagnostic and closes 1011 (0.1984ms)
+✔ peer reports throw send failure as fixed diagnostic and closes 1011 (0.117ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 58.372

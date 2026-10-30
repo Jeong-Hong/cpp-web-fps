@@ -1,0 +1,93 @@
+
+Running 3 tests using 1 worker
+
+  x  1 tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce) (8.5s)
+  x  2 tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (no-preference) (8.5s)
+  x  3 tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce/WebGL2) (8.4s)
+
+
+  1) tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce) 
+
+    Error: browser public state deadline
+
+      16 |   return new Promise((resolve,reject)=>{
+      17 |    const listener=m=>{if(predicate(m)){clearTimeout(timer);channel.off('data',listener);resolve(m);}};
+    > 18 |    const timer=setTimeout(()=>{channel.off('data',listener);reject(Error('browser public state deadline'));},timeout);channel.on('data',listener);
+         |                                                                    ^
+      19 |   });
+      20 |  };return channel;
+      21 | };
+        at Timeout._onTimeout (D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:18:68)
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-1917f-nd-visible-feedback-reduce-\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\game-tests\game-Digit2-selects-a-semi-1917f-nd-visible-feedback-reduce-\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-1917f-nd-visible-feedback-reduce-\trace.zip
+    Usage:
+
+        npx playwright show-trace work\game-tests\game-Digit2-selects-a-semi-1917f-nd-visible-feedback-reduce-\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (no-preference) 
+
+    Error: browser public state deadline
+
+      16 |   return new Promise((resolve,reject)=>{
+      17 |    const listener=m=>{if(predicate(m)){clearTimeout(timer);channel.off('data',listener);resolve(m);}};
+    > 18 |    const timer=setTimeout(()=>{channel.off('data',listener);reject(Error('browser public state deadline'));},timeout);channel.on('data',listener);
+         |                                                                    ^
+      19 |   });
+      20 |  };return channel;
+      21 | };
+        at Timeout._onTimeout (D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:18:68)
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-eba70-ble-feedback-no-preference-\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\game-tests\game-Digit2-selects-a-semi-eba70-ble-feedback-no-preference-\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-eba70-ble-feedback-no-preference-\trace.zip
+    Usage:
+
+        npx playwright show-trace work\game-tests\game-Digit2-selects-a-semi-eba70-ble-feedback-no-preference-\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce/WebGL2) 
+
+    Error: browser public state deadline
+
+      16 |   return new Promise((resolve,reject)=>{
+      17 |    const listener=m=>{if(predicate(m)){clearTimeout(timer);channel.off('data',listener);resolve(m);}};
+    > 18 |    const timer=setTimeout(()=>{channel.off('data',listener);reject(Error('browser public state deadline'));},timeout);channel.on('data',listener);
+         |                                                                    ^
+      19 |   });
+      20 |  };return channel;
+      21 | };
+        at Timeout._onTimeout (D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:18:68)
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-99bae-ble-feedback-reduce-WebGL2-\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\game-tests\game-Digit2-selects-a-semi-99bae-ble-feedback-reduce-WebGL2-\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\game-tests\game-Digit2-selects-a-semi-99bae-ble-feedback-reduce-WebGL2-\trace.zip
+    Usage:
+
+        npx playwright show-trace work\game-tests\game-Digit2-selects-a-semi-99bae-ble-feedback-reduce-WebGL2-\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce) 
+    tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (no-preference) 
+    tests\e2e\game.spec.mjs:218:100 › Digit2 selects a semi-auto pistol with independent ammo and visible feedback (reduce/WebGL2) 

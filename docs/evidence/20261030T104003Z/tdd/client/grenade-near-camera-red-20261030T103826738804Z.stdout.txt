@@ -1,0 +1,40 @@
+
+Running 1 test using 1 worker
+
+  x  1 tests\e2e\game.spec.mjs:248:100 › G edge renders authoritative grenade flight and blast with four-peer agreement (reduce) (1.8s)
+
+
+  1) tests\e2e\game.spec.mjs:248:100 › G edge renders authoritative grenade flight and blast with four-peer agreement (reduce) 
+
+    Error: grenade camera-near clipping
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      259 |   await page.keyboard.down('KeyG');const flying=await c.wait(m=>m.type==='state'&&m.grenades.some(g=>g.owner===id&&!g.exploding),1200).catch(()=>{throw Error('missing authoritative grenade throw');});const projectile=flying.grenades.find(g=>g.owner===id);
+      260 |   const firstStates=await Promise.all(peers.map(p=>p.wait(m=>m.type==='state'&&m.time===flying.time)));for(const state of firstStates){expect(state.grenades).toEqual(flying.grenades);expect(state.players).toEqual(flying.players);}
+    > 261 |   await expect(page.locator('#grenade-count')).toHaveText('1');await expect.poll(()=>page.evaluate(()=>!!window.__grenadeFlight)).toBe(true);expect(await page.evaluate(()=>window.__grenadeNearClip),'grenade camera-near clipping').toBe(false);let image=await page.evaluate(()=>window.__grenadeFlight);await writeFile(`work/actions-grenade-flight-${scenario}.png`,Buffer.from(image.split(',')[1],'base64'));
+          |                                                                                                                                                                                                                                       ^
+      262 |   await page.mouse.move(button.x+button.width/2,button.y+button.height/2+.45/.0022);
+      263 |   const blast=await c.wait(m=>m.type==='state'&&m.grenades.some(g=>g.id===projectile.id&&g.exploding)&&m.players.some(p=>p.id===id&&p.hp>0&&p.hp<100));
+      264 |   const blastStates=await Promise.all(peers.map(p=>p.wait(m=>m.type==='state'&&m.time===blast.time)));for(const state of blastStates){expect(state.grenades).toEqual(blast.grenades);expect(state.players).toEqual(blast.players);}
+        at D:\Projects\Vibe_Coding\cpp-web-fps\tests\e2e\game.spec.mjs:261:231
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    work\game-tests\game-G-edge-renders-author-bb59a-four-peer-agreement-reduce-\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: work\game-tests\game-G-edge-renders-author-bb59a-four-peer-agreement-reduce-\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    work\game-tests\game-G-edge-renders-author-bb59a-four-peer-agreement-reduce-\trace.zip
+    Usage:
+
+        npx playwright show-trace work\game-tests\game-G-edge-renders-author-bb59a-four-peer-agreement-reduce-\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\e2e\game.spec.mjs:248:100 › G edge renders authoritative grenade flight and blast with four-peer agreement (reduce) 

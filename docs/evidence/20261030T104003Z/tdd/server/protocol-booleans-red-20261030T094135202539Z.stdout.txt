@@ -1,0 +1,29 @@
+✔ strict v2 input accepts the complete action shape unchanged (0.8295ms)
+✖ strict v2 action flags require exact booleans (0.3857ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48.6337
+
+✖ failing tests:
+
+test at tests\protocol-server.test.mjs:20:1
+✖ strict v2 action flags require exact booleans (0.3857ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: jump must reject non-boolean 0
+      at TestContext.<anonymous> (file:///D:/Projects/Vibe_Coding/cpp-web-fps/tests/protocol-server.test.mjs:23:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

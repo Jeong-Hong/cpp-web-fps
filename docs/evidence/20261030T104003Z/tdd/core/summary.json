@@ -1,0 +1,156 @@
+{
+  "result": "PASS",
+  "head": "fc61eaa91195407728836cf0c8ddba58e05771a9",
+  "scope": [
+    "core/game.cpp",
+    "core/bridge.cpp",
+    "tests/core_tests.cpp"
+  ],
+  "journal": ".omh/artifacts/actions-tdd/core/journal.jsonl",
+  "journal_entries": 118,
+  "behavioral_red_count": 33,
+  "coverage_mutant_count": 13,
+  "raw_log_hashes_verified": true,
+  "final_source_and_build_hashes_match": true,
+  "final_checks": {
+    "final-wasm-tests": {
+      "id": "final-wasm-tests-20261030T100139477103Z",
+      "label": "final-wasm-tests",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py",
+        "--test"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T10:01:39.477512+00:00",
+      "finished_at": "2026-10-30T10:01:41.747247+00:00",
+      "exit_status": 0,
+      "expected_exit": 0,
+      "must_contain": null,
+      "input_sha256": {
+        "include/arena.hpp": "352ac8370f417ee0eb688de170cca266b1945c9e50ab544c8469507daf08f57f",
+        "core/game.cpp": "77804341e51d1cfd80d7a6aa963a00e36e2f96d58a23bd1373e9f2bccfdae281",
+        "core/bridge.cpp": "1c84eb4e6242aa971dc1d15c493b455777b42f9030a6fefb1550b47ed3645111",
+        "tests/core_tests.cpp": "0bf20b4490608f4395c939909726a7c703703509e694e77c678a8e326e0fca3e"
+      },
+      "stdout": ".omh/artifacts/actions-tdd/core/final-wasm-tests-20261030T100139477103Z.stdout.txt",
+      "stderr": ".omh/artifacts/actions-tdd/core/final-wasm-tests-20261030T100139477103Z.stderr.txt",
+      "stdout_sha256": "4070245cb884773ae719538503c6fb534febd252a8b48539dc17efc825a60ce4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "final-server-module": {
+      "id": "final-server-module-20261030T100142199328Z",
+      "label": "final-server-module",
+      "command": [
+        "D:\\Tools\\Hermes\\installs\\85e954bd52912826\\environments\\9381b9ce0cd947368603931f57d410ba\\venv\\Scripts\\python.exe",
+        "scripts/build.py",
+        "--core"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T10:01:42.199701+00:00",
+      "finished_at": "2026-10-30T10:01:44.175581+00:00",
+      "exit_status": 0,
+      "expected_exit": 0,
+      "must_contain": null,
+      "input_sha256": {
+        "include/arena.hpp": "352ac8370f417ee0eb688de170cca266b1945c9e50ab544c8469507daf08f57f",
+        "core/game.cpp": "77804341e51d1cfd80d7a6aa963a00e36e2f96d58a23bd1373e9f2bccfdae281",
+        "core/bridge.cpp": "1c84eb4e6242aa971dc1d15c493b455777b42f9030a6fefb1550b47ed3645111",
+        "tests/core_tests.cpp": "0bf20b4490608f4395c939909726a7c703703509e694e77c678a8e326e0fca3e"
+      },
+      "stdout": ".omh/artifacts/actions-tdd/core/final-server-module-20261030T100142199328Z.stdout.txt",
+      "stderr": ".omh/artifacts/actions-tdd/core/final-server-module-20261030T100142199328Z.stderr.txt",
+      "stdout_sha256": "5e9998ade96eb0ea24577f591db06fdcd13c81b2dc5267b6a25394d6ef8eb97d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "final-export-smoke": {
+      "id": "final-export-smoke-20261030T100148535304Z",
+      "label": "final-export-smoke",
+      "command": [
+        "node",
+        ".omh/artifacts/actions-tdd/core/export-smoke.mjs"
+      ],
+      "cwd": "D:\\Projects\\Vibe_Coding\\cpp-web-fps",
+      "source": "this checkout",
+      "started_at": "2026-10-30T10:01:48.535724+00:00",
+      "finished_at": "2026-10-30T10:01:48.586530+00:00",
+      "exit_status": 0,
+      "expected_exit": 0,
+      "must_contain": null,
+      "input_sha256": {
+        "include/arena.hpp": "352ac8370f417ee0eb688de170cca266b1945c9e50ab544c8469507daf08f57f",
+        "core/game.cpp": "77804341e51d1cfd80d7a6aa963a00e36e2f96d58a23bd1373e9f2bccfdae281",
+        "core/bridge.cpp": "1c84eb4e6242aa971dc1d15c493b455777b42f9030a6fefb1550b47ed3645111",
+        "tests/core_tests.cpp": "0bf20b4490608f4395c939909726a7c703703509e694e77c678a8e326e0fca3e"
+      },
+      "stdout": ".omh/artifacts/actions-tdd/core/final-export-smoke-20261030T100148535304Z.stdout.txt",
+      "stderr": ".omh/artifacts/actions-tdd/core/final-export-smoke-20261030T100148535304Z.stderr.txt",
+      "stdout_sha256": "a014f6d1465a5ca49b74fa2dea0b8b7fc9c1936b388f29bd3bf6b8c90bd50e99",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "module_probe": {
+    "result": "PASS",
+    "exports": [
+      "_room_create",
+      "_room_destroy",
+      "_room_input",
+      "_room_input_v2",
+      "_room_join",
+      "_room_leave",
+      "_room_snapshot",
+      "_room_tick"
+    ],
+    "inputArity": 10,
+    "inputV2Arity": 14,
+    "scope": "Actual generated server Wasm module; direct C ABI and parsed JSON, not sockets/browser",
+    "hashes": {
+      "include/arena.hpp": "352ac8370f417ee0eb688de170cca266b1945c9e50ab544c8469507daf08f57f",
+      "core/game.cpp": "77804341e51d1cfd80d7a6aa963a00e36e2f96d58a23bd1373e9f2bccfdae281",
+      "core/bridge.cpp": "1c84eb4e6242aa971dc1d15c493b455777b42f9030a6fefb1550b47ed3645111",
+      "tests/core_tests.cpp": "0bf20b4490608f4395c939909726a7c703703509e694e77c678a8e326e0fca3e",
+      "scripts/build.py": "93205655217756d786b5c851cbb8e821411fbcdf1a490d2d8065a1cd79edf7e7",
+      "build/sim.mjs": "629fc99736c1d517e531ed47125fa27854461897da0dc8344fa34be6985c5f25",
+      "build/sim.wasm": "41e680cfd335059b99b488898239a0f8fc14563ab8bf42a231be99d12936fcd3"
+    }
+  },
+  "historical_unexpected_runs": [
+    {
+      "id": "baseline-20261030T093423902634Z",
+      "label": "baseline",
+      "exit_status": 1,
+      "expected_exit": 0
+    },
+    {
+      "id": "grenade-ground-green-20261030T094451426624Z",
+      "label": "grenade-ground-green",
+      "exit_status": 1,
+      "expected_exit": 0
+    },
+    {
+      "id": "grenade-wall-green-20261030T094603053578Z",
+      "label": "grenade-wall-green",
+      "exit_status": 1,
+      "expected_exit": 0
+    },
+    {
+      "id": "blast-radius-coverage-pass-20261030T095548322270Z",
+      "label": "blast-radius-coverage-pass",
+      "exit_status": 1,
+      "expected_exit": 0
+    }
+  ],
+  "test_result": "PASS 2503 C++ checks",
+  "not_verified": [
+    "Browser/client rendering and input, real WebSocket transport and independent review belong to parent/server lanes",
+    "Full-pool saturation is explicitly unit-only; all scored combat and lifecycle tests use real public room inputs",
+    "Physical LAN/device, fall damage and out-of-scope features were not tested"
+  ],
+  "fixture_corrections": [
+    "Swept-bounce settlement test was corrected from an undocumented 1s deadline to a pre-fuse 2s observation window; 0.45 restitution retained",
+    "Exact six-metre boundary fixture selects a representable float coordinate through public movement; assertion remains distance==6"
+  ],
+  "compatibility_note": "Legacy death/corpse position is retained until respawn to preserve existing public-input corpse-position refusals; all new pose/resources reset at respawn. No policy/header changes made."
+}

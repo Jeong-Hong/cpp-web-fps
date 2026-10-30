@@ -1,0 +1,48 @@
+{
+  "origin": "http://127.0.0.1:8088",
+  "width": 1440,
+  "visibility": "visible",
+  "locked": "game",
+  "api": "WebGPU / C++ WASM",
+  "reduce": true,
+  "sawJump": true,
+  "player": {
+    "id": 0,
+    "x": -18,
+    "y": 0,
+    "z": -18,
+    "yaw": 2.356194496154785,
+    "pitch": 0,
+    "hp": 100,
+    "ammo": 11,
+    "vy": 0,
+    "grounded": true,
+    "crouch": true,
+    "weapon": 1,
+    "rifleAmmo": 24,
+    "pistolAmmo": 11,
+    "grenadeCount": 1,
+    "equip": 0,
+    "kills": 0,
+    "deaths": 0,
+    "reload": 0,
+    "respawn": 0,
+    "shield": 0,
+    "shot": 1,
+    "hit": 0,
+    "damage": 0,
+    "ack": 28,
+    "trace": [
+      -5,
+      0.949999988079071,
+      -5
+    ]
+  },
+  "hud": {
+    "weapon": "권총 / 12",
+    "stance": "앉음",
+    "grenades": "1"
+  },
+  "capture_sha256": "677720ee77fe08113eba9320744c57d2515fb7cb2b771bf3f474acaa981d8188",
+  "tested_revision": "6f4e21867a4f2f1be777ea689d7df60925a641e3"
+}
