@@ -4,7 +4,7 @@
 - Emscripten 공식 설치·EM_JS 문서: C++/Wasm과 브라우저 API 연결 경계를 확인했다.
 - WebGPU Fundamentals vertex-buffers: 인스턴스 버퍼와 정점 셰이더 구조를 참고한다. 예제 이미지·브랜드 자산은 복사하지 않는다.
 - OMH taste-foundations / design-system-contract: 시각 계층·CJK 14px·입력 상태 규칙을 적용한다.
-- 외부 디자인 서비스·이미지·모델·폰트는 사용하지 않는다. 로컬 디자인 CLI의 존재는 도구 설치 출력으로 확인하며, 없으면 이 계약의 도메인 기반 자체 토큰을 사용한다.
+- OMH 로컬 `design data` palette/font/ux(dev-tool)를 실제 조회했다. 어두운 면의 단계 구분, 한국어 14px 하한, 실패 원인과 다음 행동을 함께 쓰는 규칙을 취했다. 게임은 도구 대시보드와 다르므로 예시 파랑·보라 팔레트와 모노스페이스 본문은 채택하지 않았다.
 
 ## 1. Atmosphere & Identity
 - 방향: **Bold / expressive**, 산업 현장 사격장. 단단함·명료함·현장감.
