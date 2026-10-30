@@ -20,5 +20,8 @@ for(const width of [1440,768,375])test(`Korean lobby controls fit at ${width}px`
  await expect(page.getByLabel('닉네임',{exact:true})).toBeVisible();
  await expect(page.getByRole('button',{name:'새 방 만들기',exact:true})).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ const layout=await page.evaluate(()=>{const a=document.querySelector('.intro').getBoundingClientRect(),b=document.querySelector('.join-panel').getBoundingClientRect();return {introBottom:a.bottom,introRight:a.right,joinTop:b.top,joinLeft:b.left};});
+ if(width<=768)expect(layout.joinTop).toBeGreaterThanOrEqual(layout.introBottom);
+ else expect(layout.joinLeft).toBeGreaterThan(layout.introRight);
  expect(await page.locator('#code-help').evaluate(e=>parseFloat(getComputedStyle(e).fontSize))).toBeGreaterThanOrEqual(14);
 });
