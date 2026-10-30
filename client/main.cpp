@@ -143,6 +143,8 @@ void frame(){
    for(int i=0;i<8;++i){const float a=i*arena::kPi/4;add_box(plus(g.position,{std::sin(a)*radius,.04f,std::cos(a)*radius}),{.13f,.13f,.13f},{2.f,1.5f,.25f});}
   }else{
    const float a=1-std::exp(-dt*22.f);g.position=plus(g.position,scale({g.target.x-g.position.x,g.target.y-g.position.y,g.target.z-g.position.z},a));
+   // Keep a newly spawned projectile from enclosing the first-person camera.
+   if(distance2(g.position,eye)<.5f*.5f)continue;
    add_box(g.position,{.22f,.22f,.22f},{.32f,.42f,.18f},reduced?0:float(now)*.004f);
    add_box(plus(g.position,{0,.12f,0}),{.07f,.07f,.07f},g.owner==mine?Vec3{1.8f,1.45f,.25f}:Vec3{1.8f,.8f,.25f});
   }
