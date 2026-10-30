@@ -21,10 +21,9 @@ test('real C++ Wasm renders the lobby and fits three widths',async({page})=>{
  for(const width of [1440,768,375]){
   await page.setViewportSize({width,height:900});await page.evaluate(()=>new Promise(requestAnimationFrame));
   const measured=await page.evaluate(()=>({width:innerWidth,overflow:document.querySelector('#lobby').scrollWidth>innerWidth}));
-  expect(measured).toEqual({width,overflow:false});await page.screenshot({path:`work/rendered-lobby-${width}.png`});
+  expect(measured).toEqual({width,overflow:false});await page.locator('#lobby').evaluate(e=>{e.scrollTop=0;});await page.screenshot({path:`work/rendered-lobby-${width}.png`});
+  if(width<=768){await page.locator('#lobby').evaluate(e=>{e.scrollTop=e.scrollHeight;});await expect(page.locator('#lobby-status')).toBeInViewport();await expect(page.locator('.mobile-note')).toBeInViewport();await page.screenshot({path:`work/rendered-lobby-${width}-bottom.png`});console.log('Observed bottom state',JSON.stringify(await page.evaluate(()=>({state:'ready',origin:location.origin,width:innerWidth,height:innerHeight,visibility:document.visibilityState,scrollTop:document.querySelector('#lobby').scrollTop,text:document.querySelector('#lobby-status').textContent}))));}
  }
- await page.locator('#lobby').evaluate(e=>{e.scrollTop=e.scrollHeight;});
- await expect(page.locator('.mobile-note')).toBeInViewport();await page.screenshot({path:'work/rendered-lobby-375-bottom.png'});
  expect(errors).toEqual([]);
 });
 
@@ -34,7 +33,11 @@ test('real Wasm loading disables competing actions and then recovers',async({pag
  try{
   await page.goto(url);await page.bringToFront();await expect(page.locator('#lobby-status')).toContainText('C++ 게임 모듈');
   await expect(page.locator('#create')).toBeDisabled();await expect(page.locator('#join')).toBeDisabled();
-  for(const width of [1440,768,375]){await page.setViewportSize({width,height:900});await page.screenshot({path:`work/loading-${width}.png`});}
+  await expect(page.locator('#create'),'loading primary button names its current state').toContainText('준비 중');
+  for(const width of [1440,768,375]){
+   await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>innerWidth)).toBe(width);await page.locator('#lobby').evaluate(e=>{e.scrollTop=0;});await page.screenshot({path:`work/loading-${width}.png`});
+   if(width<=768){await page.locator('#lobby').evaluate(e=>{e.scrollTop=e.scrollHeight;});await expect(page.locator('#lobby-status')).toBeInViewport();await expect(page.locator('#create')).toBeDisabled();await page.screenshot({path:`work/loading-${width}-bottom.png`});console.log('Observed bottom state',JSON.stringify(await page.evaluate(()=>({state:'controlled-loading',origin:location.origin,width:innerWidth,height:innerHeight,visibility:document.visibilityState,scrollTop:document.querySelector('#lobby').scrollTop,text:document.querySelector('#lobby-status').textContent}))));}
+  }
  }finally{release();}
  await expect(page.locator('#create')).toBeEnabled({timeout:10000});await expect(page.locator('#join')).toBeEnabled();
 });

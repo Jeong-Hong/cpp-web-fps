@@ -134,7 +134,10 @@ test('missing-room retry and owned server disconnect recover the real UI',async(
   await page.locator('#create').click();await expect(page.locator('#pause')).toBeVisible();
   await server.stop();await expect(page.locator('#lobby-status')).toContainText('연결이 끊겼어요');await expect(page.locator('#create')).toBeEnabled();
   await page.screenshot({path:'work/controlled-disconnect.png'});
-  for(const width of [1440,768,375]){await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.querySelector('#lobby').scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:`work/disconnect-${width}.png`});}
+  for(const width of [1440,768,375]){
+   await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.querySelector('#lobby').scrollWidth<=innerWidth)).toBe(true);await page.locator('#lobby').evaluate(e=>{e.scrollTop=0;});await page.screenshot({path:`work/disconnect-${width}.png`});
+   if(width<=768){await page.locator('#lobby').evaluate(e=>{e.scrollTop=e.scrollHeight;});await expect(page.locator('#lobby-status')).toBeInViewport();await expect(page.locator('#lobby-status')).toContainText('연결이 끊겼어요');await page.screenshot({path:`work/disconnect-${width}-bottom.png`});console.log('Observed bottom state',JSON.stringify(await page.evaluate(()=>({state:'controlled-disconnect',origin:location.origin,width:innerWidth,height:innerHeight,visibility:document.visibilityState,scrollTop:document.querySelector('#lobby').scrollTop,text:document.querySelector('#lobby-status').textContent}))));}
+  }
   server=await ownedServer(Number(new URL(original).port));await page.locator('#create').click();await expect(page.locator('#pause')).toBeVisible();
   await page.locator('#leave').click();await expect(page.locator('#create')).toBeEnabled();
  }finally{await server.stop();}

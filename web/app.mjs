@@ -7,7 +7,7 @@ const motion=matchMedia('(prefers-reduced-motion: reduce)');
 $('reduce').checked=motion.matches;
 const errors={ROOM_NOT_FOUND:'방을 찾지 못했어요. 친구에게 코드를 다시 확인해 주세요.',ROOM_FULL:'이미 4명이 참가한 방이에요. 다른 방을 만들어 주세요.',SERVER_FULL:'서버가 가득 찼어요. 잠시 후 다시 시도해 주세요.',INVALID_NAME:'닉네임은 제어 문자를 제외한 1~16자로 입력해 주세요.',INVALID_CODE:'방 코드는 0~9, A~F로 된 6자리입니다.',INVALID_MESSAGE:'통신 형식이 맞지 않아요. 새로고침 후 다시 입장해 주세요.',RATE_LIMIT:'너무 많은 요청이 발생했어요. 잠시 후 다시 입장해 주세요.'};
 function status(message,error=false){text('lobby-status',message);$('lobby-status').classList.toggle('error',error);}
-function buttons(){for(const id of ['create','join'])$(id).disabled=!ready||busy;}
+function buttons(){for(const id of ['create','join'])$(id).disabled=!ready||busy;text('create-label',!ready?'준비 중…':busy?'연결 중…':'새 방 만들기');}
 function setBusy(value){busy=value;buttons();}
 function settings(){module?._client_settings(Number($('sensitivity').value),$('reduce').checked?1:0);text('sensitivity-value',Number($('sensitivity').value).toFixed(2).replace(/0$/,''));}
 function showPause(initial=false){if(!session)return;$('pause').hidden=false;text('pause-title',initial?'입장 완료':'잠시 조작을 멈췄어요');text('pause-description',initial?'아래 버튼을 누르면 마우스가 게임에 고정됩니다.':'다른 참가자의 전투는 계속되고 있습니다.');text('resume',initial?'클릭하고 플레이 ↗':'플레이로 돌아가기 ↗');if(document.hasFocus())$('resume').focus();}
@@ -128,6 +128,7 @@ $('pause').addEventListener('keydown',event=>{
  else if(!event.shiftKey&&document.activeElement===last){first.focus();event.preventDefault();}
 });
 async function boot(){
+ buttons();
  try{
   renderer=await createRenderer($('game'));globalThis.CY.renderer=renderer;text('engine',`${renderer.api} / C++ WASM`);$('engine').title=renderer.reason;
   status('그래픽 준비 완료 · C++ 게임 모듈을 불러오고 있습니다.');

@@ -21,7 +21,7 @@
    <section class="join-panel" aria-labelledby="join-title">
     <div class="panel-heading"><span class="section-number">/ 01</span><h2 id="join-title">야드에 입장</h2><span class="corner" aria-hidden="true">↗</span></div>
     <label for="nickname">닉네임</label><input id="nickname" name="nickname" maxlength="32" autocomplete="off" value="플레이어" spellcheck="false">
-    <button id="create" class="primary" disabled>새 방 만들기 <span aria-hidden="true">→</span></button>
+    <button id="create" class="primary" disabled><span id="create-label">새 방 만들기</span> <span aria-hidden="true">→</span></button>
     <div class="or"><span>초대받았다면</span></div>
     <label for="code">방 코드</label><div class="join-row"><input id="code" name="code" maxlength="6" placeholder="A1B2C3" autocomplete="off" spellcheck="false" inputmode="text" aria-describedby="code-help"><button id="join" class="secondary" disabled>참가</button></div>
     <p id="code-help" class="help">방을 만든 친구에게 6자리 코드를 받아 주세요.</p>
@@ -29,7 +29,7 @@
     <p class="solo-note">혼자 입장해 맵과 조작을 확인할 수도 있어요.<br>봇은 없으며, 참가자는 최대 4명입니다.</p>
    </section>
   </main>
-  <footer class="lobby-footer"><span><kbd>WASD</kbd> 이동 <i>·</i> 마우스 조준 <i>·</i> <kbd>R</kbd> 재장전 <i>·</i> <kbd>Esc</kbd> 메뉴</span><span class="map-label">YARD 01 <b>—</b> INDUSTRIAL GROUND</span></footer>
+  <footer class="lobby-footer"><span><kbd>WASD</kbd> 이동 <i>·</i> 마우스 조준 <i>·</i> <kbd>R</kbd> 재장전 <i>·</i> <span class="key-pair"><kbd>Esc</kbd> 메뉴</span></span><span class="map-label">YARD 01 <b>—</b> INDUSTRIAL GROUND</span></footer>
   <p class="mobile-note">실제 플레이에는 PC의 키보드와 마우스가 필요합니다.</p>
  </section>
  <div id="hud" class="hud" hidden>

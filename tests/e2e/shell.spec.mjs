@@ -37,3 +37,10 @@ test('new inventory hints fit the narrow HUD without replacing gameplay proof',a
  expect(await page.locator('#inventory').evaluate(e=>{const r=e.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth;})).toBe(true);
  expect(await page.locator('#grenade-label').evaluate(e=>parseFloat(getComputedStyle(e).fontSize))).toBeGreaterThanOrEqual(14);
 });
+
+test('Esc key and Korean footer label stay together at 375px',async({page})=>{
+ await page.route('**/app.mjs',r=>r.fulfill({contentType:'text/javascript',body:''}));
+ await page.setViewportSize({width:375,height:900});await page.goto(url);
+ const sameLine=await page.evaluate(()=>{const key=[...document.querySelectorAll('.lobby-footer kbd')].find(e=>e.textContent==='Esc');const label=key.nextSibling,start=label.textContent.indexOf('메뉴'),range=document.createRange();range.setStart(label,start);range.setEnd(label,start+2);return Math.abs(key.getBoundingClientRect().top-range.getBoundingClientRect().top)<8;});
+ expect(sameLine,'Esc key and Korean footer label share one line').toBe(true);
+});
