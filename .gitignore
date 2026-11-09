@@ -1,5 +1,6 @@
 node_modules/
 build/
+/assets/*.arena
 web/dist/
 work/
 .playwright/

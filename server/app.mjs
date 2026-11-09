@@ -4,6 +4,8 @@ import { WebSocketServer } from 'ws';
 import { parseMessage, ProtocolError } from './protocol.mjs';
 import { createPeer } from './peer.mjs';
 import { loadEngine } from './engine.mjs';
+import { DEFAULT_MAP } from '../web/maps.mjs';
+import { DEFAULT_MODE, isTeamMode } from '../web/modes.mjs';
 import { readFile, realpath } from 'node:fs/promises';
 import { resolve, relative, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,6 +16,10 @@ const assets = new Map([
   ['/style.css', ['style.css', 'text/css; charset=utf-8']],
   ['/app.mjs', ['app.mjs', 'text/javascript; charset=utf-8']],
   ['/gpu.mjs', ['gpu.mjs', 'text/javascript; charset=utf-8']],
+  ['/library-materials.mjs', ['library-materials.mjs', 'text/javascript; charset=utf-8']],
+  ['/maps.mjs', ['maps.mjs', 'text/javascript; charset=utf-8']],
+  ['/modes.mjs', ['modes.mjs', 'text/javascript; charset=utf-8']],
+  ['/minimap.mjs', ['minimap.mjs', 'text/javascript; charset=utf-8']],
   ['/dist/client.mjs', ['dist/client.mjs', 'text/javascript; charset=utf-8']],
   ['/dist/client.wasm', ['dist/client.wasm', 'application/wasm']],
 ]);
@@ -88,6 +94,13 @@ export async function createApp({ engineFactory, root = fileURLToPath(new URL('.
       return room.engine[method](...args);
     } catch { onError('engine_error'); failRoom(room); throw engineFailure; }
   }
+  function roomState(room) {
+    return { type: 'state', room: room.code, names: room.names, ...engineCall(room, 'snapshot') };
+  }
+  function publish(room) {
+    const state = roomState(room);
+    for (const client of clients) if (client.room === room) client.peer.state(state);
+  }
   function leave(client) {
     client.peer.clearState();
     const room = client.room;
@@ -99,6 +112,7 @@ export async function createApp({ engineFactory, root = fileURLToPath(new URL('.
     client.seq = -1;
     client.idleDeadline = now() + 10000;
     if (!Object.keys(room.names).length) { rooms.delete(room.code); engineCall(room, 'destroy'); }
+    else if (isTeamMode(room.mode)) publish(room);
   }
   const wss = new WebSocketServer({ noServer: true, maxPayload: 1024, perMessageDeflate: false });
   server.on('upgrade', (req, socket, head) => {
@@ -149,6 +163,11 @@ export async function createApp({ engineFactory, root = fileURLToPath(new URL('.
         client.peer.control({ type: 'left' });
         return;
       }
+      if (message.type === 'rematch') {
+        const room = client.room;
+        if (room && isTeamMode(room.mode) && engineCall(room, 'rematch')) publish(room);
+        return;
+      }
       if (message.type === 'input') {
         if (client.room && message.seq > client.seq) {
           engineCall(client.room, 'input', client.id, message);
@@ -159,11 +178,17 @@ export async function createApp({ engineFactory, root = fileURLToPath(new URL('.
       if (message.type === 'create' || message.type === 'join') {
         let room;
         if (message.type === 'create') {
+          const map = message.map ?? DEFAULT_MAP;
+          const mode = message.mode ?? DEFAULT_MODE;
+          if (map !== DEFAULT_MAP && !engineFactory.mapAvailable?.(map)) {
+            client.peer.control({ type: 'error', code: 'MAP_UNAVAILABLE', message: 'Map is unavailable.' });
+            return;
+          }
           if (rooms.size >= 16) { client.peer.control({ type: 'error', code: 'SERVER_FULL', message: 'Server is full.' }); return; }
           let code;
           do { code = randomBytes(3).toString('hex').toUpperCase(); } while (rooms.has(code));
           let engine;
-          try { engine = engineFactory(); }
+          try { engine = engineFactory(map, mode); }
           catch {
             onError('engine_error');
             client.closing = true;
@@ -171,7 +196,7 @@ export async function createApp({ engineFactory, root = fileURLToPath(new URL('.
             client.peer.end(1011, 'Internal server error.');
             return;
           }
-          room = { code, engine, names: {}, accumulator: 0, lastTick: now(), steps: 0 };
+          room = { code, map, mode, engine, names: {}, accumulator: 0, lastTick: now(), steps: 0 };
           rooms.set(code, room);
         } else room = rooms.get(message.code);
         if (!room) { client.peer.control({ type: 'error', code: 'ROOM_NOT_FOUND', message: 'Room not found.' }); return; }
@@ -180,8 +205,9 @@ export async function createApp({ engineFactory, root = fileURLToPath(new URL('.
         room.names[id] = message.name.trim();
         client.room = room;
         client.id = id;
-        client.peer.control({ type: 'welcome', room: room.code, id, names: room.names });
-        client.peer.state({ type: 'state', room: room.code, names: room.names, ...engineCall(room, 'snapshot') });
+        client.peer.control({ type: 'welcome', room: room.code, id, map: room.map, mode: room.mode, names: room.names });
+        if (isTeamMode(room.mode)) publish(room);
+        else client.peer.state(roomState(room));
       }
       } catch (error) {
         if (error !== engineFailure) { onError('engine_error'); if (client.room) failRoom(client.room); }
@@ -211,16 +237,13 @@ export async function createApp({ engineFactory, root = fileURLToPath(new URL('.
       try {
       room.accumulator += Math.min(250, Math.max(0, time - room.lastTick));
       room.lastTick = time;
-      let publish = false;
+      let shouldPublish = false;
       while (room.accumulator + 1e-6 >= 1000 / 60) {
         engineCall(room, 'tick', 1 / 60);
         room.accumulator -= 1000 / 60;
-        if (++room.steps % 3 === 0) publish = true;
+        if (++room.steps % 3 === 0) shouldPublish = true;
       }
-      if (publish) {
-        const state = { type: 'state', room: room.code, names: room.names, ...engineCall(room, 'snapshot') };
-        for (const client of clients) if (client.room === room) client.peer.state(state);
-      }
+      if (shouldPublish) publish(room);
       } catch (error) { if (error !== engineFailure) { onError('engine_error'); failRoom(room); } }
     }
   }

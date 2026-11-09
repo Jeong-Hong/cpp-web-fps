@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 import http from 'node:http';
 import {readFile} from 'node:fs/promises';
 let server,url;
-const paths=new Map([['/','index.html'],['/style.css','style.css'],['/app.mjs','app.mjs'],['/gpu.mjs','gpu.mjs'],['/dist/client.mjs','dist/client.mjs'],['/dist/client.wasm','dist/client.wasm']]);
+const paths=new Map([['/','index.html'],['/style.css','style.css'],['/app.mjs','app.mjs'],['/gpu.mjs','gpu.mjs'],['/library-materials.mjs','library-materials.mjs'],['/maps.mjs','maps.mjs'],['/modes.mjs','modes.mjs'],['/minimap.mjs','minimap.mjs'],['/dist/client.mjs','dist/client.mjs'],['/dist/client.wasm','dist/client.wasm']]);
 test.beforeAll(async()=>{
  server=http.createServer(async(req,res)=>{
   const path=paths.get(req.url);if(!path){res.writeHead(404);res.end();return;}

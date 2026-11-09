@@ -9,6 +9,30 @@ const input = (extra = {}) => ({
 });
 const parse = value => parseMessage(JSON.stringify(value));
 
+test('only room creation can specify a known map key', () => {
+  const create = { type: 'create', name: 'host' };
+  assert.deepEqual(parse(create), create);
+  assert.deepEqual(parse({ ...create, map: 'cafe' }), { ...create, map: 'cafe' });
+  for (const map of [null, '', 'Cafe', '../cafe', '__proto__', 2, ['cafe']]) {
+    assert.throws(() => parse({ ...create, map }), { code: 'INVALID_MAP' });
+  }
+  assert.throws(() => parse({ ...create, map: 'cafe', extra: true }), { code: 'INVALID_MESSAGE' });
+  assert.throws(() => parse({ type: 'join', name: 'guest', code: 'A123BC', map: 'cafe' }), { code: 'INVALID_MESSAGE' });
+});
+
+test('only room creation can specify a supported mode, independently of map', () => {
+  for (const mode of ['ffa', '2v2', 'gunfight']) {
+    const create = { type: 'create', name: 'host', map: 'cafe', mode };
+    assert.deepEqual(parse(create), create);
+  }
+  for (const mode of [null, 2, '2V2', 'coop', '__proto__']) {
+    assert.throws(() => parse({ type: 'create', name: 'host', mode }), { code: 'INVALID_MODE' });
+  }
+  assert.throws(() => parse({ type: 'join', name: 'guest', code: '123ABC', mode: '2v2' }), { code: 'INVALID_MESSAGE' });
+  assert.throws(() => parse({ type: 'create', name: 'host', mode: '2v2', team: 0 }), { code: 'INVALID_MESSAGE' });
+  assert.deepEqual(parse({ type: 'rematch' }), { type: 'rematch' });
+  assert.throws(() => parse({ type: 'rematch', winner: 0 }), { code: 'INVALID_MESSAGE' });
+});
 test('strict v2 input accepts the complete action shape unchanged', () => {
   for (const value of [input(), input({ jump: true, crouch: true, weapon: 1, grenade: true })]) {
     let actual;
@@ -67,5 +91,13 @@ test('strict v2 action flags require exact booleans', () => {
         error => error instanceof ProtocolError && error.code === 'INVALID_MESSAGE' && error.message === 'Invalid message.',
         `${field} must reject non-boolean ${JSON.stringify(value)}`);
     }
+  }
+});
+
+test('the optional prone flag requires an exact boolean', () => {
+  assert.deepEqual(parse(input({ prone: true })), input({ prone: true }));
+  assert.deepEqual(parse(input({ prone: false })), input({ prone: false }));
+  for (const prone of [0, 1, 'true', null, {}]) {
+    assert.throws(() => parse(input({ prone })), { code: 'INVALID_MESSAGE' });
   }
 });

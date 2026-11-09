@@ -5,6 +5,8 @@ import { WebSocket } from 'ws';
 import { request } from 'node:http';
 import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
+import { maps } from '../web/maps.mjs';
+import { loadEngine } from '../server/engine.mjs';
 
 function http(origin, path, options = {}) {
   return new Promise((resolve, reject) => {
@@ -33,7 +35,7 @@ function fakeFactory() {
       leave(id) { ids.delete(id); },
       input(id, input) { room.inputs.push({ id, ...input }); return true; },
       tick(dt) { room.ticks.push(dt); },
-      snapshot() { return { time: room.ticks.length * 1000 / 60, players: [...ids].map(id => ({ id, hp: 100, ack: -1, vy: 0, grounded: true, crouch: false, weapon: 0, rifleAmmo: 24, pistolAmmo: 12, grenadeCount: 2, equip: 0 })), grenades: [] }; },
+      snapshot() { return { time: room.ticks.length * 1000 / 60, players: [...ids].map(id => ({ id, hp: 100, ack: -1, vy: 0, grounded: true, crouch: false, prone: false, weapon: 0, rifleAmmo: 24, pistolAmmo: 12, grenadeCount: 1, equip: 0 })), grenades: [] }; },
       destroy() { room.destroyed = true; ids.clear(); },
     };
     rooms.push(room);
@@ -591,11 +593,106 @@ test('create assigns socket identity and sends welcome before authoritative snap
     const welcome = await create(client, '  한글😀  ');
     assert.match(welcome.room, /^[0-9A-F]{6}$/);
     assert.equal(welcome.id, 0);
+    assert.equal(welcome.map, 'crossyard');
+    assert.equal(welcome.mode, 'ffa');
     assert.deepEqual(welcome.names, { 0: '한글😀' });
     assert.deepEqual(f.app.stats(), { rooms: 1, clients: 1 });
     const response = await fetch(f.origin + '/health');
     assert.equal((await response.json()).clients, 1);
     assert.equal(f.engineFactory.rooms.length, 1);
+  } finally { await f.close(); }
+});
+
+test('map selection reaches the Wasm room and is inherited by guests', async () => {
+  const engineFactory = await loadEngine();
+  const f = await fixture({ engineFactory });
+  try {
+    const base = await f.connect();
+    const defaultRoom = await create(base);
+    const spawns = new Set(['-18,0,-18']);
+    for (const map of Object.keys(maps).filter(key => key !== 'crossyard')) {
+      const host = await f.connect();
+      host.send({ type: 'create', name: 'host', map });
+      const welcome = await host.next();
+      if (!engineFactory.mapAvailable(map)) {
+        assert.equal(welcome.code, 'MAP_UNAVAILABLE');
+        continue;
+      }
+      assert.equal(welcome.type, 'welcome');
+      assert.equal(welcome.map, map);
+      assert.notEqual(welcome.room, defaultRoom.room);
+      const state = await host.next();
+      const { x, y, z } = state.players[0];
+      const spawn = `${x},${y},${z}`;
+      assert.ok(!spawns.has(spawn), 'each map has its own spawn');
+      spawns.add(spawn);
+
+      const guest = await f.connect();
+      guest.send({ type: 'join', name: 'guest', code: welcome.room });
+      const joined = await guest.next();
+      assert.equal(joined.type, 'welcome');
+      assert.equal(joined.map, map);
+      assert.equal(joined.room, welcome.room);
+      assert.equal((await guest.next()).players.length, 2);
+    }
+    const late = await f.connect();
+    late.send({ type: 'join', name: 'late', code: defaultRoom.room });
+    assert.equal((await late.next()).map, 'crossyard');
+    assert.deepEqual((await late.next()).players.map(({ x, y, z }) => [x, y, z]), [[-18, 0, -18], [18, 0, -18]]);
+  } finally { await f.close(); }
+});
+
+for (const mode of ['2v2', 'gunfight']) test(`${mode} uses server-assigned teams and resumes only after a vacant slot is filled`, async () => {
+  let clock = 0;
+  const engineFactory = await loadEngine();
+  const f = await fixture({ engineFactory, now: () => clock });
+  const stateWith = async (peer, predicate) => {
+    for (let i = 0; i < 12; i++) {
+      const state = await peer.next();
+      if (state.type === 'state' && predicate(state)) return state;
+    }
+    assert.fail('Expected team state');
+  };
+  try {
+    const host = await f.connect();
+    const map = engineFactory.mapAvailable('cafe') ? 'cafe' : 'crossyard';
+    host.send({ type: 'create', name: 'host', map, mode });
+    const welcome = await host.next();
+    assert.equal(welcome.mode, mode);
+    assert.equal(welcome.map, map);
+    const initial = await stateWith(host, state => state.players.length === 1);
+    assert.equal(initial.playing, false);
+    assert.deepEqual(initial.teamScores, [0, 0]);
+    const peers = [host];
+    for (let i = 1; i <= 3; i++) {
+      const peer = await f.connect();
+      peer.send({ type: 'join', name: `guest${i}`, code: welcome.room });
+      const joined = await peer.next();
+      assert.equal(joined.mode, mode);
+      assert.equal(joined.map, map);
+      assert.equal(joined.id, i);
+      const state = await stateWith(peer, value => value.players.length === i + 1);
+      assert.equal(state.playing, i === 3);
+      peers.push(peer);
+    }
+    const full = await stateWith(host, state => state.playing);
+    assert.deepEqual(full.players.map(player => player.team), [0, 1, 0, 1]);
+    assert.equal(full.phase, mode === 'gunfight' ? 'countdown' : 'live');
+    assert.equal(full.target, mode === 'gunfight' ? 6 : 20);
+    clock = 50; f.app.tick();
+    const active = await stateWith(host, state => state.time > 0);
+    peers[1].send({ type: 'leave' });
+    const waiting = await stateWith(host, state => !state.playing);
+    assert.equal(waiting.time, active.time);
+    assert.deepEqual(waiting.players.map(player => player.id), [0, 2, 3]);
+    clock = 100; f.app.tick();
+    const frozen = await stateWith(host, state => !state.playing);
+    assert.equal(frozen.time, waiting.time);
+    const replacement = await f.connect();
+    replacement.send({ type: 'join', name: 'replacement', code: welcome.room });
+    assert.equal((await replacement.next()).id, 1);
+    const resumed = await stateWith(host, state => state.playing);
+    assert.equal(resumed.players.find(player => player.id === 1).team, 1);
   } finally { await f.close(); }
 });
 

@@ -1,4 +1,5 @@
 #include "arena.hpp"
+#include "../core/mantle.hpp"
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
@@ -6,7 +7,7 @@
 #include <limits>
 #include <locale>
 #include <string>
-// The fixed test build lists game.cpp only; exercise the real C bridge in this test TU.
+// Exercise the real C bridge in this test translation unit.
 #include "../core/bridge.cpp"
 
 int checks=0;
@@ -18,6 +19,10 @@ bool near(float a,float b,float eps=0.002f) { return std::abs(a-b)<eps; }
 void send(arena::Room& room,int id,arena::Input input) {
     input.seq=room.players()[id].ack+1;
     check(room.set_input(id,input),"public room input accepted");
+}
+void send_compensated_shot(arena::Room& room,int id,arena::Input input) {
+    input.pitch-=arena::recover_weapon_recoil(input.weapon,room.players()[id].recoil,.01f,input.weapon==0&&input.fire);
+    send(room,id,input);
 }
 void ticks(arena::Room& room,int count,float dt=0.05f) {
     for(int i=0;i<count;++i) room.tick(dt);
@@ -47,6 +52,132 @@ struct CommaDecimal:std::numpunct<char> {
 };
 int main() {
     {
+        arena::Room room;
+        const int id=room.join();
+        const auto& player=room.players()[id];
+        arena::Input fire{}; fire.fire=true; fire.yaw=arena::kPi/2;
+        send(room,id,fire); room.tick(.01f);
+        const float rifle_kick=player.recoil;
+        check(near(player.trace.y,arena::kEyeHeight) && rifle_kick>0,"first shot follows the initial aim and raises subsequent aim");
+        room.tick(.05f);
+        check(arena::holding_rifle_recoil(player) && player.recoil==rifle_kick,"a held burst retains its pitch between rounds");
+        room.tick(.05f); room.tick(.02f);
+        check(player.shot==2 && player.trace.y>arena::kEyeHeight+.25f && player.recoil>rifle_kick,
+              "held rifle fire climbs through the server's actual shot direction");
+        for(int tick=0;tick<80;++tick) { send(room,id,fire); room.tick(1.f/60); }
+        const auto burst_shots=player.shot;
+        check(burst_shots>=8 && near(player.recoil,.18f) && player.trace.y>arena::kEyeHeight+6,
+              "sustained rifle fire reaches a visible capped climb in the actual hit ray");
+        send(room,id,{}); room.tick(.05f);
+        check(!arena::holding_rifle_recoil(player) && player.recoil<.15f,"releasing the trigger starts recoil recovery");
+        ticks(room,2);
+        send_compensated_shot(room,id,fire); room.tick(.01f);
+        check(player.shot==burst_shots+1 && near(player.trace.y,arena::kEyeHeight),"downward mouse input cancels the authoritative recoil offset");
+        send(room,id,{}); ticks(room,24);
+        check(player.recoil<.001f,"rifle aim settles when fire is released");
+
+        fire.weapon=1; fire.fire=false; send(room,id,fire); ticks(room,5);
+        fire.fire=true; send(room,id,fire); room.tick(.01f);
+        check(player.shot==burst_shots+2 && player.recoil>rifle_kick*1.5f,"a single pistol shot kicks harder than a single rifle shot");
+        ticks(room,4);
+        check(player.shot==burst_shots+2 && player.recoil<rifle_kick*.5f,"the pistol recovers quickly and held fire produces one kick");
+    }
+    {
+        arena::Room room(arena::MapId::crossyard,arena::RoomMode::two_vs_two);
+        for(int i=0;i<4;++i) room.join();
+        auto& players=const_cast<std::array<arena::Player,arena::kCapacity>&>(room.players());
+        players[0].hp=0;
+        players[0].respawn=.01f;
+        players[1].position=arena::spawn_point(0);
+        room.tick(.01f);
+        check(players[0].hp==100 && players[0].shield>0 &&
+              (players[0].position.x!=players[1].position.x || players[0].position.z!=players[1].position.z),
+              "team respawn avoids the occupied home spawn");
+        players[0].position=arena::spawn_point(0);
+        arena::Input shot{}; shot.fire=true; shot.yaw=arena::kPi/2;
+        for(int i=1;i<=room.target_score();++i) {
+            players[1].position=arena::spawn_point(1);
+            players[1].hp=25;players[1].shield=0;
+            send_compensated_shot(room,0,shot);room.tick(.01f);send(room,0,{});ticks(room,3);
+        }
+        check(room.phase()==arena::MatchPhase::finished && room.winner()==0 &&
+              room.team_scores()[0]==20 && !room.playing(),"20th kill ends team deathmatch");
+        const auto ack=players[0].ack;
+        check(room.rematch() && !room.rematch() && room.phase()==arena::MatchPhase::live &&
+              room.team_scores()[0]==0 && players[0].kills==0 && players[0].ack==ack,
+              "rematch resets the match once while retaining input sequencing");
+    }
+    {
+        arena::Room room(arena::MapId::crossyard,arena::RoomMode::gunfight);
+        for(int i=0;i<4;++i) room.join();
+        check(room.phase()==arena::MatchPhase::countdown && !room.rematch(),"gunfight deploys through a countdown");
+        auto& players=const_cast<std::array<arena::Player,arena::kCapacity>&>(room.players());
+        arena::Input shot{}; shot.fire=true;shot.yaw=arena::kPi/2;
+        send(room,0,shot);ticks(room,61);
+        check(room.phase()==arena::MatchPhase::live && players[0].shot==0,"deployment discards countdown fire");
+        players[1].hp=25;
+        send(room,0,shot);room.tick(.01f);send(room,0,{});ticks(room,60);
+        check(players[1].hp==0 && players[1].respawn==0 && room.team_scores()[0]==0,"eliminated players wait while their teammate is alive");
+        players[3].position=arena::spawn_point(1);players[3].hp=25;
+        send(room,0,shot);room.tick(.01f);
+        check(room.phase()==arena::MatchPhase::countdown && room.team_scores()[0]==1 && room.round_result()==0,"eliminating both opponents wins one round");
+        ticks(room,61);
+        check(room.round()==2 && players[1].hp==100 && players[0].ammo==players[1].ammo,"next round redeploys everyone with matching kits");
+        ticks(room,801);
+        check(room.phase()==arena::MatchPhase::countdown && room.round_result()==-1 && room.team_scores()[0]==1,"equal health at timeout is a draw");
+        for(int expected=2;expected<=room.target_score();++expected) {
+            ticks(room,61);
+            players[1].hp=0; players[3].hp=0;
+            room.tick(.01f);
+            check(room.team_scores()[0]==expected,"each elimination adds exactly one round win");
+        }
+        check(room.phase()==arena::MatchPhase::finished && room.winner()==0,"six rounds wins the gunfight match");
+        check(room.rematch() && room.phase()==arena::MatchPhase::countdown && room.round()==1 && room.team_scores()[0]==0,
+              "gunfight rematch begins a fresh first round");
+    }
+    {
+        arena::Room room(arena::MapId::crossyard,arena::RoomMode::two_vs_two);
+        const int blue=room.join(), orange=room.join(), ally=room.join();
+        check(!room.playing() && room.team(blue)==room.team(ally) && room.team(blue)!=room.team(orange),"three players are assigned balanced slots but still wait");
+        arena::Input fire{}; fire.fire=true; fire.grenade=true; fire.forward=1;
+        send(room,blue,fire); room.tick(.05f);
+        check(room.time()==0 && room.players()[blue].position.z==-18 && room.players()[blue].shot==0,"waiting team room accepts no queued combat or movement");
+        const int fourth=room.join();
+        room.tick(.05f);
+        check(room.playing() && room.team(fourth)==room.team(orange) && room.players()[blue].shot==0 && !room.grenades()[0].active,"the fourth player starts combat with no stale input");
+        place_floor(room,ally,-15,-18);
+        place_floor(room,orange,-12,-18);
+        fire={}; fire.fire=true; fire.yaw=arena::kPi/2;
+        for(int shot=0;shot<4;++shot) { send(room,blue,fire); room.tick(.01f); send(room,blue,{}); ticks(room,3); }
+        check(room.players()[ally].hp==100 && room.players()[orange].hp==0,"bullets pass through allies and can kill enemies");
+        check(room.team_scores()[0]==1 && room.team_scores()[1]==0 && room.players()[blue].kills==1,"enemy kill scores for both the player and their team");
+        send(room,blue,fire);
+        room.leave(fourth);
+        const auto frozen=room.time();
+        ticks(room,5);
+        check(!room.playing() && room.time()==frozen && room.team_scores()[0]==1,"leaving suspends simulation and preserves team score");
+        check(room.join()==fourth && room.playing() && room.team(fourth)==room.team(orange),"replacement fills the departed team slot");
+        room.tick(.05f);
+        check(room.players()[blue].shot==4,"resuming does not replay held fire");
+    }
+
+    {
+        arena::Room room(arena::MapId::crossyard,arena::RoomMode::two_vs_two);
+        const int blue=room.join(), orange=room.join(), ally=room.join();
+        room.join();
+        place_floor(room,ally,-21,18);
+        place_floor(room,ally,-21,-20);
+        place_floor(room,ally,-18,-20);
+        place_floor(room,orange,-18,-20.5f);
+        arena::Input fire{}; fire.fire=true; send(room,blue,fire); room.tick(.01f);
+        check(room.players()[orange].hp==75 && room.players()[ally].hp==100,"the enemy is weakened by a shot through their opponent's teammate");
+        arena::Input grenade{}; grenade.grenade=true; grenade.pitch=-1.45f;
+        send(room,blue,grenade); room.tick(.01f); ticks(room,50);
+        check(room.players()[ally].hp==100 && room.players()[orange].hp==0 && room.players()[blue].hp<100,"grenade harms opponents and its thrower while sparing allies");
+        check(room.team_scores()[0]==1 && room.players()[blue].kills==1,"a lethal grenade credits the thrower's team");
+    }
+
+    {
         arena::Room room; const int id=room.join();
         arena::Input input{}; input.weapon=1; send(room,id,input); room.tick(0.01f); ticks(room,4);
         input.fire=true; send(room,id,input); room.tick(0.01f);
@@ -64,7 +195,7 @@ int main() {
         }
         check(room.players()[id].shot==12 && room.players()[id].pistol_ammo==0 && room.players()[id].ammo==24,"pistol magazine caps at twelve actual press shots with no rifle consumption");
         input.reload=true; send(room,id,input); room.tick(0.01f); ticks(room,24);
-        check(room.players()[id].pistol_ammo==12 && room.players()[id].ammo==24 && room.players()[id].shot==12,"empty pistol reload restores only its twelve-round magazine");
+        check(room.players()[id].pistol_ammo==12 && room.players()[id].ammo==24 && room.players()[id].shot==12 && room.players()[id].reloads==1,"empty pistol reload restores only its twelve-round magazine and records one completed refill");
     }
 
     {
@@ -128,20 +259,20 @@ int main() {
         auto& pool=const_cast<std::array<arena::Grenade,arena::kMaxGrenades>&>(room.grenades());
         for(auto& g:pool) { g.active=g.exploding=true; g.explosion=0.35f; g.owner=id; }
         arena::Input input{}; input.grenade=true; send(room,id,input); room.tick(0.01f);
-        check(pool.size()==16 && room.players()[id].grenades==2 && room.players()[id].grenade_cooldown==0,"full 16-slot pool refuses a throw without consuming inventory or cooldown");
+        check(pool.size()==16 && room.players()[id].grenades==1 && room.players()[id].grenade_cooldown==0,"full 16-slot pool refuses a throw without consuming inventory or cooldown");
         pool[3].active=false; room.tick(0.01f);
-        check(room.players()[id].grenades==2 && !pool[3].active,"full-pool rejected request is consumed instead of waiting for a slot");
+        check(room.players()[id].grenades==1 && !pool[3].active,"full-pool rejected request is consumed instead of waiting for a slot");
         send(room,id,input); room.tick(0.01f);
-        check(room.players()[id].grenades==1 && pool[3].active && !pool[3].exploding,"a new request reuses one free effect slot");
+        check(room.players()[id].grenades==0 && pool[3].active && !pool[3].exploding,"a new request reuses one free effect slot");
     }
 
     {
         arena::Room room; const int id=room.join(); arena::Input input{}; input.grenade=true;
         send(room,id,input); room.tick(0.01f); ticks(room,9); room.tick(0.049f);
         send(room,id,input); room.tick(0.0005f);
-        check(room.players()[id].grenades==1 && room.players()[id].grenade_cooldown>0,"grenade refuses a fresh request just before 500ms");
+        check(room.players()[id].grenades==0 && room.players()[id].grenade_cooldown>0 && !room.grenades()[1].active,"the throw starts a 500ms cooldown and spends the only grenade");
         send(room,id,input); room.tick(0.0005f);
-        check(room.players()[id].grenades==0 && room.grenades()[1].active,"grenade cooldown accepts a fresh throw at exactly 500ms");
+        check(room.players()[id].grenades==0 && room.players()[id].grenade_cooldown==0 && !room.grenades()[1].active,"cooldown ends at 500ms and does not replenish inventory");
     }
 
     {
@@ -165,7 +296,7 @@ int main() {
         check(room.players()[target].hp==50,"dead-owner fixture weakens the nearby target through two actual hits");
         arena::Input input{}; input.grenade=true; input.pitch=-1.45f; send(room,owner,input); room.tick(0.01f);
         shot.yaw=-arena::kPi/2;
-        for(int i=0;i<4;++i) {send(room,killer,shot);room.tick(0.01f);send(room,killer,{});if(i<3)ticks(room,3);}
+        for(int i=0;i<4;++i) {send_compensated_shot(room,killer,shot);room.tick(0.01f);send(room,killer,{});if(i<3)ticks(room,3);}
         check(room.players()[owner].hp==0 && room.grenades()[0].active,"dead owner retains its in-flight projectile");
         for(int i=0;i<50 && !room.grenades()[0].exploding;++i) room.tick(0.05f);
         check(room.players()[owner].hp==0 && room.players()[owner].kills==1 && room.players()[target].hp==0 && room.players()[target].deaths==1 && room.players()[killer].kills==1,"grenade thrown before owner death still awards one opponent kill");
@@ -175,9 +306,10 @@ int main() {
     {
         arena::Room room; const int thrower=room.join(),other=room.join();
         arena::Input input{}; input.grenade=true; input.pitch=-1.45f; send(room,thrower,input); room.tick(0.01f);
-        arena::Input shot{}; shot.fire=true; shot.yaw=-arena::kPi/2; send(room,other,shot); room.tick(0.01f); send(room,other,{});
-        check(room.players()[thrower].hp==75,"suicide fixture weakens the thrower with a real opponent shot");
-        ticks(room,49); room.tick(0.04f);
+        arena::Input shot{}; shot.fire=true; shot.yaw=-arena::kPi/2;
+        for(int i=0;i<2;++i) { send_compensated_shot(room,other,shot); room.tick(0.01f); send(room,other,{}); ticks(room,3); }
+        check(room.players()[thrower].hp==50,"suicide fixture weakens the thrower with real opponent shots");
+        for(int i=0;i<50 && !room.grenades()[0].exploding;++i) room.tick(0.05f);
         check(room.players()[thrower].hp==0 && room.players()[thrower].deaths==1 && room.players()[thrower].kills==0 && room.players()[other].kills==0,"self lethal blast records one death without awarding a suicide kill");
     }
 
@@ -193,7 +325,7 @@ int main() {
         arena::Input input{}; input.fire=true; send(room,id,input); room.tick(0.01f);
         input.fire=false; input.reload=true; send(room,id,input); room.tick(0.01f);
         input.reload=false; input.fire=input.grenade=true; send(room,id,input); room.tick(0.01f);
-        check(room.players()[id].reload>0 && room.players()[id].shot==1 && room.players()[id].grenades==1 && room.grenades()[0].active,"grenade request remains independent of gun reload and firing");
+        check(room.players()[id].reload>0 && room.players()[id].shot==1 && room.players()[id].grenades==0 && room.grenades()[0].active,"grenade request remains independent of gun reload and firing");
     }
 
     {
@@ -206,7 +338,7 @@ int main() {
             const s=JSON.parse(UTF8ToString($0)); const g=s.grenades[0];
             return s.grenades.length===1 && Object.keys(g).sort().join(",")==="exploding,explosion,fuse,id,owner,vx,vy,vz,x,y,z" &&
                 Object.values(g).filter(v=>typeof v==="number").every(Number.isFinite) && g.owner===0 && g.id>0 && g.fuse===2500 && g.explosion===0 && g.exploding===false && Math.abs(g.y-0.95)<0.001 &&
-                s.players[0].ammo===11 && s.players[0].rifleAmmo===24 && s.players[0].pistolAmmo===11 && s.players[0].grenadeCount===1 && s.players[0].crouch===true;
+                s.players[0].ammo===11 && s.players[0].rifleAmmo===24 && s.players[0].pistolAmmo===11 && s.players[0].grenadeCount===0 && s.players[0].crouch===true;
         },room_snapshot(handle))==1,"snapshot includes exact finite active grenade schema and millisecond fuse");
         for(int i=0;i<50;++i) room_tick(handle,0.05f);
         check(EM_ASM_INT({const g=JSON.parse(UTF8ToString($0)).grenades[0];return g.exploding===true && g.fuse===0 && Math.abs(g.explosion-350)<0.001 && g.vx===0 && g.vy===0 && g.vz===0;},room_snapshot(handle))==1,"explosion snapshot exposes boolean state and remaining effect milliseconds");
@@ -219,7 +351,7 @@ int main() {
         const auto handle=room_create(); const int id=room_join(handle);
         check(room_input_v2(handle,id,0,0,0,0,0,0,0,4,1,1,1,1)==1,"v2 ABI accepts old argument order followed by jump crouch weapon grenade");
         room_tick(handle,0.01f); const auto& room=*reinterpret_cast<const arena::Room*>(handle); const auto& p=room.players()[id];
-        check(p.ack==4 && p.position.y>0 && p.crouching && p.weapon==1 && p.grenades==1,"v2 ABI executes all new authoritative actions");
+        check(p.ack==4 && p.position.y>0 && p.crouching && p.weapon==1 && p.grenades==0,"v2 ABI executes all new authoritative actions");
         for(int field=0;field<6;++field) for(int bad:{-1,2}) {
             std::array<int,6> flags{}; flags[field]=bad;
             check(room_input_v2(handle,id,0,0,0,0,flags[0],flags[1],flags[2],5,flags[3],flags[4],0,flags[5])==0 && p.ack==4,"v2 ABI refuses every non-boolean integer flag before ack");
@@ -227,7 +359,7 @@ int main() {
         check(room_input_v2(handle,id,0,0,0,0,0,0,0,5,0,0,2,0)==0 && room_input_v2(handle,id,0,0,0,std::numeric_limits<float>::quiet_NaN(),0,0,0,5,0,0,0,0)==0 && p.ack==4,"v2 ABI fully validates selection and floats before ack");
         check(room_input_v2(0,0,0,0,0,0,0,0,0,1,0,0,0,0)==0,"null v2 ABI input fails safely");
         room_input(handle,id,0,0,0,0,0,0,0,6); room_tick(handle,0.01f);
-        check(p.weapon==0 && !p.crouching && p.grenades==1,"legacy ABI explicitly defaults to rifle standing and no new actions");
+        check(p.weapon==0 && !p.crouching && p.grenades==0,"legacy ABI explicitly defaults to rifle standing and no new actions");
         room_destroy(handle);
     }
 
@@ -238,15 +370,15 @@ int main() {
         target_input.fire=false; target_input.crouch=target_input.grenade=true; target_input.pitch=-1.45f; send(room,target,target_input); room.tick(0.01f);
         target_input.grenade=false; send(room,target,target_input);
         arena::Input fire{}; fire.fire=fire.crouch=true; fire.yaw=arena::kPi/2;
-        for(int i=0;i<3;++i) {send(room,shooter,fire);room.tick(0.01f);fire.fire=false;send(room,shooter,fire);ticks(room,3);fire.fire=true;}
+        for(int i=0;i<3;++i) {send_compensated_shot(room,shooter,fire);room.tick(0.01f);fire.fire=false;send(room,shooter,fire);ticks(room,3);fire.fire=true;}
         target_input.fire=target_input.jump=target_input.grenade=true; send(room,target,target_input);
-        send(room,shooter,fire); room.tick(0.01f);
+        send_compensated_shot(room,shooter,fire); room.tick(0.01f);
         const auto& dead=room.players()[target];
         check(dead.hp==0 && !dead.semi_pending && !dead.input.jump && !dead.input.grenade && dead.equip==0,"death clears new pending action and equip state immediately");
         check(room.grenades()[0].active && room.grenades()[0].owner==target,"death preserves a grenade already thrown by that membership");
         const auto ack=dead.ack; ticks(room,50);
         const auto& p=room.players()[target];
-        check(p.hp==100 && p.weapon==0 && p.pistol_ammo==12 && p.grenades==2 && p.vertical_velocity==0 && p.grounded && !p.crouching && p.equip==0 && p.grenade_cooldown==0 && !p.semi_pending && p.ack==ack,"respawn restores all new pose and resource state while preserving ack");
+        check(p.hp==100 && p.weapon==0 && p.pistol_ammo==12 && p.grenades==1 && p.vertical_velocity==0 && p.grounded && !p.crouching && !p.prone && p.equip==0 && p.grenade_cooldown==0 && !p.semi_pending && p.ack==ack,"respawn restores all new pose and resource state while preserving ack");
     }
 
     {
@@ -254,7 +386,7 @@ int main() {
         arena::Input input{}; input.grenade=true; send(room,id,input); room.tick(0.01f);
         room.leave(id);
         check(!room.grenades()[0].active,"leaving removes flying and exploding owner projectiles before slot reuse");
-        check(room.join()==id && room.players()[id].grenades==2,"new membership restores inventory without old projectiles");
+        check(room.join()==id && room.players()[id].grenades==1,"new membership restores inventory without old projectiles");
         send(room,id,input); room.tick(0.01f); ticks(room,50);
         check(room.grenades()[0].active && room.grenades()[0].exploding,"leave-effect fixture reaches a real explosion");
         room.leave(id); check(!room.grenades()[0].active,"leaving also removes visible explosion effects");
@@ -262,10 +394,9 @@ int main() {
 
     {
         arena::Room room; const int thrower=room.join(),target=room.join();
-        drive(room,thrower,-1,0,61);
-        drive(room,target,0,-1,160); drive(room,target,-1,0,84); drive(room,target,0,1,16);
-        check(near(room.players()[thrower].position.z,-2.85f) && near(room.players()[target].position.x,-18) && near(room.players()[target].position.z,3),"blast-cover fixture routes public players around the existing west cover");
-        arena::Input input{}; input.grenade=input.crouch=true; input.yaw=arena::kPi; input.pitch=-1.45f; send(room,thrower,input); room.tick(0.01f); ticks(room,50);
+        place_floor(room,thrower,-20.25f,0);
+        place_floor(room,target,-15.75f,0);
+        arena::Input input{}; input.grenade=input.crouch=true; input.pitch=-1.45f; send(room,thrower,input); room.tick(0.01f); ticks(room,50);
         const auto& g=room.grenades()[0]; const auto& p=room.players()[target];
         const float distance=std::sqrt((p.position.x-g.position.x)*(p.position.x-g.position.x)+(p.position.z-g.position.z)*(p.position.z-g.position.z)+(0.9f-g.position.y)*(0.9f-g.position.y));
         check(distance<6 && p.shield==0 && p.hp==100 && p.damage==0,"solid cover blocks a real in-range grenade blast");
@@ -324,30 +455,28 @@ int main() {
         arena::Room room; const int id=room.join();
         arena::Input input{}; input.grenade=true; input.yaw=arena::kPi/2; send(room,id,input); room.tick(0.01f);
         room.tick(0.05f); const auto& g=room.grenades()[0];
-        check(near(g.position.x,-17.4f) && near(g.position.y,1.755f) && near(g.velocity.y,3.1f) && near(g.fuse,2.45f),"grenade flight advances authoritative velocity and gravity after input expiry");
+        check(near(g.position.x,-17.1f) && near(g.position.y,1.855f) && near(g.velocity.y,5.1f) && near(g.fuse,2.45f),"grenade flight advances authoritative velocity and gravity after input expiry");
         ticks(room,5); check(!room.players()[id].input.fire && room.grenades()[0].position.x>-15 && room.grenades()[0].fuse<2.21f,"grenade motion and fuse continue without new controls");
     }
 
     {
         arena::Room room; const int id=room.join();
         arena::Input input{}; input.grenade=true; send(room,id,input); input.grenade=false; send(room,id,input); room.tick(0.01f);
-        check(room.players()[id].grenades==1 && room.grenades()[0].active,"coalesced grenade pulse survives newer false input");
+        check(room.players()[id].grenades==0 && room.grenades()[0].active,"coalesced grenade pulse survives newer false input");
         input.grenade=true; send(room,id,input); room.tick(0.01f);
-        check(room.players()[id].grenades==1 && !room.grenades()[1].active,"cooldown-rejected throw does not consume inventory");
-        ticks(room,10); check(room.players()[id].grenades==1,"rejected throw cannot leak across cooldown");
-        send(room,id,input); room.tick(0.01f); check(room.players()[id].grenades==0 && room.grenades()[1].active && room.grenades()[1].id!=room.grenades()[0].id,"second fresh throw consumes the last resource with a distinct stable id");
+        check(room.players()[id].grenades==0 && !room.grenades()[1].active,"a second request cannot throw without inventory");
         ticks(room,10); send(room,id,input); room.tick(0.01f);
-        check(room.players()[id].grenades==0 && !room.grenades()[2].active,"inventory never goes negative or replenishes itself");
+        check(room.players()[id].grenades==0 && !room.grenades()[1].active,"inventory stays empty after the throw cooldown expires");
     }
 
     {
         arena::Room room; const int id=room.join();
         arena::Input input{}; input.grenade=true; input.crouch=true; input.yaw=arena::kPi/2; send(room,id,input); room.tick(0.01f);
         const auto& p=room.players()[id]; const auto& g=room.grenades()[0];
-        check(p.grenades==1 && g.active && g.owner==id && g.id!=0,"fresh throw creates one authoritative grenade and spends inventory");
-        check(!g.exploding && near(g.position.x,-18) && near(g.position.y,0.95f) && near(g.position.z,-18) && near(g.velocity.x,12) && near(g.velocity.y,4) && near(g.fuse,2.5f),"throw uses actual crouched eye and authoritative aim with speed and upward impulse");
+        check(p.grenades==0 && g.active && g.owner==id && g.id!=0,"fresh throw creates one authoritative grenade and spends inventory");
+        check(!g.exploding && near(g.position.x,-18) && near(g.position.y,0.95f) && near(g.position.z,-18) && near(g.velocity.x,18) && near(g.velocity.y,6) && near(g.fuse,2.5f),"throw uses actual crouched eye and scales the full launch velocity by 1.5");
         check(p.shield==0 && near(p.grenade_cooldown,0.5f) && !p.input.grenade,"throw breaks shield and consumes exactly one request");
-        ticks(room,2); check(room.players()[id].grenades==1,"held throw request never repeats without fresh input");
+        ticks(room,2); check(room.players()[id].grenades==0 && !room.grenades()[1].active,"held throw request never repeats without fresh input");
     }
 
     {
@@ -356,8 +485,20 @@ int main() {
         arena::Input fire{}; fire.fire=true; fire.yaw=arena::kPi/2; send(room,shooter,fire); room.tick(0.01f);
         check(room.players()[target].hp==100 && near(room.players()[shooter].trace.x,23.5f),"standing horizontal shot passes above a crouched target");
         fire.fire=false; send(room,shooter,fire); ticks(room,3);
-        fire.crouch=fire.fire=true; send(room,shooter,fire); room.tick(0.01f);
+        fire.crouch=fire.fire=true; send_compensated_shot(room,shooter,fire); room.tick(0.01f);
         check(room.players()[target].hp==75 && near(room.players()[shooter].trace.y,0.95f),"crouched shooter originates hitscan at the actual lower eye height");
+    }
+
+    {
+        arena::Room room; const int shooter=room.join(),target=room.join(); ticks(room,30);
+        arena::Input low{}; low.prone=true; low.yaw=-arena::kPi/2; send(room,target,low);
+        arena::Input fire{}; fire.fire=fire.crouch=true; fire.yaw=arena::kPi/2; send(room,shooter,fire); room.tick(0.01f);
+        check(room.players()[target].prone && room.players()[target].hp==100,"crouch-height shot passes above a prone target");
+        fire.fire=false; send(room,shooter,fire); ticks(room,3);
+        fire.prone=fire.fire=fire.grenade=true; fire.crouch=false; send_compensated_shot(room,shooter,fire); room.tick(0.01f);
+        const auto& shot=room.players()[shooter];
+        check(room.players()[target].hp==75 && near(shot.trace.y,arena::kProneEyeHeight) && near(shot.trace.x,18-arena::kProneLength/2),"prone shot uses lowered eye and yaw-aligned target length");
+        check(near(room.grenades()[0].position.y,arena::kProneEyeHeight),"prone throw originates at the lowered eye");
     }
 
     {
@@ -380,11 +521,12 @@ int main() {
         check(room.players()[id].shot==0,"rejected equip edge never replays when equip ends");
         input.fire=true; send(room,id,input); room.tick(0.01f);
         input.weapon=0; send(room,id,input); room.tick(0.01f);
+        check(room.players()[id].weapon==0 && room.players()[id].shot_weapon==1,"a weapon swap preserves the last shot's audio identity");
         const float cooldown=room.players()[id].cooldown;
         input.weapon=1; send(room,id,input); room.tick(0.01f);
         check(cooldown>0.26f && room.players()[id].cooldown>0.25f,"weapon switching preserves shared shot cooldown");
         for(int i=0;i<8;++i) { send(room,id,input); room.tick(0.05f); }
-        check(room.players()[id].shot==1 && room.players()[id].pistol_ammo==11,"switching while fire is held synthesizes no pistol edge");
+        check(room.players()[id].shot==1 && room.players()[id].pistol_ammo==11 && room.players()[id].shot_weapon==1,"switching while fire is held synthesizes no pistol edge and preserves the last shot's weapon");
     }
 
     {
@@ -483,6 +625,74 @@ int main() {
     }
 
     {
+        arena::Input input{1,0,0}; input.jump=true;
+        const arena::MotionState approach{{4,0,17.35f},0,true};
+        auto climbed=arena::step_motion(approach,input,.016f);
+        check(climbed.mantle.active() && !climbed.grounded && !arena::mantle_uses_hands(climbed.mantle) && climbed.mantle.grips[0].y==0,
+              "a 1.4-metre ledge begins a low climb without hand grips");
+        for(int tick=0;tick<3;++tick) climbed=arena::step_motion(climbed,{},.05f);
+        check(climbed.mantle.active() && climbed.position.y>.25f && climbed.position.y<1.4f && near(climbed.position.z,approach.position.z),
+              "mantle rises in place before moving across the wall face");
+        for(int tick=0;tick<6 && climbed.mantle.active();++tick) climbed=arena::step_motion(climbed,{},.05f);
+        check(climbed.grounded && !climbed.mantle.active() && near(climbed.position.y,1.4f) && climbed.position.z<16.75f && climbed.vertical_velocity==0,
+              "forward jump climbs onto the low cover with solid landing support");
+        const auto stable=arena::step_motion(climbed,{},.016f);
+        check(stable.grounded && near(stable.position.y,1.4f),"climbing ends grounded on the actual top");
+        input.yaw=arena::kPi;
+        const auto high=arena::step_motion({{-18,0,-2.85f},0,true},input,.016f);
+        check(arena::mantle_uses_hands(high.mantle) && near(high.mantle.landing.y,2) &&
+              near(high.mantle.grips[0].y,2) && near(high.mantle.grips[1].y,2),"a two-metre climb plants both hands on the actual top");
+        input.forward=0;
+        input.yaw=0;
+        const auto jump=arena::step_motion(approach,input,.016f);
+        check(!jump.grounded && jump.position.z==approach.position.z,"jump without forward input does not climb");
+        input.forward=1; input.yaw=arena::kPi/2;
+        const auto wall=arena::step_motion({{23.15f,0,0},0,true},input,.016f);
+        check(!wall.grounded && wall.position.y<.2f && near(wall.position.x,23.15f),"a high wall only permits a regular jump");
+        input.yaw=0; input.crouch=true;
+        const auto crouch=arena::step_motion(approach,input,.016f);
+        check(crouch.crouching && !crouch.grounded && crouch.position.y<.2f,"crouching retains the normal jump");
+    }
+
+    {
+        arena::Input input{1,0,0}; input.jump=true;
+        const auto attempt=[&](bool low_ceiling,bool narrow_top,float height=1.f) {
+            arena::MotionState state{{0,0,.5f},0,true};
+            return arena::try_mantle(state,input,[&](arena::Vec3 feet) {
+                const bool ledge=feet.z<.2f && feet.y<height;
+                const bool ceiling=low_ceiling && feet.z>.10f && feet.y<2.5f && feet.y+arena::kStandingHeight>2.15f;
+                return ledge || ceiling;
+            },[&](arena::Vec3 origin,float limit) {
+                const float top=origin.z<0 && (!narrow_top || std::abs(origin.x)<.1f) ? height : 0.f;
+                return origin.y>=top && origin.y-top<=limit ? top : -std::numeric_limits<float>::infinity();
+            });
+        };
+        check(attempt(false,false),"a broad ledge with headroom is climbable");
+        check(!attempt(true,false),"a low ceiling blocks the upward path before the ledge");
+        check(!attempt(false,true),"a narrow railing cannot support the landing footprint");
+        check(attempt(false,false,2.5f) && !attempt(false,false,2.501f),"the 2.5-metre climb limit is inclusive");
+    }
+
+    {
+        arena::Input sprint{1,0,arena::kPi}; sprint.sprint=sprint.jump=true;
+        const arena::MotionState start{{11,0,5.55f},0,true};
+        auto running=arena::step_motion(start,sprint,.016f);
+        check(running.mantle.sprint && running.position.y>0 && running.position.z>start.position.z+.04f,
+              "a sprint mantle immediately rises and advances before reaching the wall");
+        const auto landing=running.mantle.landing;
+        for(int tick=1;tick<22;++tick) {
+            const auto previous=running.position;
+            running=arena::step_motion(running,sprint,.016f);
+            check(running.mantle.active() && running.position.z>previous.z+.015f,"sprint mantle advances through the curve each tick");
+        }
+        const auto continued=arena::step_motion(running,sprint,.02f);
+        check(continued.grounded && near(continued.position.y,2.4f) && near(continued.position.z-landing.z,.084f),
+              "remaining landing tick immediately continues at sprint speed without another jump");
+        const auto released=arena::step_motion(running,{},.02f);
+        check(released.grounded && near(released.position.z,landing.z),"releasing movement during the climb stops at the landing");
+    }
+
+    {
         // Unit-only: west cover top is y=2.
         const auto s=arena::step_motion({{-18,2.1f,0},-2,false,false},{},0.05f);
         check(near(s.position.y,2) && s.grounded && s.vertical_velocity==0,"falling body lands on an actual solid top");
@@ -516,6 +726,22 @@ int main() {
         check(near(arena::body_height(true),1.1f) && near(arena::eye_height(true),0.95f) && near(arena::body_height(false),1.8f) && near(arena::eye_height(false),1.6f),"shared body and eye helpers expose actual stance dimensions");
         input={}; send(room,id,input); room.tick(0.05f);
         check(!room.players()[id].crouching,"clear-space stand request restores actual standing stance");
+    }
+
+    {
+        arena::Input crawl{}; crawl.prone=crawl.sprint=crawl.jump=true; crawl.forward=crawl.strafe=1;
+        const auto moving=arena::step_motion({{-18,0,-18},0,true,false},crawl,0.05f);
+        check(moving.prone && !moving.crouching && moving.grounded && near(std::hypot(moving.position.x+18,moving.position.z+18),.0625f),"prone movement is capped and does not jump");
+        check(!arena::step_motion({{-18,1,-18},0,false,false},crawl,0.05f).prone,"airborne players wait for ground to enter prone");
+
+        auto under=arena::step_motion({{0,5,-10},0,false,false,true},{},0.01f);
+        check(under.prone,"low ceiling prevents rising from prone");
+        arena::Input crouch{}; crouch.crouch=true;
+        under=arena::step_motion(under,crouch,0.01f);
+        check(under.prone,"low ceiling also prevents rising to crouch");
+        under.position.x=5;
+        under=arena::step_motion(under,crouch,0.01f);
+        check(under.crouching && !under.prone,"the crouch request succeeds with clearance");
     }
 
     {
@@ -835,10 +1061,10 @@ int main() {
         arena::Input reload; reload.reload=true; send(room,victim,reload); room.tick(0.01f);
         arena::Input fire; fire.fire=true; fire.yaw=arena::kPi/2;
         for(int hit=0;hit<3;++hit) {
-            send(room,shooter,fire); room.tick(0.01f); send(room,shooter,{}); ticks(room,3);
+            send_compensated_shot(room,shooter,fire); room.tick(0.01f); send(room,shooter,{}); ticks(room,3);
         }
         check(room.players()[victim].hp==25 && room.players()[victim].reload>0,"three public hits leave target alive and reloading");
-        send(room,shooter,fire); room.tick(0.01f);
+        send_compensated_shot(room,shooter,fire); room.tick(0.01f);
         const auto dead=room.players()[victim];
         check(dead.hp==0 && dead.deaths==1 && room.players()[shooter].kills==1,"fourth public hit kills exactly once");
         check(dead.damage==4 && room.players()[shooter].hit==4 && dead.shot==1,"death preserves cumulative hit, damage and shot counters");
@@ -855,7 +1081,7 @@ int main() {
         send(room,victim,sky); room.tick(0.01f); send(room,victim,{}); ticks(room,30);
         arena::Input fire; fire.fire=true; fire.yaw=arena::kPi/2;
         for(int hit=0;hit<4;++hit) {
-            send(room,shooter,fire); room.tick(0.01f); send(room,shooter,{});
+            send_compensated_shot(room,shooter,fire); room.tick(0.01f); send(room,shooter,{});
             if(hit<3) ticks(room,3);
         }
         check(room.players()[victim].hp==0 && near(room.players()[victim].position.x,17.75f),"respawn fixture kills target moved through real public inputs");
@@ -912,11 +1138,11 @@ int main() {
         const char* snapshot=room_snapshot(handle);
         check(EM_ASM_INT({
             const s=JSON.parse(UTF8ToString($0));
-            const expected="id,x,y,z,yaw,pitch,hp,ammo,kills,deaths,reload,respawn,shield,shot,hit,damage,ack,trace,vy,grounded,crouch,weapon,rifleAmmo,pistolAmmo,grenadeCount,equip".split(",").sort().join(",");
+            const expected="id,x,y,z,yaw,pitch,recoil,recoilHeld,hp,ammo,kills,deaths,reload,respawn,shield,shot,shotWeapon,reloads,hit,damage,ack,trace,vy,grounded,crouch,prone,weapon,rifleAmmo,pistolAmmo,grenadeCount,equip".split(",").sort().join(",");
             return Object.keys(s).sort().join(",")==="grenades,players,time" && s.grenades.length===0 && s.time===0 && s.players.length===1 && s.players[0].id===1 &&
                 s.players.every(p => Object.keys(p).sort().join(",")===expected &&
                     Object.values(p).filter(v => typeof v==="number").every(Number.isFinite) && p.trace.length===3 && p.trace.every(Number.isFinite)) &&
-                s.players[0].shield===1500 && s.players[0].respawn===0 && s.players[0].reload===0 && s.players[0].vy===0 && s.players[0].grounded===true && s.players[0].crouch===false && s.players[0].weapon===0 && s.players[0].rifleAmmo===24 && s.players[0].pistolAmmo===12 && s.players[0].grenadeCount===2 && s.players[0].equip===0;
+                s.players[0].shield===1500 && s.players[0].respawn===0 && s.players[0].reload===0 && s.players[0].vy===0 && s.players[0].grounded===true && s.players[0].crouch===false && s.players[0].prone===false && s.players[0].weapon===0 && s.players[0].rifleAmmo===24 && s.players[0].pistolAmmo===12 && s.players[0].grenadeCount===1 && s.players[0].equip===0;
         },snapshot)==1,"snapshot parses as exact active-only schema with finite numbers and millisecond durations under comma locale");
         const std::string cached=snapshot;
         room_tick(handle,0.05f);

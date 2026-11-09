@@ -4,7 +4,9 @@ import {readFile} from 'node:fs/promises';
 let server,url;
 test.beforeAll(async()=>{
  server=http.createServer(async(req,res)=>{
-  if(req.url==='/gpu.mjs') {res.setHeader('Content-Type','text/javascript');res.end(await readFile(new URL('../../web/gpu.mjs',import.meta.url)));return;}
+  if(['/gpu.mjs','/library-materials.mjs','/maps.mjs'].includes(req.url)) {
+   res.setHeader('Content-Type','text/javascript');res.end(await readFile(new URL('../../web'+req.url,import.meta.url)));return;
+  }
   res.setHeader('Content-Type','text/html');res.end('<!doctype html><html><meta name="viewport" content="width=device-width"><body style="margin:0"><canvas id="game" style="width:640px;height:400px"></canvas></body></html>');
  });
  await new Promise(r=>server.listen(0,'127.0.0.1',r));url=`http://127.0.0.1:${server.address().port}`;

@@ -2,7 +2,7 @@
 
 ## Approval and boundary
 
-The person approved implementing the proposed four additions, in order: jump/crouch → pistol → normal explosive grenade. Keys: Space, C, 1/2, G. Baseline: `b7b0c69c9ae61ee3e4fcafe000314178d4a9db0b`. Hermes remains the implementation owner. Existing map, maximum four members, server authority, native C++/Wasm logic, WebGPU/WebGL2 and local-only exposure stay unchanged. No external executor, dependency, account, public deployment, push or firewall change is needed.
+The person approved implementing the proposed four additions, in order: jump/crouch → pistol → normal explosive grenade. Baseline: `b7b0c69c9ae61ee3e4fcafe000314178d4a9db0b`. Hermes remains the implementation owner. Existing map, maximum four members, server authority, native C++/Wasm logic, WebGPU/WebGL2 and local-only exposure stay unchanged. No external executor, dependency, account, public deployment, push or firewall change is needed.
 
 The following are implementation defaults, not claims the person individually chose balance numbers. They are centralized and adjustable. Feature status starts **planned**, not executed.
 
@@ -10,22 +10,27 @@ The following are implementation defaults, not claims the person individually ch
 
 - Feet position is x/y/z in metres, y-up; floor plane y=0. Standing body height1.8, eye1.6, radius0.35. C toggles desired crouch: height1.1, eye0.95, speed2.5. Crouch suppresses sprint. Actual stance, not just camera appearance, controls hit and movement geometry.
 - Gravity18m/s², initial jump velocity8m/s. A fresh Space edge is one jump request; only grounded players jump. Holding the key or sending duplicate packets cannot cause an extra/mid-air jump. Unsupported airborne requests are consumed, not buffered until landing.
+- A standing player holding W can use the same Space edge to climb a nearby ledge between 0.34 and 2.5 metres above their feet. The shared movement code checks landing support and sweeps the body along the climb path. A sprint starts farther from the ledge when space allows and takes 0.36 seconds, compared with 0.42 seconds at walking speed. The current movement input resumes within the landing tick. Above 1.4 metres, the climb pauses weapon actions and supplies hand contact points for the browser animation. A rejected climb falls back to the normal jump rules.
 - Shared `step_motion` handles vertical and horizontal movement, landing on solid tops, underside collision and falling off edges. Grounding is a physical support state; non-solid skyline/decorations remain non-colliding. A standing expansion under a low ceiling is refused; moving into clear space permits the outstanding stand request.
 - Authoritative motion advances on server dt. Browser uses the same function for prediction. Snapshots contain vertical velocity, actual grounded/crouch state; both local camera and remote model use the actual body/eye heights.
-- Death clears pending actions and freezes the corpse at its last position, preserving existing behavior. Respawn resets feet to the existing spawn, vertical velocity0, grounded/standing and resources. No new fall damage, climbing, double jump or changed map.
+- Death clears pending actions and freezes the corpse at its last position, preserving existing behavior. Respawn resets feet to the existing spawn, vertical velocity0, grounded/standing and resources.
 
 ## Weapon contract
 
 - weapon0=existing automatic rifle; weapon1=semi-automatic pistol. Keys1/2 request selection. A selection change takes0.20s and cancels the old reload. Switching cannot reset the shared fire cooldown or refill either magazine. Repeated same selection does not restart equip.
 - Rifle remains magazine24/damage25/interval0.12s/reload1.5s. Pistol defaults: magazine12/damage34/minimum interval0.28s/reload1.2s. Reserve ammunition remains unlimited as before.
+- The reload animation follows the server's remaining reload time. The support hand removes the old magazine and inserts a fresh one. The removal sound plays once when the magazine clears the gun. The seating sound and return to the ready pose follow the server's refill confirmation. Switching weapons ends the old animation.
+- The local rifle and pistol use distinct synthesized firing sounds. The sound follows the weapon that actually fired, including when a snapshot also changes the equipped weapon.
+- Confirmed shots also produce a short translucent muzzle flash and eject a tumbling brass case from the side of the weapon. The browser renders these effects from the shot counter and expires the cases locally.
 - `Player.ammo` retains the rifle magazine for existing C++ callers; `pistol_ammo` is separate. `active_ammo()` selects the current magazine. Network `ammo` means active magazine, and explicit rifleAmmo/pistolAmmo accompany it.
 - Pistol fires on a fresh press edge, not while held. Valid fresh input rising edges latch until one tick; a later false packet cannot erase the press. The request is consumed even if equip/reload/cooldown rejects the shot; it cannot fire later unexpectedly. Duplicate/old sequences never enqueue actions.
 - Shared cooldown, selected-weapon reload, hitscan, solid cover, shield, score and death rules remain server authoritative. Switching while a held fire button is down does not synthesize a pistol press.
+- Rifle shots add 0.025 radians of upward recoil up to 0.18 radians. The rifle retains recoil between rounds during a held burst and recovers at 5.5/s once the burst ends. Pistol shots add 0.044 radians and recover at 10/s. A shot uses the current aim and adds its kick for subsequent aim. The browser uses the same recoil state to move the view, and pulling the mouse down compensates for the offset. The pistol slide and weapon movement are animated on confirmed shots.
 
 ## Grenade contract
 
-- G sends one throw request. Two grenades per spawn, cooldown0.5s, no replenishment except respawn/new membership. No cooking or alternate grenade type.
-- Throw origin comes from the authoritative player's eye. Direction is authoritative yaw/pitch; default speed12m/s plus an upward4m/s component. Never accept a client position, velocity, fuse, damage, owner or target.
+- E sends one throw request. One grenade per spawn, cooldown0.5s, and replenishment on respawn or new membership.
+- Throw origin comes from the authoritative player's eye. Direction is authoritative yaw/pitch. Launch velocity is 18 m/s along the aim plus 6 m/s upward. Never accept a client position, velocity, fuse, damage, owner or target.
 - Radius0.12, gravity18m/s², fuse2.5s. Swept collision against ground and solid map geometry prevents tunneling; restitution0.45 and surface damping settle bouncing grenades. The near spawn path must also respect solids.
 - Explosion radius6m. Damage is `ceil(100 * (1 - distance/6))` strictly inside the radius, zero at/outside6m, using each target body's centre. Solid line-of-sight cover blocks blast damage. Existing spawn shield blocks damage; throwing breaks the thrower's shield. Self damage is possible, but suicide adds no kill. Other kills count once for the still-active owner, including a grenade thrown before that owner's death.
 - At most16 live grenade/effect slots per room. Reject a full-slot request without consuming inventory. Each grenade ID remains stable while flying/exploding. A visible explosion persists0.35s and then frees the slot.
@@ -52,6 +57,6 @@ Files consumed by the change: include/arena.hpp; core/game.cpp/bridge.cpp; serve
 
 1. Real Wasm RED→GREEN for each motion/stance/weapon/grenade behavior, inclusive timer/range boundaries, duplicate/coalesced/dead input, shield/cover, no resource refill/negative inventory and leave/respawn cleanup; preserve existing rules.
 2. Exact v2 validation and ABI argument tests, then real compiled-module socket proof. Fakes are only adapter/isolation evidence.
-3. Actual browser Space/C/1/2/G plus existing WASD/mouse/R/Esc; authoritative state, visible model/stance/HUD and projectile/explosion screenshots in both motion settings and forced WebGL2. Public-protocol multiplayer observer agreement, not private state changes.
+3. Actual browser Space/C/1/2/E plus existing WASD/mouse/R/Esc; authoritative state, visible model/stance/HUD and projectile/explosion screenshots in both motion settings and forced WebGL2. Public-protocol multiplayer observer agreement, not private state changes.
 4. Current lobby/menu/HUD at1440/768/375, including all new Korean hints, loading/retry, no essential overlap. Touch and physical LAN remain outside this local evidence.
 5. Full build/C++/Node/browser regression, independent bounded review, clean source provenance, per-step local commits and execution guidance. Old baseline receipts remain immutable historical evidence; new changes require new results.
