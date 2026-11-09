@@ -1,6 +1,11 @@
 node_modules/
 build/
 /assets/*.arena
+!/assets/cachette.arena
+!/assets/cafe.arena
+!/assets/library.arena
+!/assets/nyc.arena
+!/assets/smuggler.arena
 web/dist/
 work/
 .playwright/
